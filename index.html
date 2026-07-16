@@ -18,7 +18,7 @@ hr {
   background: linear-gradient(to right, #990000, #FFCC00);
   height: 5px;
 }
-	
+
 DIV.content
 {
 border: 0px solid #5f5f5f;
@@ -84,173 +84,33 @@ left: 50px;
 bottom: 20px;
 }
 
-
-
-#contact
+/* Section visibility is now handled with a single reusable class
+   instead of one display rule per section id. */
+.content section.page
 {
 display: none;
 }
 
-#home
+.content section.page.active
 {
 display: block;
-}
-
-#research
-{
-display: none;
-}
-
-#publications
-{
-display: none;
-}
-
-#people
-{
-display: none;
-}
-
-#lab
-{
-display: none;
-}
-
-#news
-{
-display: none;
-}
-
-#outreach
-{
-display: none;
-}
-
-#teaching
-{
-display: none;
 }
 
 </STYLE>
 
 <SCRIPT type="text/javascript">
 
-function homeShow()
+// One generic function replaces the nine nearly-identical
+// xyzShow() functions that used to live here. Each nav link now
+// calls showSection('id') with the section it wants to reveal.
+function showSection(id)
 {
-document.getElementById("contact").style.display="none";
-document.getElementById("publications").style.display="none";
-document.getElementById("home").style.display="block";
-document.getElementById("people").style.display="none";
-document.getElementById("research").style.display="none";
-document.getElementById("teaching").style.display="none";
-document.getElementById("news").style.display="none";
-document.getElementById("lab").style.display="none";
-document.getElementById("outreach").style.display="none";
+var pages = document.querySelectorAll(".content section.page");
+for (var i = 0; i < pages.length; i++)
+{
+pages[i].classList.remove("active");
 }
-
-function contactShow()
-{
-document.getElementById("contact").style.display="block";
-document.getElementById("publications").style.display="none";
-document.getElementById("people").style.display="none";
-document.getElementById("home").style.display="none";
-document.getElementById("research").style.display="none";
-document.getElementById("teaching").style.display="none";
-document.getElementById("news").style.display="none";
-document.getElementById("lab").style.display="none";
-document.getElementById("outreach").style.display="none";
-}
-
-function publicationsShow()
-{
-document.getElementById("contact").style.display="none";
-document.getElementById("publications").style.display="block";
-document.getElementById("people").style.display="none";
-document.getElementById("home").style.display="none";
-document.getElementById("research").style.display="none";
-document.getElementById("teaching").style.display="none";
-document.getElementById("news").style.display="none";
-document.getElementById("lab").style.display="none";
-document.getElementById("outreach").style.display="none";
-}
-
-function peopleShow()
-{
-document.getElementById("contact").style.display="none";
-document.getElementById("publications").style.display="none";
-document.getElementById("people").style.display="block";
-document.getElementById("home").style.display="none";
-document.getElementById("research").style.display="none";
-document.getElementById("teaching").style.display="none";
-document.getElementById("news").style.display="none";
-document.getElementById("lab").style.display="none";
-document.getElementById("outreach").style.display="none";
-}
-
-function researchShow()
-{
-document.getElementById("contact").style.display="none";
-document.getElementById("publications").style.display="none";
-document.getElementById("home").style.display="none";
-document.getElementById("people").style.display="none";
-document.getElementById("research").style.display="block";
-document.getElementById("teaching").style.display="none";
-document.getElementById("news").style.display="none";
-document.getElementById("lab").style.display="none";
-document.getElementById("outreach").style.display="none";
-}
-
-
-function joinShow()
-{
-document.getElementById("contact").style.display="none";
-document.getElementById("publications").style.display="none";
-document.getElementById("home").style.display="none";
-document.getElementById("people").style.display="none";
-document.getElementById("research").style.display="none";
-document.getElementById("teaching").style.display="none";
-document.getElementById("news").style.display="none";
-document.getElementById("lab").style.display="block";
-document.getElementById("outreach").style.display="none";
-}
-
-function teachingShow()
-{
-document.getElementById("contact").style.display="none";
-document.getElementById("publications").style.display="none";
-document.getElementById("home").style.display="none";
-document.getElementById("people").style.display="none";
-document.getElementById("research").style.display="none";
-document.getElementById("teaching").style.display="block";
-document.getElementById("news").style.display="none";
-document.getElementById("lab").style.display="none";
-document.getElementById("outreach").style.display="none";
-}
-
-function newsShow()
-{
-document.getElementById("contact").style.display="none";
-document.getElementById("publications").style.display="none";
-document.getElementById("home").style.display="none";
-document.getElementById("people").style.display="none";
-document.getElementById("research").style.display="none";
-document.getElementById("teaching").style.display="none";
-document.getElementById("news").style.display="block";
-document.getElementById("lab").style.display="none";
-document.getElementById("outreach").style.display="none";
-}
-
-function outreachShow()
-{
-document.getElementById("contact").style.display="none";
-document.getElementById("publications").style.display="none";
-document.getElementById("home").style.display="none";
-document.getElementById("people").style.display="none";
-document.getElementById("research").style.display="none";
-document.getElementById("teaching").style.display="none";
-document.getElementById("news").style.display="none";
-document.getElementById("lab").style.display="none";
-document.getElementById("outreach").style.display="block";
+document.getElementById(id).classList.add("active");
 }
 
 </SCRIPT>
@@ -275,44 +135,44 @@ document.getElementById("outreach").style.display="block";
 <BODY>
 
 <DIV class="bar">
-    <video width="45%" height="35%" autoplay muted loop playsinline 
+    <video width="45%" height="35%" autoplay muted loop playsinline
         style="float:left;margin:0 15px 0 0;">
         <source src="MooneyLabLogo_Shirin.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
     <br> <br> <br> <br> <br>
-<P class="link"><A href="#" class="minlink" onclick="homeShow();">Home</A></P>
-<P class="link"><A href="#" class="minlink" onclick="researchShow();">Research</A></P>
-<P class="link"><A href="#" class="minlink" onclick="teachingShow();">Teaching</A></P>
-<P class="link"><A href="#" class="minlink" onclick="publicationsShow();">Publications</A></P>
-<P class="link"><A href="#" class="minlink" onclick="newsShow();">News</A></P>
-<P class="link"><A href="#" class="minlink" onclick="peopleShow();">Team</A></P>
-<P class="link"><A href="#" class="minlink" onclick="joinShow();">Join</A></P>
-<P class="link"><A href="#" class="minlink" onclick="outreachShow();">Outreach and Science Communication</A></P>
-<P class="link"><A href="#" class="minlink" onclick="contactShow();">Contact</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('home');">Home</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('research');">Research</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('teaching');">Teaching</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('publications');">Publications</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('news');">News</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('people');">Team</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('lab');">Join</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('outreach');">Outreach and Science Communication</A></P>
+<P class="link"><A href="#" class="minlink" onclick="showSection('contact');">Contact</A></P>
 </DIV>
 
 <DIV class="content">
-  
-<div id="home">
+
+<section id="home" class="page active">
   <h2>Mooney Lab @ University of Southern California</h2>
   <hr>
   <br>
-  <span style="font-weight:bold;font-size:+2">Welcome! We are the Mooney Lab.</span> Our goal is to use patterns of variation in the genome to understand the evolutionary and population histories of both humans and other species. 
+  <span style="font-weight:bold;font-size:+2">Welcome! We are the Mooney Lab.</span> Our goal is to use patterns of variation in the genome to understand the evolutionary and population histories of both humans and other species.
   We do this by implementing and developing computational and statistical methods to study the genome.
   <br>
   <br>
 
-  We are also interested in more broad population genetics questions such as: 
-  the genomic consequences of deleterious (non-neutral) mutations, where deleterious mutations tend to aggregate in the genome, 
+  We are also interested in more broad population genetics questions such as:
+  the genomic consequences of deleterious (non-neutral) mutations, where deleterious mutations tend to aggregate in the genome,
   and understanding patterns of genomic sharing through identity-by-descent segments and runs of homozygosity.
   <br>
   <br>
 
   <br>
   <br>
-  
+
   <div style="text-align:center;">
     <img src="Lab2026.jpg" alt="Mooney Lab" style="max-width:100%;height:auto;">
   </div>
@@ -320,16 +180,16 @@ document.getElementById("outreach").style.display="block";
   <br>
   <br>
 
-	
+
   We are located at the University of Southern California (USC) in the <a href="https://www.qcb-dornsife.usc.edu/" target="_blank">Department of Quantitative and Computational Biology (QCB)</a>.
 
   <br><br>
   <hr style="width:50%;height:2px">
   <br>
-</div>
+</section>
 
 
-<DIV id="research">
+<section id="research" class="page">
 <h2>Our Research</h2>
 <hr>
 <br>
@@ -339,13 +199,13 @@ These data sets have provided valuable insights about population history, phenot
 <img src = "LAIsoROH.jpg" width = "50%" height = "50%" style="float:left;margin:5px 15px 5px 5px;">
 <br>
 <br>
-Broadly, our lab uses empirical data analysis, simulation frameworks, and methods development to do the following: 
+Broadly, our lab uses empirical data analysis, simulation frameworks, and methods development to do the following:
 1) infer demography, 2) understand the fitness impact of recessive variation, and 3) investigate complex trait architecture.
 <br>
-<br>	
-We focus primarily on integrating data from both human and non-human populations to develop a more complete picture of mechanisms 
-that shape patterns of genomic sharing (in the form of identity-by-descent segments and runs of homozygosity) and deleterious variation. 
-We are also interested in developing methods for conservation biology, inference of the genealogical histories of admixed populations, 
+<br>
+We focus primarily on integrating data from both human and non-human populations to develop a more complete picture of mechanisms
+that shape patterns of genomic sharing (in the form of identity-by-descent segments and runs of homozygosity) and deleterious variation.
+We are also interested in developing methods for conservation biology, inference of the genealogical histories of admixed populations,
 and the equitable inclusion of underrepresented populations in genomics.
 <br>
 <br>
@@ -360,68 +220,68 @@ and the equitable inclusion of underrepresented populations in genomics.
         </div>
     </div>
 <hr style="width:50%;height:2px">
-</div>
+</section>
 
-<DIV id="lab">
+<section id="lab" class="page">
 <h2>Join the Mooney Lab</h2>
 <hr>
 <br>
 <b>We are glad you are interested in joining us!</b>
 <br><br>
-We are an inclusive lab. I support my students and believe they all deserve an oppurtunity to be in computational biology. 
-The Mooney lab is a space where lab members not only learn the science but also are excited about the future of science. 
-There are no required pre-requisites for joining the lab and lab members may come from any background. In the Mooney lab, most projects will include 
-coding for genetic data analysis, some mathematics, simulation, and data visualization. Most of all, I want students to learn relevant skills for 
+We are an inclusive lab. I support my students and believe they all deserve an oppurtunity to be in computational biology.
+The Mooney lab is a space where lab members not only learn the science but also are excited about the future of science.
+There are no required pre-requisites for joining the lab and lab members may come from any background. In the Mooney lab, most projects will include
+coding for genetic data analysis, some mathematics, simulation, and data visualization. Most of all, I want students to learn relevant skills for
 the next step in their career, in a lab where they feel like science is a place where they can grow and thrive.
 <br><br>
-	
+
   <div style="text-align:center;">
     <img src="MooneyLab_Dec2024_v2.jpg" alt="Mooney Lab" style="max-width:100%;height:auto;">
   </div>
-	
+
 <hr style="width:50%;height:2px">
 <h3>Postdoctoral researchers</h3>
 We are hiring a postdoc who is interested in understanding recessive variation and complex traits. Please apply <a href="https://usccareers.usc.edu/job/los-angeles/postdoctoral-scholar-research-associate/1209/94189826384" target="_blank">here</a>!
-<br><br>	
-To inquire about postdoctoral positions, please write to Jazlyn at <a href="mailto:jazlynmo@usc.edu?subject=Postdoc position" target="_blank">jazlynmo@usc.edu</a>. 
-Interest areas that would fit particularly well in the lab include the population genetics of runs of homozygosity, identity-by-descent segments, complex traits, 
+<br><br>
+To inquire about postdoctoral positions, please write to Jazlyn at <a href="mailto:jazlynmo@usc.edu?subject=Postdoc position" target="_blank">jazlynmo@usc.edu</a>.
+Interest areas that would fit particularly well in the lab include the population genetics of runs of homozygosity, identity-by-descent segments, complex traits,
 and demographic inference.
 <br><br>
-Please include a CV and a short description (1-2 pages) of your research experience, interests, and ideas for work in the lab. Please put “Postdoc position” in the 
-subject line of your email to <a href="mailto:jazlynmo@usc.edu?subject=Postdoc position" target="_blank">jazlynmo@usc.edu</a>. Please also list 2-3 professional references 
+Please include a CV and a short description (1-2 pages) of your research experience, interests, and ideas for work in the lab. Please put “Postdoc position” in the
+subject line of your email to <a href="mailto:jazlynmo@usc.edu?subject=Postdoc position" target="_blank">jazlynmo@usc.edu</a>. Please also list 2-3 professional references
 and include any recent work you’d like to share.
 <br><br>
 <hr style="width:50%;height:2px">
 <h3>PhD students</h3>
-Feel free to contact me and put “Graduate student position” in the subject line of your email to <a href="mailto:jazlynmo@usc.edu?subject=Graduate student position" target="_blank">jazlynmo@usc.edu</a>. 
+Feel free to contact me and put “Graduate student position” in the subject line of your email to <a href="mailto:jazlynmo@usc.edu?subject=Graduate student position" target="_blank">jazlynmo@usc.edu</a>.
 We can talk about potential research interests and relevant projects in the lab.
 <br><br>
-Students should apply to <a href="https://www.qcb-dornsife.usc.edu/phd" target="_blank">USC’s Computational Biology and Bioinformatics (CBB)</a> program. 
-Our graduate program will give you experience in algorithms, statistics, and biology. During the first year, students will complete coursework as well as 
-rotate in up to three CBB-affiliated labs. Students interested in completing a PhD in the lab should arrange to do one of their rotations with us. CBB admissions 
+Students should apply to <a href="https://www.qcb-dornsife.usc.edu/phd" target="_blank">USC’s Computational Biology and Bioinformatics (CBB)</a> program.
+Our graduate program will give you experience in algorithms, statistics, and biology. During the first year, students will complete coursework as well as
+rotate in up to three CBB-affiliated labs. Students interested in completing a PhD in the lab should arrange to do one of their rotations with us. CBB admissions
 are handled by the admissions committee and not by individual labs.
 <br><br>
 <hr style="width:50%;height:2px">
 <h3>Undergraduates, Master’s students, and others</h3>
-We are looking to include USC undergraduates and Master's students on research projects. If you are interested in joining the lab, email me with the relevant header of 
-either “Undergraduate student position” or " Master’s student position" in the subject line of your email to <a href="mailto:jazlynmo@usc.edu?subject=Undergraduate/Master’s student position" target="_blank">jazlynmo@usc.edu</a>. 
+We are looking to include USC undergraduates and Master's students on research projects. If you are interested in joining the lab, email me with the relevant header of
+either “Undergraduate student position” or " Master’s student position" in the subject line of your email to <a href="mailto:jazlynmo@usc.edu?subject=Undergraduate/Master’s student position" target="_blank">jazlynmo@usc.edu</a>.
 Please include a CV, relevant course history, and statement of interest.
 <br><br>
-Experience with command line, Python, R, C/C++, would be beneficial but are not necessarily required. 
+Experience with command line, Python, R, C/C++, would be beneficial but are not necessarily required.
 <br><br>
 <hr style="width:50%;height:2px">
 <br>
 
-</DIV>
+</section>
 
-<DIV id="contact">
+<section id="contact" class="page">
 <h2>Contact Us</h2>
 <hr>
 <br>
 <span style="font-weight:bold">Email:</span> <a href="mailto:jazlynmo@usc.edu?subject=Mooney Lab" target="_blank">jazlynmo@usc.edu</a>
 <br>
 <br>
-We are located on the 4th floor of <a href="https://map.concept3d.com/?id=1928#!m/552409" target="_blank">Ray R. Irani Hall (RRI)</a> at the University of Southern California, 
+We are located on the 4th floor of <a href="https://map.concept3d.com/?id=1928#!m/552409" target="_blank">Ray R. Irani Hall (RRI)</a> at the University of Southern California,
 in the University Park neighborhood of Los Angeles.
 <br>
 The closest parking structure is the Downey Way Structure.
@@ -431,10 +291,10 @@ The closest parking structure is the Downey Way Structure.
 <hr style="width:50%;height:2px">
 <br>
 
-</DIV>
+</section>
 
 
-<DIV id="publications">
+<section id="publications" class="page">
 <h2>Our Publications</h2>
 <hr>
 
@@ -451,7 +311,7 @@ Agranat-Tamir L, Agwamba KD, <b>Mooney JA</b>, & Rosenberg NA. <span style="text
 
 <hr style="width:50%;height:2px">
 <br>
-	
+
 2025
 <br>
 <b>Akopyan M</b>, <b>Genchev M</b>, Armstrong EE, <b>Mooney JA</b>. <span style="text-decoration:underline"> Reference genome choice compromises population genetic analyses</span>. Cell. 2025 Nov 26;188(24):6939-6952.e11. doi: 10.1016/j.cell.2025.08.034. Epub 2025 Sep 22. PMID: 40987293. <a href="AkopyanEtal2025_RefBias_Cell.pdf" target="_blank">PDF</a>
@@ -468,7 +328,7 @@ Sherman CA<SUP>&</SUP>, <b>Nataneli S</b><SUP>&</SUP>, Claw KG, <b>Mooney JA</b>
 
 2024
 <br>
-Kreger J, <b>Mooney, JA</b>, Shibata D, & MacLean AL. 
+Kreger J, <b>Mooney, JA</b>, Shibata D, & MacLean AL.
 <span style="text-decoration:underline">Developmental hematopoietic stem cell variation explains clonal hematopoiesis later in life. </span>Nat Commun. 2024 Nov 26;15(1):10268. doi: 10.1038/s41467-024-54711-2. PMID: 39592593; PMCID: PMC11599844.
 <br><br>
 
@@ -496,7 +356,7 @@ Agranat-Tamir L, <b>Mooney JA</b>, Rosenberg NA.
 <span style="text-decoration:underline"> On the number of genealogical ancestors tracing to the source groups of an admixed population</span>. Genetics. 2023 Jul 6;224(3):iyad079. doi: 10.1093/genetics/iyad079. PMID: 37410594; PMCID: PMC10324943.
 <br><br>
 
-<b>Mooney JA</b>, Marsden CD, <b>Yohannes A</b>, Wayne RK, Lohmueller KE. 
+<b>Mooney JA</b>, Marsden CD, <b>Yohannes A</b>, Wayne RK, Lohmueller KE.
 <span style="text-decoration:underline"> Long-term small population size, deleterious variation, and altitude adaptation in the Ethiopian wolf, a severely endangered canid</span>. Mol Biol Evol. 2023 Jan 4;40(1):msac277. doi: 10.1093/molbev/msac277. PMID: 36585842; PMCID: PMC9847632.
 <br><br>
 <hr style="width:50%;height:2px">
@@ -512,7 +372,7 @@ Agranat-Tamir L, <b>Mooney JA</b>, Rosenberg NA.
 
 2019
 <br>
-Sura SA, Smith LL, Ambrose MR, Amorim CEG, Beichman AC, Gomez ACR, Juhn M, Kandlikar GS, Miller JS, <b>Mooney JA</b>, Mummah RO, Lohmueller KE, Lloyd-Smith JO. 
+Sura SA, Smith LL, Ambrose MR, Amorim CEG, Beichman AC, Gomez ACR, Juhn M, Kandlikar GS, Miller JS, <b>Mooney JA</b>, Mummah RO, Lohmueller KE, Lloyd-Smith JO.
 <span style="text-decoration:underline">Ten simple rules for giving an effective academic job talk</span>. PLoS Comput Biol. 2019 Jul 25;15(7):e1007163. doi: 10.1371/journal.pcbi.1007163. PMID: 31344032; PMCID: PMC6657819.
 <br><br>
 <hr style="width:50%;height:2px">
@@ -520,39 +380,39 @@ Sura SA, Smith LL, Ambrose MR, Amorim CEG, Beichman AC, Gomez ACR, Juhn M, Kandl
 
 2018
 <br>
-<b>Mooney JA</b><SUP>&</SUP>, Huber CD<SUP>&</SUP>, Service S, Sul JH, Marsden CD, Zhang Z, Sabatti C, Ruiz-Linares A, Bedoy G, Costa Rica/Colombia Consortium for Genetic Investigation 
+<b>Mooney JA</b><SUP>&</SUP>, Huber CD<SUP>&</SUP>, Service S, Sul JH, Marsden CD, Zhang Z, Sabatti C, Ruiz-Linares A, Bedoy G, Costa Rica/Colombia Consortium for Genetic Investigation
 of Bipolar Endophenotypes, Freimer N, Lohmueller KE. <span style="text-decoration:underline">Understanding the hidden complexity of Latin American population isolates</span>.Am J Hum Genet. 2018 Nov 1;103(5):707-726. doi: 10.1016/j.ajhg.2018.09.013. Epub 2018 Oct 25. PMID: 30401458; PMCID: PMC6218714. <SUP>&</SUP> indicates co-first authorship
 <br><br>
 <hr style="width:50%;height:2px">
 <br>
 
-</DIV>
+</section>
 
-<DIV id="people">
+<section id="people" class="page">
 <h2>The Team</h2>
 <hr>
 <br>
 <img src = "DrJmooney.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Jazlyn Mooney (she/her)</h3> Principal Investigator (<a href="mailto:jazlynmo@usc.edu" target="_blank">jazlynmo@usc.edu</a>)
 <br><br>
-Jazlyn is a Gabilan Assistant Professor in the Quantitative and Computational Biology (QCB) Department within the Dornsife College of Letters, Arts and Sciences at USC. 
+Jazlyn is a Gabilan Assistant Professor in the Quantitative and Computational Biology (QCB) Department within the Dornsife College of Letters, Arts and Sciences at USC.
 Her research combines computational approaches with population genetics theory to better understand genetic variation, medical genetics, and human evolution.
 <a href="Mooney_CV_November2024.pdf" target="_blank">Jazlyn's CV</a>
 <br><br>
-Jazlyn completed her undergraduate degree at the University of New Mexico where she studied human evolution with Jeffrey Long in the department of 
-<a href="https://anthropology.unm.edu/research/areas/evolutionary-anthropology.html" target="_blank">Anthropology</a>. She completed her 
-PhD in <a href="https://medschool.ucla.edu/human-genetics/genetics-and-genomics" target="_blank">Human Genetics</a> at UCLA in 2020 under the advisement of Kirk Lohmueller. 
-At UCLA, Jazlyn studied genetic variation in admixed populations, complex traits in dogs, and conservation genomics. Afterward, she moved to Stanford’s 
-<a href="https://biology.stanford.edu/research/research-areas/computational-biology" target="_blank">Biology</a> department for postdoctoral research with Noah Rosenberg; 
+Jazlyn completed her undergraduate degree at the University of New Mexico where she studied human evolution with Jeffrey Long in the department of
+<a href="https://anthropology.unm.edu/research/areas/evolutionary-anthropology.html" target="_blank">Anthropology</a>. She completed her
+PhD in <a href="https://medschool.ucla.edu/human-genetics/genetics-and-genomics" target="_blank">Human Genetics</a> at UCLA in 2020 under the advisement of Kirk Lohmueller.
+At UCLA, Jazlyn studied genetic variation in admixed populations, complex traits in dogs, and conservation genomics. Afterward, she moved to Stanford’s
+<a href="https://biology.stanford.edu/research/research-areas/computational-biology" target="_blank">Biology</a> department for postdoctoral research with Noah Rosenberg;
 where she continued to study admixed populations with a focus on inference method development.
 <br><br>
 Fun fact from Jazlyn: When I am not in lab, I enjoy record collecting and going to concerts.
 <br><br>
 	<hr>
-	
+
 <img src = "Shirin.jpeg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Shirin Nataneli (she/her/hers)</h3> Graduate student<br><br>
-Shirin is a graduate student in the Computational Biology and Bioinformatics program and is broadly interested population genetics and evolution. 
+Shirin is a graduate student in the Computational Biology and Bioinformatics program and is broadly interested population genetics and evolution.
 Currently, she is exploring how we can better model complex admixture scenarios to infer demography in humans and populations of conservation concern.
 <br><br>
 Fun fact from Shirin: I've collected snow globes from every place I've traveled and my favorite animal is a sheep.
@@ -560,7 +420,7 @@ Fun fact from Shirin: I've collected snow globes from every place I've traveled 
 
 <img src = "AydinK.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Aydin Loid Karatas (he/him/his)</h3> Graduate student<br><br>
-Aydin is a graduate student in the Computational Biology and Bioinformatics program. 
+Aydin is a graduate student in the Computational Biology and Bioinformatics program.
 Aydin is excited about the intersection of modeling human disease and large scale simulation frameworks to model them. He is currently exploring how admixture affects the distribution of identity by descent segments and eventually the deleterious variation within them.
 <br><br>
 Fun fact from Aydin: I own (and use) several film cameras and older digicams.
@@ -568,7 +428,7 @@ Fun fact from Aydin: I own (and use) several film cameras and older digicams.
 
 <img src = "ShengmiaoH.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Shengmiao (Morgan) Huang (she/her/hers)</h3> Graduate student<br><br>
-Shengmiao is a graduate student in the Computational Biology and Bioinformatics program. She is interested in developing mathematical models for conservation biology. 
+Shengmiao is a graduate student in the Computational Biology and Bioinformatics program. She is interested in developing mathematical models for conservation biology.
 Currently, she is exploring how we can better quantify complex relatedness in small populations and developing software to infer relatedness in species of conservation concern.
 <br><br>
 Fun fact from Shengmiao: Water is my natural habitat. And I have the best cat in the world.
@@ -584,11 +444,11 @@ Fun fact from Tessa: In my free time I’m a competitive hip hop and open style 
 <br><br>
 
 	<hr>
-	
+
 <img src = "MattG.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Matthew Genchev</h3> Undergraduate student<br><br>
-Matthew is an undergraduate in the Quantitative Biology program with an interest in modeling recombination and demography in non-human populations. 
-Matthew is currently exploring recombination and demography in Canidae, specifically foxes. 
+Matthew is an undergraduate in the Quantitative Biology program with an interest in modeling recombination and demography in non-human populations.
+Matthew is currently exploring recombination and demography in Canidae, specifically foxes.
 Matthew is a <a href="https://undergrad.usc.edu/experience/research/undergrad_research/" target="_blank">Provost</a> Undergraduate Research Fellow. Previously he was a Summer Undergraduate Research Fellow <a href="https://dornsife.usc.edu/exl/surf-shure/" target="_blank"> (SURF) </a> and Undergraduate Research Associates Program <a href="https://academicprograms.usc.edu/services/undergraduate-research-and-experiential-learning/usc-undergraduate-research-associates-program/" target="_blank"> (URAP) </a> Fellow.
 <br><br>
 Fun fact from Matthew: I won $20 from a scratch off ticket one time.
@@ -596,26 +456,26 @@ Fun fact from Matthew: I won $20 from a scratch off ticket one time.
 
 <img src = "BrukT.jpeg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Bruk Tefera</h3> Undergraduate student<br><br>
-Bruk is an undergraduate in the Quantitative Biology program with an interest in bioinformatics and cancer genomics. 
+Bruk is an undergraduate in the Quantitative Biology program with an interest in bioinformatics and cancer genomics.
 He is currently studying abroad in Australia.
 <br><br>
 Fun fact from Bruk: I've worked more than 7 different jobs in my life-time so far.
 <br><br>
-	
+
 <img src = "Abo_Dominguez_Aiko.JPG" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Aiko Abo Domiguez</h3> Undergraduate student<br><br>
-Aiko is an undergraduate in the  Biological Sciences (Ecology, Evolution and Environment) program with an interest in marine biology, population genetics, and speciation. 
-She is co-advised with <a href="https://nhm.org/person/wetzer-regina#:~:text=Since%202003%20she%20has%20been,crustacean%20systematics%20and%20isopod%20phylogeny" target="_blank">Dr. Regina Wetzer</a> at LA NHM in the Marine Biodiversity Center. 
+Aiko is an undergraduate in the  Biological Sciences (Ecology, Evolution and Environment) program with an interest in marine biology, population genetics, and speciation.
+She is co-advised with <a href="https://nhm.org/person/wetzer-regina#:~:text=Since%202003%20she%20has%20been,crustacean%20systematics%20and%20isopod%20phylogeny" target="_blank">Dr. Regina Wetzer</a> at LA NHM in the Marine Biodiversity Center.
 Aiko is currently studying the Los Angeles population of Ligia, a marine isopod, and using macroevolutionary and population genetic analyses to compare the Los Angeles populations with other coastal populations. Aiko is in the lab as a Undergraduate Research Associates Program <a href="https://academicprograms.usc.edu/services/undergraduate-research-and-experiential-learning/usc-undergraduate-research-associates-program/" target="_blank"> (URAP) </a> Fellow.
 She is closing out her undergraduate degree as a recipient of both the NSF GRFP and Fulbright Research Award in Argentina!
 <br><br>
 Fun fact from Aiko: I pick up a new hobby every winter break- this year it was beading jewelry!
 <br><br>
-	
+
 <img src = "Sydney.png" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Sydney Bruce</h3> Undergraduate student<br><br>
-Sydney is an undergraduate in the Quantitative Biology program with an interest in population genetics and systems biology. 
-Currently, Sydney is working to create a recombination map for captive tigers in the U.S. and will be exploring the relationship between genetic diversity and the recombination landscape in tigers. 
+Sydney is an undergraduate in the Quantitative Biology program with an interest in population genetics and systems biology.
+Currently, Sydney is working to create a recombination map for captive tigers in the U.S. and will be exploring the relationship between genetic diversity and the recombination landscape in tigers.
 She was a <a href="https://wise.usc.edu/programs/grants-and-awards/undergraduate-students/undergraduate-research-experience/" target="_blank">WiSE</a> Undergraduate Fellow last Summer, and is now a Undergraduate Research Associates Program <a href="https://academicprograms.usc.edu/services/undergraduate-research-and-experiential-learning/usc-undergraduate-research-associates-program/" target="_blank"> (URAP) </a> Fellow.
 <br><br>
 Fun fact from Sydney: I work as an EMT during the summers!
@@ -625,9 +485,9 @@ Fun fact from Sydney: I work as an EMT during the summers!
 
 <img src = "Tina.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Tina Lasisi (she/her/hers)</h3> Former Postdoctoral Fellow <br><br>
-Dr. Tina Lasisi is now an Assistant Professor at the University of Michigan in the Anthropology department, and a former Postdoctoral Researcher in the Mooney and <a href="https://edgepopgen.github.io/edgelab/" target="_blank">Edge</a> labs. 
-Tina's background and interests fall within the realm of Biological Anthropology and complex trait genetics. Specifically, her research area includes understanding the evolution of human variation in 1) pigmentation and 2) scalp hair. 
-Tina is also active in science communication. Check out Tina's <a href="https://www.tinalasisi.com/" target="_blank">website</a> 
+Dr. Tina Lasisi is now an Assistant Professor at the University of Michigan in the Anthropology department, and a former Postdoctoral Researcher in the Mooney and <a href="https://edgepopgen.github.io/edgelab/" target="_blank">Edge</a> labs.
+Tina's background and interests fall within the realm of Biological Anthropology and complex trait genetics. Specifically, her research area includes understanding the evolution of human variation in 1) pigmentation and 2) scalp hair.
+Tina is also active in science communication. Check out Tina's <a href="https://www.tinalasisi.com/" target="_blank">website</a>
 and her amazing PBS mini-series <a href="https://www.youtube.com/playlist?list=PLnNZYWyBGJ1FNZ_ZcL_tJyV8li-lQj0ZA" target="_blank">Why Am I Like This?</a>.
 <br><br>
 Fun fact from Tina: I have a standard poodle.
@@ -635,36 +495,36 @@ Fun fact from Tina: I have a standard poodle.
 
 <img src = "MariaA.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Maria Akopyan (she/her/hers)</h3> Former Postdoctoral Fellow<br><br>
-Dr. <a href="https://www.makopyan.com/about.html" target="_blank">Maria</a> Akopyan completed her PhD at Cornell where she studied gene flow and adaptation in Atlantic silversides. Dr. Akopyan  holds an M.S., which she completed at CSUN, and studied variation in Red-eyed Tree frogs. While in our group, she was exploring how reference bias affects demographic inference in Canidae by using whole genome sequence data from Mainland foxes. She is a now an NSF PRFB postdoc in the Samuk and Armstrong labs at UCR and will be starting her own group at Rice in Fall 2026. 
+Dr. <a href="https://www.makopyan.com/about.html" target="_blank">Maria</a> Akopyan completed her PhD at Cornell where she studied gene flow and adaptation in Atlantic silversides. Dr. Akopyan  holds an M.S., which she completed at CSUN, and studied variation in Red-eyed Tree frogs. While in our group, she was exploring how reference bias affects demographic inference in Canidae by using whole genome sequence data from Mainland foxes. She is a now an NSF PRFB postdoc in the Samuk and Armstrong labs at UCR and will be starting her own group at Rice in Fall 2026.
 <br><br>
 Fun fact from Maria: I like to paint and dance!
 <br><br>
     <hr>
-	
+
 <img src = "Mengdi.JPG" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Mengdi (Kim) Chai</h3> Former Undergraduate student<br><br>
-Mengdi is an alumni of the Mooney Lab and graduated with honors from the Quantitative Biology undergraduate program. 
+Mengdi is an alumni of the Mooney Lab and graduated with honors from the Quantitative Biology undergraduate program.
 While in the lab, Mengdi was a <a href="https://wise.usc.edu/programs/grants-and-awards/undergraduate-students/undergraduate-research-experience/" target="_blank">WiSE</a> Undergraduate Fellow and used identity-by-descent segments to identify genes associated with coat color in tigers and tracking their ancestral origins.
 She recently completed her Master's Degree at Harvard in Computational Biology and Quantitative Genetics and will be working at Eli Lilly as a Marketing Management Trainee.
 <br><br>
 Fun fact from Kim: I have one hamster and he is cute! I decide to have two dogs, one cat, and two hamsters when I have my own apartment!
 <br><br>
-	
+
 <img src = "Anika.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Anika Shrivastava</h3> Former Undergraduate student<br><br>
 Anika was an undergraduate in the Quantitative Biology program and is interested in human genetics and disease. While in the lab, she worked on quantifying regions of the genome that harbor potential recessive lethal mutations by layering information from multiple types of genomic annotations.
-Anika was a <a href="https://undergrad.usc.edu/experience/research/undergrad_research/" target="_blank">Provost</a> Undergraduate Research Fellow, completed an internship at Expedia, and now works as a Software Engineer at Capital One. 
+Anika was a <a href="https://undergrad.usc.edu/experience/research/undergrad_research/" target="_blank">Provost</a> Undergraduate Research Fellow, completed an internship at Expedia, and now works as a Software Engineer at Capital One.
 <br><br>
 Fun fact from Anika: I have been playing the piano for 15 years and have a minor in musical studies at USC.
 <br><br>
-	
+
 <img src = "JulieLi.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>Chenyang (Julie) Li</h3> Former Undergraduate student<br><br>
-Julie was an undergraduate in Applied and Computational Mathematics & the Quantitative Biology program with an interest in conservation and disease. 
+Julie was an undergraduate in Applied and Computational Mathematics & the Quantitative Biology program with an interest in conservation and disease.
 She created the population assignment algorithm for <a href="https://github.com/ellieearmstrong/mPCRselect/" target="_blank">mPCRselect</a>, which allows users to construct informative marker panels in populations of conservation concern.
 She was a <a href="https://wise.usc.edu/programs/grants-and-awards/undergraduate-students/undergraduate-research-experience/" target="_blank">WiSE</a> Undergraduate Fellow,
 graduated with honors and received the USC <a href="https://ahf.usc.edu/commencement-honors/scholar-distinctions/discovery/" target="_blank">Discovery</a> Scholar Distinction.
-Julie now at Emory in their Population Biology, Ecology, and Evolution PhD program. 
+Julie now at Emory in their Population Biology, Ecology, and Evolution PhD program.
 <br><br>
 Fun fact from Julie: I've never dyed my hair. My reddish/brown hair color is my natural hair color.
 <br><br>
@@ -680,7 +540,7 @@ Fun fact from Mahija: I love chocolate milk.
 <h3>Peyton Hall</h3> Former Undergraduate student<br><br>
 Peyton was an undergraduate in the Quantitative Biology program who was interested in pursuing medicine. While in the lab, she decided to branch out and continue our work on captive tigers. Peyton’s project layered information from multiple types of genomic annotations to explore whether there were differences in annotation distributions across ancestries. Peyton is now in medical school at Howard!
 <br><br>
-Fun fact from Peyton: I am volunteer birth doula.
+Fun fact from Peyton: I a am volunteer birth doula.
 <br><br>
 
 <img src = "JosephC.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
@@ -692,22 +552,22 @@ Fun fact from Joseph: In my free time I like to needle felt animals, write/read 
 
 <hr style="width:50%;height:2px">
 <br>
-	
-</DIV>
 
-<DIV id="teaching">
+</section>
+
+<section id="teaching" class="page">
 <h2>Classes Taught</h2>
 <hr>
 <br>
 <h3>HUMGEN 19: How Genetics has Contributed to Racial Injustice in America and the World </h3> Fall 2020<br><br>
-Fiat Lux seminar I co-taught with Dr. Nelson Freimer at UCLA. We used  a mixture of readings, presentations, and discussions to navigate the history of Genetics and its ties to Eugenics. 
+Fiat Lux seminar I co-taught with Dr. Nelson Freimer at UCLA. We used  a mixture of readings, presentations, and discussions to navigate the history of Genetics and its ties to Eugenics.
 <a href="SyllabusHumGen19_v1_noZoomLink.pdf" target="_blank">Syllabus</a>
 <br><br>
 <hr style="width:50%;height:2px">
 
 <h3>BIOL 870: Biology Colloquium </h3> Fall 2020 <br><br>
-Seminar based course I taught at SFSU. In this course students’ scientific curiosity was be piqued as they heard  and interacted with biologists from a range of subfields. 
-<a href="syllabus_nozoomLinks.pdf" target="_blank">Syllabus</a> 
+Seminar based course I taught at SFSU. In this course students’ scientific curiosity was be piqued as they heard  and interacted with biologists from a range of subfields.
+<a href="syllabus_nozoomLinks.pdf" target="_blank">Syllabus</a>
 <br><br>
 <hr style="width:50%;height:2px">
 
@@ -725,15 +585,15 @@ QBIO capstone course I co-teach with Dr. Doc Edge at USC. This is an upper-divis
 
 <img src = "QBIO115GFlyer.jpg" width = "30%" height = "30%" style="float:left;margin:5px 15px 5px 5px;">
 <h3>QBIO 115w: Ethics in Biology, Medicine, and Statistics  </h3> Spring 2024 & Spring 2025<br><br>
-Dornsife General Education (GE) course I created and teach at USC. Biology, medicine, and statistics have each made a large impact on understanding life sciences and human disease. This impact has been bolstered over the last 20 years with the integration of information from all three fields and the advancement of genetics and computation. However, these fields are also deeply rooted in 19th century eugenics. Unfortunately, these ties percolated into foundational scientific data and were used to establish biased public policies with rise of eugenics movement. This course will critically reflect on the origins of each field through a scientific perspective and explore modern research practices that offer hope for an equitable future. We will use a mixture of readings, presentations, and discussions to navigate these topics. 
+Dornsife General Education (GE) course I created and teach at USC. Biology, medicine, and statistics have each made a large impact on understanding life sciences and human disease. This impact has been bolstered over the last 20 years with the integration of information from all three fields and the advancement of genetics and computation. However, these fields are also deeply rooted in 19th century eugenics. Unfortunately, these ties percolated into foundational scientific data and were used to establish biased public policies with rise of eugenics movement. This course will critically reflect on the origins of each field through a scientific perspective and explore modern research practices that offer hope for an equitable future. We will use a mixture of readings, presentations, and discussions to navigate these topics.
 <a href="QBIO115_GE_Syllabus_Spring2024.pdf" target="_blank">Syllabus</a>
 <br><br>
 <hr style="width:50%;height:2px">
 <br>
-  
-</DIV>
-	
-<DIV id="outreach">
+
+</section>
+
+<section id="outreach" class="page">
 <h2>Outreach and Science Communication</h2>
 <hr>
 <br>
@@ -783,30 +643,30 @@ I got the opportunity to join a panel discussion about Dire Wolves for NHM’s n
 <hr style="width:50%;height:2px">
 <br>
 
-</DIV>
+</section>
 
-<DIV id="news">
+<section id="news" class="page">
 <h2>Lab in the news</h2>
 <hr>
 
 <br>
-<h3>Reference genome choice compromises population genetic analyses</h3> News about our work on using non-species matched reference genomes led by former postdoc <a href="https://www.makopyan.com/" target="_blank">Dr. Maria Akopyan</a>. 
+<h3>Reference genome choice compromises population genetic analyses</h3> News about our work on using non-species matched reference genomes led by former postdoc <a href="https://www.makopyan.com/" target="_blank">Dr. Maria Akopyan</a>.
 <br><br>
 <br>
 Want to save an endangered species? Start with the right <a href="https://dornsife.usc.edu/news/stories/genomic-reference-dna-affects-genetic-research-results/" target="_blank">DNA blueprint</a>
-<br> 
+<br>
 <br><br>
 <hr style="width:50%;height:2px">
 
 <br>
-<h3>Unraveling the genomic diversity and admixture history of captive tigers in the United States</h3> News about our work on Tigers with <a href="https://www.armstrong-lab.com/" target="_blank">Dr. Ellie Armstrong</a>. 
+<h3>Unraveling the genomic diversity and admixture history of captive tigers in the United States</h3> News about our work on Tigers with <a href="https://www.armstrong-lab.com/" target="_blank">Dr. Ellie Armstrong</a>.
 <br><br>
 <br>
 DNA Reveals the Origin Stories of America's <a href="https://www.nytimes.com/2024/10/04/science/captive-tiger-dna.html" target="_blank">Captive Tigers</a>
-<br> 
-The genetic secrets of the United States’s <a href="https://www.science.org/content/article/genetic-secrets-united-states-s-privately-owned-tigers" target="_blank">privately owned tigers</a> 
 <br>
-How captive tigers can help the wild ones: <a href="https://today.usc.edu/how-captive-tigers-can-help-the-wild-ones-qa-with-uscs-jazlyn-mooney/" target="_blank">Q&A with USC’s Jazlyn Mooney</a> 
+The genetic secrets of the United States’s <a href="https://www.science.org/content/article/genetic-secrets-united-states-s-privately-owned-tigers" target="_blank">privately owned tigers</a>
+<br>
+How captive tigers can help the wild ones: <a href="https://today.usc.edu/how-captive-tigers-can-help-the-wild-ones-qa-with-uscs-jazlyn-mooney/" target="_blank">Q&A with USC’s Jazlyn Mooney</a>
 <br>
 <br><br>
 <hr style="width:50%;height:2px">
@@ -831,8 +691,10 @@ Breaking down the ‘brick wall’ of <a href="https://dailytrojan.com/2024/02/1
 <hr style="width:50%;height:2px">
 <br>
 
+</section>
+
 </DIV>
-	
+
 </BODY>
 
 </HTML>
