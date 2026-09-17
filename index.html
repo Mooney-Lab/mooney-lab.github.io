@@ -245,40 +245,102 @@
     margin-bottom: 8px;
   }
 
+  /* ── Hamburger button (mobile only) ── */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 200;
+    background: #990000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+
   /* ── Responsive ── */
   @media (max-width: 700px) {
+    .menu-toggle {
+      display: flex;
+    }
+
     .sidebar {
-      position: static;
-      width: 100%;
-      height: auto;
-      flex-direction: row;
-      flex-wrap: wrap;
-      border-right: none;
-      border-bottom: 1px solid #eee;
-      padding: 16px;
+      position: fixed;
+      top: 0;
+      left: -240px;
+      width: 220px;
+      height: 100vh;
+      overflow-y: auto;
+      transition: left 0.25s ease;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+      z-index: 150;
+      padding-top: 64px;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 140;
+    }
+
+    .overlay.open {
+      display: block;
     }
 
     .main {
       margin-left: 0;
-      padding: 24px 20px;
+      padding: 72px 18px 40px;
+      max-width: 100%;
     }
 
-    .sidebar-logo { display: none; }
+    .person {
+      flex-direction: column;
+    }
+
+    .person img {
+      width: 100%;
+      height: auto;
+    }
 
     .research-img {
       float: none;
       width: 100%;
       margin: 0 0 16px;
     }
+
+    .video-block {
+      flex-direction: column;
+    }
+
+    .video-block iframe {
+      max-width: 100%;
+      height: 200px;
+    }
   }
 </style>
 </head>
 <body>
 
+<button class="menu-toggle" onclick="toggleMenu()" aria-label="Open navigation">☰</button>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
 <div class="shell">
 
   <!-- ── Sidebar ── -->
-  <nav class="sidebar" aria-label="Site navigation">
+  <nav class="sidebar" id="sidebar" aria-label="Site navigation">
     <div class="sidebar-logo">
       <video width="60" autoplay muted loop playsinline aria-hidden="true">
         <source src="MooneyLabLogo_Shirin.mp4" type="video/mp4">
@@ -831,7 +893,7 @@
       <hr class="divider">
 
       <h3>On the number of genealogical ancestors tracing to the source groups of an admixed population</h3>
-      <p>News about our work on uncovering lost ancestors of African Americans.</p>
+      <p>News about our work on uncovering lost ancestors of African Americans with <a href="https://rosenberglab.stanford.edu/noahbriefbio.html/" target="_blank">Dr. Noah Rosenberg</a>.</p>.</p>
       <ul class="news-links">
         <li><a href="https://humsci.stanford.edu/feature/mathematical-model-calculates-probability-shared-ancestors-african-americans" target="_blank">Mathematical model calculates probability of shared ancestors for African Americans</a> — <em>Stanford H&amp;S</em></li>
         <li><a href="https://www.axios.com/2023/07/27/study-sheds-light-black-americans-ancestry" target="_blank">Study sheds light on Black Americans' ancestral links</a> — <em>Axios</em></li>
@@ -855,6 +917,19 @@ function showSection(id) {
   }
   document.getElementById(id).classList.add("active");
   window.scrollTo(0, 0);
+  closeMenu();
+}
+
+function toggleMenu() {
+  var sidebar = document.getElementById("sidebar");
+  var overlay = document.getElementById("overlay");
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("open");
+}
+
+function closeMenu() {
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("overlay").classList.remove("open");
 }
 </script>
 
