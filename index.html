@@ -172,8 +172,19 @@
   }
 
   /* ── Publications ── */
-  .pub-year {
-    font-size: 15px;
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    vertical-align: super;
+    line-height: 1.3;
+    letter-spacing: 0.03em;
+  }
+  .badge-gr { background: #990000; color: #fff; }
+  .badge-ug { background: #FFCC00; color: #1a1a1a; }
+  .badge-pd { background: #2a5fa5; color: #fff; }
     font-weight: 700;
     color: #990000;
     margin: 24px 0 12px;
@@ -387,7 +398,7 @@
 
       <p>For the last decade, population genetics has rapidly accelerated to new heights with the availability of sequence data. These data sets have provided valuable insights about population history, phenotypes, disease architecture, evolution, and genomic diversity.</p>
 
-      <img class="research-img" src="LAIsoROH.jpg" alt="Local ancestry and runs of homozygosity diagram">
+      <img class="research-img" src="Figure5_MooneyGENETICS.pdf" alt="Geneaological ancestors">
 
       <p>Broadly, our lab uses empirical data analysis, simulation frameworks, and methods development to: (1) infer demography, (2) understand the fitness impact of recessive variation, and (3) investigate complex trait architecture.</p>
 
@@ -460,20 +471,25 @@
       <h2>Our Publications</h2>
       <hr class="rule">
 
-      <p style="font-size:14px;color:#555;"><sup>&amp;</sup> indicates co-first authorship &nbsp;·&nbsp; <sup>+</sup> indicates co-corresponding authorship</p>
+      <p style="font-size:14px;color:#555;">
+        <sup>&amp;</sup> co-first authorship &nbsp;·&nbsp; <sup>+</sup> co-corresponding authorship<br>
+        <span class="badge badge-gr">GR</span> graduate student &nbsp;·&nbsp;
+        <span class="badge badge-ug">UG</span> undergraduate &nbsp;·&nbsp;
+        <span class="badge badge-pd">PD</span> postdoctoral fellow &nbsp;·&nbsp; (at time of publication)
+      </p>
 
       <div class="pub-year">2026</div>
 
       <div class="pub-entry">
-        Sweetalana<sup>&amp;</sup>, <strong>Nataneli S</strong><sup>&amp;</sup>, <strong>Huang S</strong>, <strong>Mooney JA</strong><sup>+</sup>, Szpiech ZA<sup>+</sup>. <span class="pub-title">Genotypic and phenotypic consequences of domestication in dogs</span>. <em>G3 (Bethesda)</em>. 2026 Sep 2;16(9):jkag195. doi: 10.1093/g3journal/jkag195.
+        Sweetalana<sup>&amp;</sup>, <strong>Nataneli S</strong><span class="badge badge-gr">GR</span><sup>&amp;</sup>, <strong>Huang S</strong><span class="badge badge-gr">GR</span>, <strong>Mooney JA</strong><sup>+</sup>, Szpiech ZA<sup>+</sup>. <span class="pub-title">Genotypic and phenotypic consequences of domestication in dogs</span>. <em>G3 (Bethesda)</em>. 2026 Sep 2;16(9):jkag195. doi: 10.1093/g3journal/jkag195.
       </div>
 
       <div class="pub-entry">
-        Oleksyk TK, Wolfsberger WW, Chhugani K, et al., <strong>Mooney JA</strong>, et al. <span class="pub-title">Challenges and recommendations in establishing national human diversity genomic projects</span>. <em>Nat Methods</em>. 2026 Jul;23(7):1261–1266. doi: 10.1038/s41592-026-03131-9.
+        Oleksyk TK, Wolfsberger WW, Chhugani K, ..., <strong>Mooney JA</strong>, et al. <span class="pub-title">Challenges and recommendations in establishing national human diversity genomic projects</span>. <em>Nat Methods</em>. 2026 Jul;23(7):1261–1266. doi: 10.1038/s41592-026-03131-9.
       </div>
 
       <div class="pub-entry">
-        <strong>Nataneli S</strong>, <strong>Karatas AL</strong>, <strong>Ferrari T</strong>, Patel RA, <strong>Mooney JA</strong>. <span class="pub-title">Analytical expectations for ancestry junction accumulation in admixed genomes</span>. <em>Genetics</em>. 2026 Jun 3;233(2):iyag062. doi: 10.1093/genetics/iyag062.
+        <strong>Nataneli S</strong><span class="badge badge-gr">GR</span>, <strong>Karatas AL</strong><span class="badge badge-gr">GR</span>, <strong>Ferrari T</strong><span class="badge badge-gr">GR</span>, Patel RA, <strong>Mooney JA</strong>. <span class="pub-title">Analytical expectations for ancestry junction accumulation in admixed genomes</span>. <em>Genetics</em>. 2026 Jun 3;233(2):iyag062. doi: 10.1093/genetics/iyag062.
       </div>
 
       <div class="pub-entry">
@@ -484,15 +500,15 @@
       <div class="pub-year">2025</div>
 
       <div class="pub-entry">
-        <strong>Akopyan M</strong>, <strong>Genchev M</strong>, Armstrong EE, <strong>Mooney JA</strong>. <span class="pub-title">Reference genome choice compromises population genetic analyses</span>. <em>Cell</em>. 2025 Nov 26;188(24):6939–6952.e11. doi: 10.1016/j.cell.2025.08.034. <a href="AkopyanEtal2025_RefBias_Cell.pdf" target="_blank">PDF</a>
+        <strong>Akopyan M</strong><span class="badge badge-pd">PD</span>, <strong>Genchev M</strong><span class="badge badge-ug">UG</span>, Armstrong EE, <strong>Mooney JA</strong>. <span class="pub-title">Reference genome choice compromises population genetic analyses</span>. <em>Cell</em>. 2025 Nov 26;188(24):6939–6952.e11. doi: 10.1016/j.cell.2025.08.034. <a href="AkopyanEtal2025_RefBias_Cell.pdf" target="_blank">PDF</a>
       </div>
 
       <div class="pub-entry">
-        Sherman CA<sup>&amp;</sup>, <strong>Nataneli S</strong><sup>&amp;</sup>, Claw KG, <strong>Mooney JA</strong>. <span class="pub-title">Echoes of eugenics: confronting its effects in indigenous genomics</span>. <em>Genetics</em>. 2025 Oct 8;231(2):iyaf127. doi: 10.1093/genetics/iyaf127.
+        Sherman CA<sup>&amp;</sup>, <strong>Nataneli S</strong><span class="badge badge-gr">GR</span><sup>&amp;</sup>, Claw KG, <strong>Mooney JA</strong>. <span class="pub-title">Echoes of eugenics: confronting its effects in indigenous genomics</span>. <em>Genetics</em>. 2025 Oct 8;231(2):iyaf127. doi: 10.1093/genetics/iyaf127.
       </div>
 
       <div class="pub-entry">
-        <strong>Ferrari T</strong>, Feng S, Zhang X<sup>+</sup>, <strong>Mooney J</strong><sup>+</sup>. <span class="pub-title">Parameter scaling in population genetics simulations may introduce unintended background selection: considerations for scaled simulation design</span>. <em>Genome Biol Evol</em>. 2025 May 30;17(6):evaf097. doi: 10.1093/gbe/evaf097.
+        <strong>Ferrari T</strong><span class="badge badge-gr">GR</span>, Feng S, Zhang X<sup>+</sup>, <strong>Mooney J</strong><sup>+</sup>. <span class="pub-title">Parameter scaling in population genetics simulations may introduce unintended background selection: considerations for scaled simulation design</span>. <em>Genome Biol Evol</em>. 2025 May 30;17(6):evaf097. doi: 10.1093/gbe/evaf097.
       </div>
 
       <hr class="divider">
@@ -503,7 +519,7 @@
       </div>
 
       <div class="pub-entry">
-        Armstrong EE<sup>&amp;</sup>, <strong>Li C</strong><sup>&amp;</sup>, Campana MG, <strong>Ferrari T</strong>, et al., <strong>Mooney JA</strong>. <span class="pub-title">A pipeline and recommendations for population and individual diagnostic SNP selection in non-model species</span>. <em>Mol Ecol Resour</em>. 2025 Apr;25(3):e14048. doi: 10.1111/1755-0998.14048.
+        Armstrong EE<sup>&amp;</sup>, <strong>Li C</strong><span class="badge badge-ug">UG</span><sup>&amp;</sup>, Campana MG, <strong>Ferrari T</strong><span class="badge badge-ug">UG</span>, et al., <strong>Mooney JA</strong>. <span class="pub-title">A pipeline and recommendations for population and individual diagnostic SNP selection in non-model species</span>. <em>Mol Ecol Resour</em>. 2025 Apr;25(3):e14048. doi: 10.1111/1755-0998.14048.
       </div>
 
       <div class="pub-entry">
@@ -643,7 +659,7 @@
 
       <hr class="divider">
 
-      <!-- Postbac -->
+      <!-- Postbac and Research Tech -->
       <h3 style="margin-top:0;">Postbac Researcher</h3>
 
       <div class="person">
@@ -893,7 +909,7 @@
       <hr class="divider">
 
       <h3>On the number of genealogical ancestors tracing to the source groups of an admixed population</h3>
-      <p>News about our work on uncovering lost ancestors of African Americans with <a href="https://rosenberglab.stanford.edu/noahbriefbio.html/" target="_blank">Dr. Noah Rosenberg</a>.</p>
+      <p>News about our work on uncovering lost ancestors of African Americans.</p>
       <ul class="news-links">
         <li><a href="https://humsci.stanford.edu/feature/mathematical-model-calculates-probability-shared-ancestors-african-americans" target="_blank">Mathematical model calculates probability of shared ancestors for African Americans</a> — <em>Stanford H&amp;S</em></li>
         <li><a href="https://www.axios.com/2023/07/27/study-sheds-light-black-americans-ancestry" target="_blank">Study sheds light on Black Americans' ancestral links</a> — <em>Axios</em></li>
