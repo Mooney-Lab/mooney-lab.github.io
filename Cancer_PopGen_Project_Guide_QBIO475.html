@@ -157,7 +157,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
 <div class="hero">
   <div class="hero-label">QBIO 475 · Statistical and Evolutionary Genetics · Fall 2026</div>
   <h1>Cancer PopGen<br>Project Guide</h1>
-  <p>A reference for navigating the data pipeline — from the GWAS Catalog through allele frequency computation, F<sub>ST</sub>, nucleotide diversity, and your final figures. The code is yours to write; this guide explains what each step needs to accomplish and what to watch out for along the way.</p>
+  <p>A reference for navigating the data pipeline — from the GWAS Catalog through allele frequency computation, F<sub>ST</sub>, Watterson's θ, and expected heterozygosity. The code is yours to write; this guide explains what each step needs to accomplish and what to watch out for along the way.</p>
   <div class="pill-row">
     <span class="pill">R / Rmd</span>
     <span class="pill">Python</span>
@@ -187,7 +187,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
     <div class="pipe-item active">
       <span class="pipe-num">STEP 2</span>
       <span class="pipe-label">snp151 lookup</span>
-      <span class="pipe-sub">rsID → CHR + POS (chromEnd)</span>
+      <span class="pipe-sub">rsID → CHR + posEnd (1-based)</span>
     </div>
     <div class="pipe-item active">
       <span class="pipe-num">STEP 3</span>
@@ -196,8 +196,8 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
     </div>
     <div class="pipe-item active">
       <span class="pipe-num">STEP 4</span>
-      <span class="pipe-label">F<sub>ST</sub> + π</span>
-      <span class="pipe-sub">Pairwise divergence + diversity</span>
+      <span class="pipe-label">F<sub>ST</sub> + θ + H<sub>e</sub></span>
+      <span class="pipe-sub">Divergence + diversity</span>
     </div>
     <div class="pipe-item active">
       <span class="pipe-num">STEP 5</span>
@@ -245,17 +245,32 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
   <div class="box watch"><span class="box-icon">⚠️</span><p><strong>CHR_ID needs cleaning.</strong> The chromosome column can contain non-numeric entries: "X", "Y", "MT", combined values like "1;2", or entries with extra characters. The frq.count files only cover autosomes 1–22 — filter to integer chromosome IDs only, then convert to integer type for sorting.</p></div>
 
   <h3>snp151.txt.gz (UCSC hg38 dbSNP)</h3>
-  <p>No header. Tab-separated. Large (~7 GB compressed). The columns you need — by zero-based index:</p>
+  <p><strong>No header row. Tab-separated. Large (~7 GB compressed.</strong>) The columns are at fixed zero-based positions. When you write your output file you will need to <strong>assign your own column names</strong> — we suggest the names below so they are easier to work with downstream. Only five columns matter for this project:</p>
   <div class="file-block">
-<span class="dim">col[0]  col[1]   col[2]      col[3]      col[4]          col[5] ...  col[9]</span>
-<span class="dim">bin     chrom    chromStart  chromEnd    name            score  ...  observed</span>
-<span class="dim">585</span>     <span class="hi">chr1</span>     <span class="dim">10019</span>       <span class="grn">10020</span>       <span class="grn">rs775809821</span>     <span class="dim">0      ...  A/C</span>
-<span class="dim">585</span>     <span class="hi">chr1</span>     <span class="dim">10037</span>       <span class="grn">10038</span>       <span class="grn">rs978760828</span>     <span class="dim">0      ...  A/C</span>
-<span class="dim">585</span>     <span class="hi">chr1</span>     <span class="dim">10041</span>       <span class="grn">10042</span>       <span class="grn">rs1008829651</span>    <span class="dim">0      ...  A/T</span>
-<span class="dim">...     ...      ...         ...         ...             ...    ...  ...</span>
+<span class="dim"># Raw file — NO header. Columns shown with zero-based index:</span>
+
+<span class="dim">col[0]</span>  bin       <span class="dim">→  internal UCSC bin (ignore)</span>
+<span class="hi">col[1]</span>  chrom     <span class="dim">→  chromosome with "chr" prefix, e.g.</span> <span class="grn">chr1</span>
+<span class="dim">col[2]</span>  posStart  <span class="dim">→  0-based start (ignore — do NOT use for joining)</span>
+<span class="grn">col[3]</span>  posEnd    <span class="dim">→  1-based end position — THIS is what matches frq.count POS</span>
+<span class="grn">col[4]</span>  rsID      <span class="dim">→  SNP name, e.g.</span> <span class="grn">rs775809821</span>
+<span class="dim">col[5]</span>  score     <span class="dim">→  ignore</span>
+  <span class="dim">...   (columns 6–8 ignored)</span>
+<span class="dim">col[9]</span>  alleles   <span class="dim">→  observed alleles, e.g.</span> <span class="grn">A/C</span>
+
+<span class="dim"># Example data rows:</span>
+<span class="dim">585</span>  <span class="hi">chr1</span>  <span class="dim">10019</span>  <span class="grn">10020</span>  <span class="grn">rs775809821</span>   <span class="dim">0  ...  A/C</span>
+<span class="dim">585</span>  <span class="hi">chr1</span>  <span class="dim">10037</span>  <span class="grn">10038</span>  <span class="grn">rs978760828</span>   <span class="dim">0  ...  A/C</span>
+<span class="dim">585</span>  <span class="hi">chr1</span>  <span class="dim">10041</span>  <span class="grn">10042</span>  <span class="grn">rs1008829651</span>  <span class="dim">0  ...  A/T</span>
+<span class="dim">...  ...   ...    ...    ...            ...  ...  ...</span>
+
+<span class="dim"># When you write your output, assign these column names:</span>
+<span class="hdr">rsID          chr    posStart  posEnd  alleles</span>
+<span class="grn">rs775809821</span>   <span class="hi">chr1</span>   <span class="dim">10019</span>     <span class="grn">10020</span>   <span class="grn">A/C</span>
+<span class="grn">rs978760828</span>   <span class="hi">chr1</span>   <span class="dim">10037</span>     <span class="grn">10038</span>   <span class="grn">A/C</span>
   </div>
 
-  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Use <code>chromEnd</code> (col[3]), not <code>chromStart</code> (col[2]).</strong> The frq.count files use 1-based positions that match <code>chromEnd</code>. If you join on <code>chromStart</code> you will lose the vast majority of your matches. The rsID lives at <code>col[4]</code> (the <em>name</em> field). The chromosome uses a "chr" prefix (e.g., <code>chr1</code>) — strip this when joining to frq.count files, which use bare integers.</p></div>
+  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Use <code>posEnd</code> (col[3]), not <code>posStart</code> (col[2]).</strong> The frq.count files record SNP positions as 1-based coordinates that match <code>posEnd</code>. If you join on <code>posStart</code> you will lose the vast majority of your matches — <code>posStart</code> is 0-based and off by one. The chromosome column uses a "chr" prefix (e.g., <code>chr1</code>) — strip this when joining to frq.count files, which use bare integers.</p></div>
 
   <h3>*.frq.count files (1000 Genomes allele counts)</h3>
   <p>One file per super-population × chromosome (e.g., <code>AFR_chr6.frq.count</code>). Tab-separated with a header row. The last two columns encode allele-count pairs.</p>
@@ -272,7 +287,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
       <thead><tr><th>Column</th><th>Meaning</th><th>How you use it</th></tr></thead>
       <tbody>
         <tr><td><code>CHROM</code></td><td>Chromosome number (integer, no "chr" prefix)</td><td>Filter to your focal chromosome</td></tr>
-        <tr><td><code>POS</code></td><td>Position (1-based) — matches <code>chromEnd</code> from snp151</td><td>Join key to your coordinate table</td></tr>
+        <tr><td><code>POS</code></td><td>Position (1-based) — matches <code>posEnd</code> from snp151 (col[3])</td><td>Join key to your coordinate table</td></tr>
         <tr><td><code>N_CHR</code></td><td>Total chromosomes sampled in this population</td><td>Denominator for all frequency calculations</td></tr>
         <tr><td><code>{ALLELE:COUNT}</code></td><td>Space-separated allele:count pairs (e.g., <code>T:1285 C:1</code>)</td><td>Split on ":" to get allele identity and count</td></tr>
       </tbody>
@@ -341,7 +356,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
   <div class="sec-label">Step 02 · Python (recommended)</div>
   <h2>Map rsIDs to Genomic Coordinates</h2>
 
-  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> For every rsID from Step 1, retrieve its chromosome and 1-based position (chromEnd) from snp151.txt.gz. Output a table with columns: rsID, chr, start, end, alleles. This table bridges the GWAS rsIDs to the positions used in the allele count files.</p></div>
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> For every rsID from Step 1, retrieve its chromosome and 1-based position (<code>posEnd</code>, col[3]) from snp151.txt.gz. Output a table with your own header row — columns: <code>rsID, chr, posStart, posEnd, alleles</code>. This table bridges the GWAS rsIDs to the positions used in the allele count files.</p></div>
 
   <div class="step">
     <div class="step-n">2a</div>
@@ -357,7 +372,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
     <div class="step-n">2b</div>
     <div class="step-body">
       <div class="step-title">Filter back to your focal chromosome in R</div>
-      <p>Load the output from 2a into R. Filter to rows where the chromosome matches your focal chromosome (remember snp151 uses the <code>chr6</code> format — strip the prefix when needed). Remove any duplicate rsID entries, keeping one row per rsID. The <code>end</code> column (chromEnd) is the position you will join against <code>POS</code> in the frq.count files.</p>
+      <p>Load the output from 2a into R. Filter to rows where the chromosome matches your focal chromosome (remember snp151 uses the <code>chr6</code> format — strip the prefix when needed). Remove any duplicate rsID entries, keeping one row per rsID. The <code>posEnd</code> column is the 1-based position you will join against <code>POS</code> in the frq.count files.</p>
     </div>
   </div>
 </div>
@@ -367,14 +382,14 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
   <div class="sec-label">Step 03 · R</div>
   <h2>Compute Allele Frequencies</h2>
 
-  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> For each of the five super-populations, parse the frq.count file for your focal chromosome, join to your coordinate table on <code>POS == chromEnd</code>, compute per-allele frequencies and MAF, and identify which frequency corresponds to the GWAS risk allele. Then sample 1,000 random background SNPs per population for comparison.</p></div>
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> For each of the five super-populations, parse the frq.count file for your focal chromosome, join to your coordinate table on <code>POS == posEnd</code>, compute per-allele frequencies and MAF, and identify which frequency corresponds to the GWAS risk allele. Then sample 1,000 random background SNPs per population for comparison.</p></div>
 
   <div class="step">
     <div class="step-n">3a</div>
     <div class="step-body">
       <div class="step-title">Parse frq.count files and compute frequencies</div>
       <p>Write a single function that reads one frq.count file for one population. Inside it, skip the header, split the <code>ALLELE:COUNT</code> strings on ":" to get allele identity and raw count, then divide each count by <code>N_CHR</code> to get frequency. Compute MAF as the minimum of the two allele frequencies. Call this function in a loop over all five populations and stack the results.</p>
-      <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Join on POS == chromEnd.</strong> The frq.count POS column is 1-based and matches snp151's <code>chromEnd</code>. Join on this; joining on <code>chromStart</code> will lose most matches.</p></div>
+      <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Join on POS == posEnd.</strong> The frq.count POS column is 1-based and matches snp151's <code>posEnd</code> (col[3]). Join on this; joining on <code>posStart</code> (col[2]) will lose most matches because posStart is 0-based and off by one.</p></div>
     </div>
   </div>
 
@@ -400,9 +415,9 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
 <!-- ═══════════════════════════════════ STEP 4 -->
 <div class="section" id="step4">
   <div class="sec-label">Step 04 · R</div>
-  <h2>Compute F<sub>ST</sub> and Nucleotide Diversity (π)</h2>
+  <h2>Compute F<sub>ST</sub>, Watterson's θ, and Expected Heterozygosity</h2>
 
-  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> Quantify population differentiation using pairwise F<sub>ST</sub> across all ten pairs of super-populations, and quantify within-population genetic diversity using nucleotide diversity (π). Compute both statistics for associated SNPs and for your random background set.</p></div>
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> Quantify population differentiation using pairwise F<sub>ST</sub> across all ten super-population pairs. Then, using your site frequency spectrum data, compute two summaries of within-population diversity — Watterson's θ and expected heterozygosity (H<sub>e</sub>) — for both associated and random SNP sets. Compare these statistics across populations and between variant types.</p></div>
 
   <h3>Pairwise F<sub>ST</sub></h3>
   <p>F<sub>ST</sub> at a single biallelic site summarizes how much more different two populations are from each other than each is internally. Use the following estimator, where p<sub>1</sub> and p<sub>2</sub> are the ALT allele frequencies and n<sub>1</sub>, n<sub>2</sub> are the chromosome counts:</p>
@@ -417,16 +432,26 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
 
   <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Negative F<sub>ST</sub> values.</strong> The estimator can return small negative values due to sampling noise when within-population variance exceeds between-population variance. True F<sub>ST</sub> is bounded between 0 and 1. Floor negative values at 0, report in your Methods that you did this, and note how much the mean F<sub>ST</sub> changes before versus after flooring.</p></div>
 
-  <h3>Nucleotide Diversity (π)</h3>
-  <p>π estimates the average number of pairwise nucleotide differences per site within a population. For a biallelic site with allele frequencies p and q = (1−p) sampled from n chromosomes, the per-site estimate is:</p>
+  <h3>Watterson's θ (theta)</h3>
+  <p>Watterson's θ estimates the population-scaled mutation rate from the number of segregating sites. For a set of S segregating sites observed in a sample of n chromosomes:</p>
   <div class="formula">
-    π<sub>site</sub> = [n/(n−1)] · 2pq
+    a<sub>n</sub> = 1 + 1/2 + 1/3 + … + 1/(n−1)   &nbsp;&nbsp; (harmonic number)<br>
+    θ<sub>W</sub> = S / a<sub>n</sub>
   </div>
-  <p>The n/(n−1) factor is a finite-sample correction. Average π<sub>site</sub> across all sites in your set to get the mean nucleotide diversity for that SNP set and population.</p>
+  <p>θ<sub>W</sub> summarizes diversity in terms of how many variable sites you observe, normalized for sample size. A higher θ<sub>W</sub> means more polymorphic sites. Compute this separately for your associated SNP set and your random SNP set within each super-population. Because your SNP sets are pre-selected (not a random genomic window), interpret θ<sub>W</sub> as a relative measure comparing variant classes, not as an absolute population parameter.</p>
 
-  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Compute π for both associated and random SNPs, for all five super-populations.</strong> Compare: are associated variants more or less diverse within populations than random variants? Which super-population shows the highest π for cancer-associated SNPs?</p></div>
+  <div class="box tip"><span class="box-icon">💡</span><p><strong>S is just your count of SNPs in that set.</strong> Every site in your frq.count-matched set is by definition segregating (it has two alleles present). So S = number of sites in your set for that population. The tricky part is computing the harmonic number a<sub>n</sub> — you can do this in R with <code>sum(1/seq(1, n-1))</code> where n is <code>N_CHR</code> for that population.</p></div>
 
-  <div class="box tip"><span class="box-icon">💡</span><p>You can compute π using the frequency columns you already have from Step 3 — no new data needed. This is a population genetics summary statistic you learned in class (neutral theory, SFS lecture).</p></div>
+  <h3>Expected Heterozygosity (H<sub>e</sub>)</h3>
+  <p>Expected heterozygosity at a single biallelic site is the probability that two randomly drawn chromosomes carry different alleles. With allele frequencies p and q = (1−p):</p>
+  <div class="formula">
+    H<sub>e,site</sub> = 2pq = 2·p·(1−p)
+  </div>
+  <p>Average H<sub>e,site</sub> across all sites in your SNP set to get mean expected heterozygosity for that set and population. This is directly computable from the frequency columns you already have from Step 3. Unlike θ<sub>W</sub>, H<sub>e</sub> is sensitive to allele frequency — sites at intermediate frequency contribute most.</p>
+
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Compute both θ<sub>W</sub> and H<sub>e</sub> for associated and random SNPs in all five super-populations.</strong> Key comparisons to make: (1) Are associated variants more or less diverse than the random background within each population? (2) Do θ<sub>W</sub> and H<sub>e</sub> tell the same story, or do they diverge — and what would that divergence mean given how each statistic is calculated? (3) Which super-population shows the highest diversity for cancer-associated loci?</p></div>
+
+  <div class="box tip"><span class="box-icon">💡</span><p>θ<sub>W</sub> and H<sub>e</sub> are related but not identical. Both estimate diversity, but θ<sub>W</sub> depends only on how <em>many</em> sites are variable, while H<sub>e</sub> depends on how <em>common</em> each variant is. A SNP set dominated by rare variants will have a higher θ<sub>W</sub> relative to H<sub>e</sub>; a set enriched for intermediate-frequency variants will have the reverse. The contrast between them is itself informative about the shape of the SFS — and connects directly to what you saw in Figure 5.</p></div>
 </div>
 
 <!-- ═══════════════════════════════════ STEP 5 / FIGURES -->
@@ -849,68 +874,101 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
     <p class="fig-caption"><strong>Figure 5</strong> — Site frequency spectrum of cancer-associated variants across all five super-populations. Bar heights represent the proportion of associated SNPs in each 0.05-wide MAF interval.</p>
   </div>
 
-  <!-- NUCLEOTIDE DIVERSITY -->
-  <h3>Figure 6 — Nucleotide diversity (π) of associated vs. random variants</h3>
+  <!-- WATTERSON THETA + He -->
+  <h3>Figure 6 — Watterson's θ and expected heterozygosity (H<sub>e</sub>) of associated vs. random variants</h3>
   <div class="assign">📋 Assigned to: _______________ (required for all groups — 5 members)</div>
-  <p>Compute mean π for associated and random SNPs separately within each super-population. Show the results as a grouped bar chart, with populations on the x-axis and bars colored by variant type. Comment on: which super-population has the highest π for associated variants? Is π for associated variants higher or lower than the random background, and what might that suggest about the selection history or GWAS ascertainment of these loci?</p>
-
-  <div class="box tip"><span class="box-icon">💡</span><p><strong>Per-site π formula.</strong> For a biallelic site with allele frequencies p and q = (1−p) in a sample of n chromosomes:<br>π<sub>site</sub> = [n / (n−1)] × 2pq<br>Average this across all sites in your set. The n/(n−1) factor is a finite-sample correction that matters when n is small but is close to 1 for 1000 Genomes sample sizes (~1,000–1,400 chromosomes per super-pop).</p></div>
+  <p>Compute Watterson's θ<sub>W</sub> and mean expected heterozygosity (H<sub>e</sub>) for associated and random SNPs separately within each super-population. Display both statistics as grouped bar charts, either as two side-by-side panels or as a single faceted figure. Comment on: which population shows the highest diversity for cancer-associated loci? Do θ<sub>W</sub> and H<sub>e</sub> agree, or do they diverge — and what does divergence tell you about the allele frequency spectrum of your SNP sets?</p>
 
   <div class="fig-wrap">
-    <svg class="mock" viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
-      <rect width="700" height="240" fill="white"/>
-      <text x="350" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">Mean Nucleotide Diversity (π) by Super-Population</text>
-      <text x="350" y="36" text-anchor="middle" font-size="11" fill="#9a9890">[Your Name] — Associated vs Random SNPs</text>
+    <svg class="mock" viewBox="0 0 700 310" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
+      <rect width="700" height="310" fill="white"/>
+      <text x="350" y="18" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">Watterson's θ and Expected Heterozygosity (H&#x2091;) by Super-Population</text>
+      <text x="350" y="33" text-anchor="middle" font-size="11" fill="#9a9890">[Your Name] — Associated vs Random SNPs · two-panel layout</text>
+
+      <!-- PANEL A: Watterson's theta -->
+      <rect x="10" y="42" width="330" height="180" fill="#f7f6f2" stroke="#dddbd5"/>
+      <text x="175" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1916">A. Watterson's θ<tspan baseline-shift="sub" font-size="9">W</tspan></text>
+      <text x="175" y="69" text-anchor="middle" font-size="9" fill="#9a9890">based on number of segregating sites (S)</text>
       <!-- axes -->
-      <line x1="80" y1="55" x2="80" y2="185" stroke="#1a1916" stroke-width="1.5"/>
-      <line x1="80" y1="185" x2="660" y2="185" stroke="#1a1916" stroke-width="1.5"/>
+      <line x1="48" y1="75" x2="48" y2="195" stroke="#50504a" stroke-width="1"/>
+      <line x1="48" y1="195" x2="325" y2="195" stroke="#50504a" stroke-width="1"/>
+      <text x="28" y="130" text-anchor="middle" font-size="9" fill="#50504a" transform="rotate(-90,28,130)">θ&#x2082; (per site)</text>
       <!-- y ticks -->
-      <line x1="76" y1="185" x2="80" y2="185" stroke="#1a1916"/><text x="72" y="188" text-anchor="end" font-size="9" fill="#50504a">0.000</text>
-      <line x1="76" y1="152" x2="80" y2="152" stroke="#1a1916"/><text x="72" y="155" text-anchor="end" font-size="9" fill="#50504a">0.100</text>
-      <line x1="76" y1="118" x2="80" y2="118" stroke="#1a1916"/><text x="72" y="121" text-anchor="end" font-size="9" fill="#50504a">0.200</text>
-      <line x1="76" y1="85" x2="80" y2="85" stroke="#1a1916"/><text x="72" y="88" text-anchor="end" font-size="9" fill="#50504a">0.300</text>
-      <line x1="76" y1="55" x2="80" y2="55" stroke="#1a1916"/><text x="72" y="58" text-anchor="end" font-size="9" fill="#50504a">0.400</text>
-      <!-- y axis label -->
-      <text x="18" y="125" text-anchor="middle" font-size="11" fill="#50504a" transform="rotate(-90,18,125)">Mean π</text>
-      <!-- gridlines -->
-      <line x1="80" y1="152" x2="660" y2="152" stroke="#eeedea" stroke-width="1"/>
-      <line x1="80" y1="118" x2="660" y2="118" stroke="#eeedea" stroke-width="1"/>
-      <line x1="80" y1="85" x2="660" y2="85" stroke="#eeedea" stroke-width="1"/>
-
-      <!-- AFR: high π, assoc slightly lower than random -->
-      <rect x="100" y="90" width="35" height="95" fill="#D7263D" opacity=".8"/>
-      <rect x="140" y="75" width="35" height="110" fill="#3A86C8" opacity=".7"/>
-      <text x="157" y="200" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">AFR</text>
-
+      <text x="44" y="198" text-anchor="end" font-size="8" fill="#9a9890">0</text>
+      <line x1="45" y1="155" x2="48" y2="155" stroke="#9a9890"/><text x="44" y="158" text-anchor="end" font-size="8" fill="#9a9890">0.2</text>
+      <line x1="45" y1="115" x2="48" y2="115" stroke="#9a9890"/><text x="44" y="118" text-anchor="end" font-size="8" fill="#9a9890">0.4</text>
+      <line x1="45" y1="75" x2="48" y2="75" stroke="#9a9890"/><text x="44" y="78" text-anchor="end" font-size="8" fill="#9a9890">0.6</text>
+      <line x1="48" y1="155" x2="325" y2="155" stroke="#eeedea"/>
+      <line x1="48" y1="115" x2="325" y2="115" stroke="#eeedea"/>
+      <!-- AFR: assoc lower theta than random (GWAS biases toward common variants) -->
+      <rect x="57"  y="110" width="18" height="85" fill="#D7263D" opacity=".8"/>
+      <rect x="77"  y="92"  width="18" height="103" fill="#3A86C8" opacity=".7"/>
+      <text x="76" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">AFR</text>
       <!-- AMR -->
-      <rect x="220" y="112" width="35" height="73" fill="#D7263D" opacity=".8"/>
-      <rect x="260" y="103" width="35" height="82" fill="#3A86C8" opacity=".7"/>
-      <text x="277" y="200" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">AMR</text>
-
+      <rect x="110" y="125" width="18" height="70" fill="#D7263D" opacity=".8"/>
+      <rect x="130" y="112" width="18" height="83" fill="#3A86C8" opacity=".7"/>
+      <text x="129" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">AMR</text>
       <!-- EAS -->
-      <rect x="340" y="108" width="35" height="77" fill="#D7263D" opacity=".8"/>
-      <rect x="380" y="100" width="35" height="85" fill="#3A86C8" opacity=".7"/>
-      <text x="397" y="200" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">EAS</text>
-
+      <rect x="163" y="120" width="18" height="75" fill="#D7263D" opacity=".8"/>
+      <rect x="183" y="108" width="18" height="87" fill="#3A86C8" opacity=".7"/>
+      <text x="182" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">EAS</text>
       <!-- EUR -->
-      <rect x="460" y="120" width="35" height="65" fill="#D7263D" opacity=".8"/>
-      <rect x="500" y="114" width="35" height="71" fill="#3A86C8" opacity=".7"/>
-      <text x="517" y="200" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">EUR</text>
-
+      <rect x="216" y="132" width="18" height="63" fill="#D7263D" opacity=".8"/>
+      <rect x="236" y="122" width="18" height="73" fill="#3A86C8" opacity=".7"/>
+      <text x="235" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">EUR</text>
       <!-- SAS -->
-      <rect x="580" y="116" width="35" height="69" fill="#D7263D" opacity=".8"/>
-      <rect x="620" y="108" width="35" height="77" fill="#3A86C8" opacity=".7"/>
-      <text x="637" y="200" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">SAS</text>
+      <rect x="269" y="128" width="18" height="67" fill="#D7263D" opacity=".8"/>
+      <rect x="289" y="118" width="18" height="77" fill="#3A86C8" opacity=".7"/>
+      <text x="288" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">SAS</text>
+      <text x="175" y="222" text-anchor="middle" font-size="8.5" fill="#9a9890" font-style="italic">θ&#x2082; counts segregating sites — rare variants matter equally</text>
+
+      <!-- PANEL B: Expected Heterozygosity -->
+      <rect x="360" y="42" width="330" height="180" fill="#f7f6f2" stroke="#dddbd5"/>
+      <text x="525" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1916">B. Expected Heterozygosity H&#x2091;</text>
+      <text x="525" y="69" text-anchor="middle" font-size="9" fill="#9a9890">based on allele frequencies (H&#x2091; = 2pq per site)</text>
+      <!-- axes -->
+      <line x1="398" y1="75" x2="398" y2="195" stroke="#50504a" stroke-width="1"/>
+      <line x1="398" y1="195" x2="675" y2="195" stroke="#50504a" stroke-width="1"/>
+      <text x="378" y="130" text-anchor="middle" font-size="9" fill="#50504a" transform="rotate(-90,378,130)">Mean H&#x2091;</text>
+      <text x="394" y="198" text-anchor="end" font-size="8" fill="#9a9890">0</text>
+      <line x1="395" y1="155" x2="398" y2="155" stroke="#9a9890"/><text x="394" y="158" text-anchor="end" font-size="8" fill="#9a9890">0.1</text>
+      <line x1="395" y1="115" x2="398" y2="115" stroke="#9a9890"/><text x="394" y="118" text-anchor="end" font-size="8" fill="#9a9890">0.2</text>
+      <line x1="395" y1="75" x2="398" y2="75" stroke="#9a9890"/><text x="394" y="78" text-anchor="end" font-size="8" fill="#9a9890">0.3</text>
+      <line x1="398" y1="155" x2="675" y2="155" stroke="#eeedea"/>
+      <line x1="398" y1="115" x2="675" y2="115" stroke="#eeedea"/>
+      <!-- AFR: assoc HIGHER He than random — GWAS enriches intermediate freq variants -->
+      <rect x="407" y="103" width="18" height="92" fill="#D7263D" opacity=".8"/>
+      <rect x="427" y="122" width="18" height="73" fill="#3A86C8" opacity=".7"/>
+      <text x="426" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">AFR</text>
+      <!-- AMR -->
+      <rect x="460" y="108" width="18" height="87" fill="#D7263D" opacity=".8"/>
+      <rect x="480" y="128" width="18" height="67" fill="#3A86C8" opacity=".7"/>
+      <text x="479" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">AMR</text>
+      <!-- EAS -->
+      <rect x="513" y="110" width="18" height="85" fill="#D7263D" opacity=".8"/>
+      <rect x="533" y="130" width="18" height="65" fill="#3A86C8" opacity=".7"/>
+      <text x="532" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">EAS</text>
+      <!-- EUR -->
+      <rect x="566" y="105" width="18" height="90" fill="#D7263D" opacity=".8"/>
+      <rect x="586" y="132" width="18" height="63" fill="#3A86C8" opacity=".7"/>
+      <text x="585" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">EUR</text>
+      <!-- SAS -->
+      <rect x="619" y="108" width="18" height="87" fill="#D7263D" opacity=".8"/>
+      <rect x="639" y="130" width="18" height="65" fill="#3A86C8" opacity=".7"/>
+      <text x="638" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">SAS</text>
+      <text x="525" y="222" text-anchor="middle" font-size="8.5" fill="#9a9890" font-style="italic">H&#x2091; weights by frequency — GWAS variants are often intermediate-frequency</text>
 
       <!-- legend -->
-      <rect x="90" y="210" width="12" height="12" fill="#D7263D" opacity=".8"/>
-      <text x="106" y="221" font-size="11" fill="#50504a">Associated (GWAS)</text>
-      <rect x="230" y="210" width="12" height="12" fill="#3A86C8" opacity=".7"/>
-      <text x="246" y="221" font-size="11" fill="#50504a">Random (Null)</text>
+      <rect x="230" y="240" width="12" height="12" fill="#D7263D" opacity=".8"/>
+      <text x="246" y="251" font-size="11" fill="#50504a">Associated (GWAS)</text>
+      <rect x="390" y="240" width="12" height="12" fill="#3A86C8" opacity=".7"/>
+      <text x="406" y="251" font-size="11" fill="#50504a">Random (Null)</text>
 
-      <text x="350" y="237" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">AFR typically shows highest π genome-wide — does that hold for your cancer-associated loci?</text>
+      <text x="350" y="272" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">Key question: does the relationship between θ&#x2082; and H&#x2091; differ for associated vs random SNPs?</text>
+      <text x="350" y="286" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">If H&#x2091; is high relative to θ&#x2082; for GWAS SNPs, this reflects enrichment for intermediate-frequency variants</text>
+      <text x="350" y="300" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">— consistent with GWAS power being greatest for common alleles. Values above are illustrative only.</text>
     </svg>
-    <p class="fig-caption"><strong>Figure 6</strong> — Mean nucleotide diversity (π) for associated and random SNPs in each super-population. Values in the mockup are illustrative. The finite-sample correction [n/(n−1)] should be applied at each site before averaging.</p>
+    <p class="fig-caption"><strong>Figure 6</strong> — Panel A: Watterson's θ<sub>W</sub> for associated and random SNPs in each super-population. Panel B: Mean expected heterozygosity (H<sub>e</sub> = average 2pq) for the same sets. The contrasting patterns between the two panels reflect differences in the allele frequency spectrum — θ<sub>W</sub> is sensitive to rare variants while H<sub>e</sub> is maximized at intermediate frequency.</p>
   </div>
 
   <div class="box req"><span class="box-icon">📋</span><p><strong>Figure assignment summary.</strong> Each group member is responsible for at least one figure. Write your name in the subtitle or caption of every figure you produce. The grader uses this to assign individual scores for the Results section.</p></div>
@@ -951,7 +1009,8 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
     <li><strong>Allele frequency computation:</strong> how did you calculate MAF? Which allele frequency did you use for associated SNPs specifically?</li>
     <li><strong>Random SNP sampling:</strong> how many per population? What random seed? Why did you sample independently per population?</li>
     <li><strong>F<sub>ST</sub>:</strong> which estimator? How did you handle negative values?</li>
-    <li><strong>Nucleotide diversity (π):</strong> formula used, finite-sample correction, how values were averaged across sites</li>
+    <li><strong>Watterson's θ<sub>W</sub>:</strong> formula used (S / a<sub>n</sub>), how you computed the harmonic number a<sub>n</sub>, and what value of n (N_CHR) you used per population</li>
+    <li><strong>Expected heterozygosity (H<sub>e</sub>):</strong> formula (mean of 2pq across sites), which frequency columns you used</li>
     <li><strong>Software:</strong> R version, Python version, key packages (tidyverse, ggplot2, pheatmap, etc.)</li>
   </ul>
 
@@ -969,7 +1028,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
     <li>Are associated MAF distributions different from random? What does this say about GWAS statistical power and ascertainment?</li>
     <li>Are risk alleles more common in the GWAS discovery population (likely EUR)? Do they appear in non-discovery populations at similar frequencies?</li>
     <li>Do pairwise F<sub>ST</sub> values for associated SNPs differ from the genomic background? What does this imply about whether cancer risk is population-specific?</li>
-    <li>What do the π comparisons suggest about diversity at these loci — are they more or less variable than expected?</li>
+    <li>Do θ<sub>W</sub> and H<sub>e</sub> tell the same story for associated vs. random SNPs? If they diverge — for example, if H<sub>e</sub> is high relative to θ<sub>W</sub> for GWAS SNPs — what does that imply about allele frequency at cancer-associated loci?</li>
     <li><strong>Caution:</strong> allele frequency ≠ disease penetrance or risk. Do not overstate what frequency differences mean for individuals from different populations.</li>
     <li>End with 2–3 summary sentences of your key findings</li>
   </ul>
