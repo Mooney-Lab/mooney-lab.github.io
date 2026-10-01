@@ -602,124 +602,199 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
   <p>Compute pairwise F<sub>ST</sub> for all 10 population pairs across your associated SNPs. Show the distribution of per-SNP F<sub>ST</sub> values as boxplots (one box per pair) and summarize mean F<sub>ST</sub> as a symmetric heatmap. Comment on which pairs are most and least differentiated and whether any pattern reflects known demographic history.</p>
 
   <div class="fig-wrap">
-    <svg class="mock" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
-      <rect width="700" height="300" fill="white"/>
-      <text x="350" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">Pairwise F<tspan baseline-shift="sub" font-size="10">ST</tspan> — Associated Variants</text>
-      <text x="350" y="36" text-anchor="middle" font-size="11" fill="#9a9890">[Your Name] — [Cancer Type]</text>
+    <svg class="mock" viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
+      <rect width="820" height="360" fill="white"/>
 
-      <!-- Boxplot left side -->
-      <rect x="16" y="44" width="310" height="240" fill="#f7f6f2" stroke="#dddbd5"/>
-      <text x="171" y="58" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">Boxplot: per-SNP FST per pair</text>
-      <!-- Y axis ticks -->
-      <line x1="55" y1="65" x2="55" y2="270" stroke="#dddbd5" stroke-width="1"/>
-      <text x="52" y="70" text-anchor="end" font-size="8" fill="#9a9890">1.0</text>
-      <text x="52" y="168" text-anchor="end" font-size="8" fill="#9a9890">0.5</text>
-      <text x="52" y="270" text-anchor="end" font-size="8" fill="#9a9890">0.0</text>
-      <!-- boxes for 5 pairs shown -->
-      <!-- AFR-EAS high -->
-      <rect x="62" y="100" width="20" height="60" fill="none" stroke="#1a6b65" stroke-width="1.5"/>
-      <line x1="62" y1="130" x2="82" y2="130" stroke="#1a6b65" stroke-width="2"/>
-      <line x1="72" y1="88" x2="72" y2="100" stroke="#1a6b65" stroke-width="1"/>
-      <line x1="72" y1="160" x2="72" y2="170" stroke="#1a6b65" stroke-width="1"/>
-      <text x="72" y="282" text-anchor="middle" font-size="7.5" fill="#50504a">AFR-EAS</text>
-      <!-- AFR-EUR -->
-      <rect x="90" y="108" width="20" height="55" fill="none" stroke="#1a6b65" stroke-width="1.5"/>
-      <line x1="90" y1="138" x2="110" y2="138" stroke="#1a6b65" stroke-width="2"/>
-      <line x1="100" y1="95" x2="100" y2="108" stroke="#1a6b65" stroke-width="1"/>
-      <line x1="100" y1="163" x2="100" y2="175" stroke="#1a6b65" stroke-width="1"/>
-      <text x="100" y="282" text-anchor="middle" font-size="7.5" fill="#50504a">AFR-EUR</text>
-      <!-- AFR-AMR -->
-      <rect x="118" y="112" width="20" height="52" fill="none" stroke="#1a6b65" stroke-width="1.5"/>
-      <line x1="118" y1="140" x2="138" y2="140" stroke="#1a6b65" stroke-width="2"/>
-      <line x1="128" y1="100" x2="128" y2="112" stroke="#1a6b65" stroke-width="1"/>
-      <line x1="128" y1="164" x2="128" y2="174" stroke="#1a6b65" stroke-width="1"/>
-      <text x="128" y="282" text-anchor="middle" font-size="7.5" fill="#50504a">AFR-AMR</text>
-      <!-- SAS-EUR low -->
-      <rect x="146" y="145" width="20" height="38" fill="none" stroke="#1a6b65" stroke-width="1.5"/>
-      <line x1="146" y1="162" x2="166" y2="162" stroke="#1a6b65" stroke-width="2"/>
-      <line x1="156" y1="133" x2="156" y2="145" stroke="#1a6b65" stroke-width="1"/>
-      <line x1="156" y1="183" x2="156" y2="194" stroke="#1a6b65" stroke-width="1"/>
-      <text x="156" y="282" text-anchor="middle" font-size="7.5" fill="#50504a">SAS-EUR</text>
-      <!-- AMR-EUR low -->
-      <rect x="174" y="148" width="20" height="36" fill="none" stroke="#1a6b65" stroke-width="1.5"/>
-      <line x1="174" y1="165" x2="194" y2="165" stroke="#1a6b65" stroke-width="2"/>
-      <line x1="184" y1="137" x2="184" y2="148" stroke="#1a6b65" stroke-width="1"/>
-      <line x1="184" y1="184" x2="184" y2="195" stroke="#1a6b65" stroke-width="1"/>
-      <text x="184" y="282" text-anchor="middle" font-size="7.5" fill="#50504a">AMR-EUR</text>
-      <!-- ellipsis -->
-      <text x="235" y="170" font-size="14" fill="#9a9890">···</text>
-      <text x="235" y="182" font-size="8" fill="#9a9890">all 10 pairs</text>
-      <text x="171" y="296" text-anchor="middle" font-size="9" fill="#9a9890" font-style="italic">x-axis: population pair  ·  y-axis: FST</text>
+      <!-- ── LEFT PANEL: horizontal boxplot, all 10 pairs ─────────────── -->
+      <!-- panel border -->
+      <rect x="4" y="4" width="400" height="348" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="204" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">Boxplot: per-SNP F<tspan baseline-shift="sub" font-size="8">ST</tspan> per population pair</text>
 
-      <!-- Heatmap right side -->
-      <rect x="350" y="44" width="330" height="240" fill="#f7f6f2" stroke="#dddbd5"/>
-      <text x="515" y="58" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">Mean F<tspan baseline-shift="sub" font-size="8">ST</tspan> heatmap (symmetric)</text>
-      <!-- 5x5 grid -->
-      <!-- row/col labels -->
-      <text x="404" y="80" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">AFR</text>
-      <text x="444" y="80" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">AMR</text>
-      <text x="484" y="80" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">EAS</text>
-      <text x="524" y="80" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">EUR</text>
-      <text x="564" y="80" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">SAS</text>
-      <text x="390" y="103" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">AFR</text>
-      <text x="390" y="143" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">AMR</text>
-      <text x="390" y="183" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">EAS</text>
-      <text x="390" y="223" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">EUR</text>
-      <text x="390" y="263" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">SAS</text>
-      <!-- cells - diagonal grey, off-diag colored by value -->
+      <!-- axis: vertical line at x=96, horizontal at y=330 -->
+      <line x1="96" y1="26" x2="96" y2="330" stroke="#50504a" stroke-width="1.5"/>
+      <line x1="96" y1="330" x2="390" y2="330" stroke="#50504a" stroke-width="1.5"/>
+
+      <!-- x-axis ticks and labels -->
+      <line x1="96"  y1="330" x2="96"  y2="336" stroke="#50504a" stroke-width="1"/>
+      <text x="96"  y="344" text-anchor="middle" font-size="8" fill="#9a9890">0</text>
+      <line x1="183" y1="330" x2="183" y2="336" stroke="#50504a" stroke-width="1"/>
+      <text x="183" y="344" text-anchor="middle" font-size="8" fill="#9a9890">0.10</text>
+      <line x1="270" y1="330" x2="270" y2="336" stroke="#50504a" stroke-width="1"/>
+      <text x="270" y="344" text-anchor="middle" font-size="8" fill="#9a9890">0.20</text>
+      <line x1="357" y1="330" x2="357" y2="336" stroke="#50504a" stroke-width="1"/>
+      <text x="357" y="344" text-anchor="middle" font-size="8" fill="#9a9890">0.30</text>
+      <!-- gridlines -->
+      <line x1="183" y1="26" x2="183" y2="330" stroke="#e8e6e0" stroke-width="1"/>
+      <line x1="270" y1="26" x2="270" y2="330" stroke="#e8e6e0" stroke-width="1"/>
+      <line x1="357" y1="26" x2="357" y2="330" stroke="#e8e6e0" stroke-width="1"/>
+
+      <!-- x-axis title -->
+      <text x="243" y="356" text-anchor="middle" font-size="9" fill="#50504a">F<tspan baseline-shift="sub" font-size="7">ST</tspan></text>
+      <!-- y-axis title rotated -->
+      <text x="10" y="180" text-anchor="middle" font-size="9" fill="#50504a" transform="rotate(-90 10 180)">Population pair</text>
+
+      <!-- scale: xmax=0.35, plot width = 390-96 = 294px → 1 unit = 294/0.35 = 840px
+           so 0.01 = 8.4px, med values in px from x=96 -->
+      <!-- pairs: med, iqr-half, whisker-half (all in FST units) -->
+      <!-- AFR-EAS  med=0.26 q1=0.22 q3=0.30 wl=0.16 wr=0.36→clamp0.35 -->
+      <!-- AFR-EUR  med=0.22 -->
+      <!-- AFR-AMR  med=0.21 -->
+      <!-- AFR-SAS  med=0.20 -->
+      <!-- AMR-EAS  med=0.18 -->
+      <!-- AMR-EUR  med=0.14 -->
+      <!-- AMR-SAS  med=0.16 -->
+      <!-- EAS-EUR  med=0.15 -->
+      <!-- EAS-SAS  med=0.17 -->
+      <!-- EUR-SAS  med=0.11 -->
+
+      <!-- helper: x(v) = 96 + v/0.35*294 = 96 + v*840 -->
+      <!-- row spacing: 10 rows in 26..330 = 304px → 30.4px per row, cy = 26 + i*30.4 + 15 -->
+
+      <!-- row 0: AFR-EAS  cy=41  med=218 q1=281 q3=348→357 wl=230 wr=390 -->
+      <text x="92" y="45" text-anchor="end" font-size="8.5" fill="#50504a">AFR-EAS</text>
+      <line x1="131" y1="41" x2="184" y2="41" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="184" y="35" width="64" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="218" y1="35" x2="218" y2="47" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="248" y1="41" x2="294" y2="41" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 1: AFR-EUR  cy=71  med=0.22 -->
+      <text x="92" y="75" text-anchor="end" font-size="8.5" fill="#50504a">AFR-EUR</text>
+      <line x1="143" y1="71" x2="192" y2="71" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="192" y="65" width="54" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="211" y1="65" x2="211" y2="77" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="246" y1="71" x2="285" y2="71" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 2: AFR-AMR  cy=101  med=0.21 -->
+      <text x="92" y="105" text-anchor="end" font-size="8.5" fill="#50504a">AFR-AMR</text>
+      <line x1="147" y1="101" x2="193" y2="101" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="193" y="95" width="50" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="208" y1="95" x2="208" y2="107" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="243" y1="101" x2="278" y2="101" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 3: AFR-SAS  cy=131  med=0.20 -->
+      <text x="92" y="135" text-anchor="end" font-size="8.5" fill="#50504a">AFR-SAS</text>
+      <line x1="150" y1="131" x2="193" y2="131" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="193" y="125" width="48" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="204" y1="125" x2="204" y2="137" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="241" y1="131" x2="272" y2="131" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 4: AMR-EAS  cy=161  med=0.18 -->
+      <text x="92" y="165" text-anchor="end" font-size="8.5" fill="#50504a">AMR-EAS</text>
+      <line x1="156" y1="161" x2="196" y2="161" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="196" y="155" width="44" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="200" y1="155" x2="200" y2="167" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="240" y1="161" x2="262" y2="161" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 5: AMR-EUR  cy=191  med=0.14 -->
+      <text x="92" y="195" text-anchor="end" font-size="8.5" fill="#50504a">AMR-EUR</text>
+      <line x1="165" y1="191" x2="196" y2="191" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="196" y="185" width="38" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="193" y1="185" x2="193" y2="197" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="234" y1="191" x2="252" y2="191" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 6: AMR-SAS  cy=221  med=0.16 -->
+      <text x="92" y="225" text-anchor="end" font-size="8.5" fill="#50504a">AMR-SAS</text>
+      <line x1="161" y1="221" x2="196" y2="221" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="196" y="215" width="40" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="196" y1="215" x2="196" y2="227" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="236" y1="221" x2="257" y2="221" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 7: EAS-EUR  cy=251  med=0.15 -->
+      <text x="92" y="255" text-anchor="end" font-size="8.5" fill="#50504a">EAS-EUR</text>
+      <line x1="163" y1="251" x2="195" y2="251" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="195" y="245" width="38" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="194" y1="245" x2="194" y2="257" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="233" y1="251" x2="253" y2="251" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 8: EAS-SAS  cy=281  med=0.17 -->
+      <text x="92" y="285" text-anchor="end" font-size="8.5" fill="#50504a">EAS-SAS</text>
+      <line x1="159" y1="281" x2="196" y2="281" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="196" y="275" width="40" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="199" y1="275" x2="199" y2="287" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="236" y1="281" x2="258" y2="281" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 9: EUR-SAS  cy=311  med=0.11 -->
+      <text x="92" y="315" text-anchor="end" font-size="8.5" fill="#50504a">EUR-SAS</text>
+      <line x1="170" y1="311" x2="192" y2="311" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="192" y="305" width="32" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="188" y1="305" x2="188" y2="317" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="224" y1="311" x2="240" y2="311" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- ── RIGHT PANEL: heatmap ──────────────────────────────────────── -->
+      <rect x="416" y="4" width="400" height="348" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="616" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">Mean F<tspan baseline-shift="sub" font-size="8">ST</tspan> heatmap (symmetric)</text>
+
+      <!-- col headers -->
+      <text x="490" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">AFR</text>
+      <text x="542" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">AMR</text>
+      <text x="594" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">EAS</text>
+      <text x="646" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">EUR</text>
+      <text x="698" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">SAS</text>
+      <!-- row headers -->
+      <text x="460" y="69"  text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">AFR</text>
+      <text x="460" y="121" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">AMR</text>
+      <text x="460" y="173" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">EAS</text>
+      <text x="460" y="225" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">EUR</text>
+      <text x="460" y="277" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">SAS</text>
+
       <!-- row AFR -->
-      <rect x="392" y="85" width="38" height="32" fill="#d4d4d4"/>
-      <rect x="432" y="85" width="38" height="32" fill="#2a9d8f" opacity=".5"/>
-      <text x="451" y="105" text-anchor="middle" font-size="8" fill="#1a1916">0.22</text>
-      <rect x="472" y="85" width="38" height="32" fill="#2a9d8f" opacity=".65"/>
-      <text x="491" y="105" text-anchor="middle" font-size="8" fill="#1a1916">0.28</text>
-      <rect x="512" y="85" width="38" height="32" fill="#2a9d8f" opacity=".55"/>
-      <text x="531" y="105" text-anchor="middle" font-size="8" fill="#1a1916">0.24</text>
-      <rect x="552" y="85" width="38" height="32" fill="#2a9d8f" opacity=".52"/>
-      <text x="571" y="105" text-anchor="middle" font-size="8" fill="#1a1916">0.23</text>
+      <rect x="464" y="46" width="52" height="46" fill="#d4d4d4"/>
+      <rect x="516" y="46" width="52" height="46" fill="#2a9d8f" opacity=".50"/>
+      <text x="542" y="73" text-anchor="middle" font-size="9" fill="#1a1916">0.22</text>
+      <rect x="568" y="46" width="52" height="46" fill="#2a9d8f" opacity=".65"/>
+      <text x="594" y="73" text-anchor="middle" font-size="9" fill="#1a1916">0.28</text>
+      <rect x="620" y="46" width="52" height="46" fill="#2a9d8f" opacity=".55"/>
+      <text x="646" y="73" text-anchor="middle" font-size="9" fill="#1a1916">0.24</text>
+      <rect x="672" y="46" width="52" height="46" fill="#2a9d8f" opacity=".52"/>
+      <text x="698" y="73" text-anchor="middle" font-size="9" fill="#1a1916">0.23</text>
+
       <!-- row AMR -->
-      <rect x="392" y="125" width="38" height="32" fill="#2a9d8f" opacity=".5"/>
-      <text x="411" y="145" text-anchor="middle" font-size="8" fill="#1a1916">0.22</text>
-      <rect x="432" y="125" width="38" height="32" fill="#d4d4d4"/>
-      <rect x="472" y="125" width="38" height="32" fill="#2a9d8f" opacity=".45"/>
-      <text x="491" y="145" text-anchor="middle" font-size="8" fill="#1a1916">0.19</text>
-      <rect x="512" y="125" width="38" height="32" fill="#2a9d8f" opacity=".38"/>
-      <text x="531" y="145" text-anchor="middle" font-size="8" fill="#1a1916">0.15</text>
-      <rect x="552" y="125" width="38" height="32" fill="#2a9d8f" opacity=".42"/>
-      <text x="571" y="145" text-anchor="middle" font-size="8" fill="#1a1916">0.17</text>
+      <rect x="464" y="98" width="52" height="46" fill="#2a9d8f" opacity=".50"/>
+      <text x="490" y="125" text-anchor="middle" font-size="9" fill="#1a1916">0.22</text>
+      <rect x="516" y="98" width="52" height="46" fill="#d4d4d4"/>
+      <rect x="568" y="98" width="52" height="46" fill="#2a9d8f" opacity=".45"/>
+      <text x="594" y="125" text-anchor="middle" font-size="9" fill="#1a1916">0.19</text>
+      <rect x="620" y="98" width="52" height="46" fill="#2a9d8f" opacity=".38"/>
+      <text x="646" y="125" text-anchor="middle" font-size="9" fill="#1a1916">0.15</text>
+      <rect x="672" y="98" width="52" height="46" fill="#2a9d8f" opacity=".42"/>
+      <text x="698" y="125" text-anchor="middle" font-size="9" fill="#1a1916">0.17</text>
+
       <!-- row EAS -->
-      <rect x="392" y="165" width="38" height="32" fill="#2a9d8f" opacity=".65"/>
-      <text x="411" y="185" text-anchor="middle" font-size="8" fill="#1a1916">0.28</text>
-      <rect x="432" y="165" width="38" height="32" fill="#2a9d8f" opacity=".45"/>
-      <text x="451" y="185" text-anchor="middle" font-size="8" fill="#1a1916">0.19</text>
-      <rect x="472" y="165" width="38" height="32" fill="#d4d4d4"/>
-      <rect x="512" y="165" width="38" height="32" fill="#2a9d8f" opacity=".4"/>
-      <text x="531" y="185" text-anchor="middle" font-size="8" fill="#1a1916">0.16</text>
-      <rect x="552" y="165" width="38" height="32" fill="#2a9d8f" opacity=".44"/>
-      <text x="571" y="185" text-anchor="middle" font-size="8" fill="#1a1916">0.18</text>
+      <rect x="464" y="150" width="52" height="46" fill="#2a9d8f" opacity=".65"/>
+      <text x="490" y="177" text-anchor="middle" font-size="9" fill="#1a1916">0.28</text>
+      <rect x="516" y="150" width="52" height="46" fill="#2a9d8f" opacity=".45"/>
+      <text x="542" y="177" text-anchor="middle" font-size="9" fill="#1a1916">0.19</text>
+      <rect x="568" y="150" width="52" height="46" fill="#d4d4d4"/>
+      <rect x="620" y="150" width="52" height="46" fill="#2a9d8f" opacity=".40"/>
+      <text x="646" y="177" text-anchor="middle" font-size="9" fill="#1a1916">0.16</text>
+      <rect x="672" y="150" width="52" height="46" fill="#2a9d8f" opacity=".44"/>
+      <text x="698" y="177" text-anchor="middle" font-size="9" fill="#1a1916">0.18</text>
+
       <!-- row EUR -->
-      <rect x="392" y="205" width="38" height="32" fill="#2a9d8f" opacity=".55"/>
-      <text x="411" y="225" text-anchor="middle" font-size="8" fill="#1a1916">0.24</text>
-      <rect x="432" y="205" width="38" height="32" fill="#2a9d8f" opacity=".38"/>
-      <text x="451" y="225" text-anchor="middle" font-size="8" fill="#1a1916">0.15</text>
-      <rect x="472" y="205" width="38" height="32" fill="#2a9d8f" opacity=".4"/>
-      <text x="491" y="225" text-anchor="middle" font-size="8" fill="#1a1916">0.16</text>
-      <rect x="512" y="205" width="38" height="32" fill="#d4d4d4"/>
-      <rect x="552" y="205" width="38" height="32" fill="#2a9d8f" opacity=".3"/>
-      <text x="571" y="225" text-anchor="middle" font-size="8" fill="#1a1916">0.12</text>
+      <rect x="464" y="202" width="52" height="46" fill="#2a9d8f" opacity=".55"/>
+      <text x="490" y="229" text-anchor="middle" font-size="9" fill="#1a1916">0.24</text>
+      <rect x="516" y="202" width="52" height="46" fill="#2a9d8f" opacity=".38"/>
+      <text x="542" y="229" text-anchor="middle" font-size="9" fill="#1a1916">0.15</text>
+      <rect x="568" y="202" width="52" height="46" fill="#2a9d8f" opacity=".40"/>
+      <text x="594" y="229" text-anchor="middle" font-size="9" fill="#1a1916">0.16</text>
+      <rect x="620" y="202" width="52" height="46" fill="#d4d4d4"/>
+      <rect x="672" y="202" width="52" height="46" fill="#2a9d8f" opacity=".30"/>
+      <text x="698" y="229" text-anchor="middle" font-size="9" fill="#1a1916">0.12</text>
+
       <!-- row SAS -->
-      <rect x="392" y="245" width="38" height="32" fill="#2a9d8f" opacity=".52"/>
-      <text x="411" y="265" text-anchor="middle" font-size="8" fill="#1a1916">0.23</text>
-      <rect x="432" y="245" width="38" height="32" fill="#2a9d8f" opacity=".42"/>
-      <text x="451" y="265" text-anchor="middle" font-size="8" fill="#1a1916">0.17</text>
-      <rect x="472" y="245" width="38" height="32" fill="#2a9d8f" opacity=".44"/>
-      <text x="491" y="265" text-anchor="middle" font-size="8" fill="#1a1916">0.18</text>
-      <rect x="512" y="245" width="38" height="32" fill="#2a9d8f" opacity=".3"/>
-      <text x="531" y="265" text-anchor="middle" font-size="8" fill="#1a1916">0.12</text>
-      <rect x="552" y="245" width="38" height="32" fill="#d4d4d4"/>
-      <text x="515" y="296" text-anchor="middle" font-size="9" fill="#9a9890" font-style="italic">Darker = higher FST · diagonal = self-comparison (undefined)</text>
+      <rect x="464" y="254" width="52" height="46" fill="#2a9d8f" opacity=".52"/>
+      <text x="490" y="281" text-anchor="middle" font-size="9" fill="#1a1916">0.23</text>
+      <rect x="516" y="254" width="52" height="46" fill="#2a9d8f" opacity=".42"/>
+      <text x="542" y="281" text-anchor="middle" font-size="9" fill="#1a1916">0.17</text>
+      <rect x="568" y="254" width="52" height="46" fill="#2a9d8f" opacity=".44"/>
+      <text x="594" y="281" text-anchor="middle" font-size="9" fill="#1a1916">0.18</text>
+      <rect x="620" y="254" width="52" height="46" fill="#2a9d8f" opacity=".30"/>
+      <text x="646" y="281" text-anchor="middle" font-size="9" fill="#1a1916">0.12</text>
+      <rect x="672" y="254" width="52" height="46" fill="#d4d4d4"/>
+
+      <text x="616" y="322" text-anchor="middle" font-size="9" fill="#9a9890" font-style="italic">Darker = higher F<tspan baseline-shift="sub" font-size="7">ST</tspan> · grey diagonal = self-comparison (undefined)</text>
     </svg>
-    <p class="fig-caption"><strong>Figure 3</strong> — Boxplot of per-SNP F<sub>ST</sub> distributions for all ten pairwise comparisons (left) and mean F<sub>ST</sub> heatmap (right) for cancer-associated variants. Numbers in the mockup are illustrative — yours will differ.</p>
+    <p class="fig-caption"><strong>Figure 3</strong> — Left: horizontal boxplot of per-SNP F<sub>ST</sub> distributions for all ten pairwise population comparisons (population pair labels on y-axis, F<sub>ST</sub> on x-axis). Right: symmetric mean F<sub>ST</sub> heatmap. Values are illustrative — yours will differ.</p>
   </div>
 
   <!-- FIG 4 FST compare -->
