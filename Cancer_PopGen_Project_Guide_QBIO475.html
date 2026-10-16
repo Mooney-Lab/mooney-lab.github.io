@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cancer PopGen Project Guide · Mooney Lab · QBIO 475</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #f7f6f2;
+  --sf:     #ffffff;
+  --sf2:    #eeedea;
+  --bd:     #dddbd5;
+  --ink:    #1a1916;
+  --mid:    #50504a;
+  --dim:    #9a9890;
+  --red:    #b83228;
+  --redl:   #fdf1f0;
+  --teal:   #1a6b65;
+  --teall:  #edf5f4;
+  --amber:  #7a4b00;
+  --amberl: #fef8ed;
+  --blue:   #1e4a8a;
+  --bluel:  #edf2fb;
+  --mono:   'DM Mono', monospace;
+  --sans:   'DM Sans', system-ui, sans-serif;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top,0px);
+  padding-bottom: env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#16150f; --sf:#1e1d16; --sf2:#27261d; --bd:#38362c;
+    --ink:#edebd8; --mid:#b0ad98; --dim:#6a6858;
+    --red:#d95f52; --redl:#2a100e;
+    --teal:#3db8b0; --teall:#0d2422;
+    --amber:#e8a93a; --amberl:#241800;
+    --blue:#6b9fe0; --bluel:#0d1e36;
+  }
+}
+*,*::before,*::after{box-sizing:inherit;margin:0;padding:0;}
+html{scroll-padding-top:calc(52px + env(safe-area-inset-top,0px));}
+body{font-family:var(--sans);font-size:16px;line-height:1.75;color:var(--mid);background:var(--bg);}
+
+/* NAV */
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);border-bottom:1px solid var(--bd);z-index:200;display:flex;align-items:center;padding:0 28px;height:52px;gap:0;overflow-x:auto;scrollbar-width:none;}
+nav::-webkit-scrollbar{display:none;}
+.nbrand{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--red);margin-right:20px;white-space:nowrap;flex-shrink:0;}
+nav a{font-family:var(--mono);font-size:11px;color:var(--dim);text-decoration:none;padding:0 11px;height:52px;display:flex;align-items:center;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;flex-shrink:0;}
+nav a:hover{color:var(--ink);}
+
+/* HERO */
+.hero{padding:60px 28px 52px;max-width:860px;margin:0 auto;border-bottom:2px solid var(--ink);}
+.hero-label{font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;}
+h1{font-size:clamp(30px,5vw,52px);font-weight:600;line-height:1.1;color:var(--ink);margin-bottom:18px;max-width:600px;}
+.hero p{max-width:560px;font-size:17px;font-weight:300;margin-bottom:28px;line-height:1.7;}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;}
+.pill{font-family:var(--mono);font-size:11px;padding:3px 9px;border:1px solid var(--bd);border-radius:2px;color:var(--dim);}
+
+/* BODY */
+.page{max-width:860px;margin:0 auto;padding:0 28px 100px;}
+
+/* SECTION */
+.section{margin-top:68px;scroll-margin-top:64px;}
+.sec-label{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+h2{font-size:24px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--bd);padding-bottom:12px;margin-bottom:20px;}
+h3{font-size:17px;font-weight:600;color:var(--ink);margin:30px 0 8px;}
+h4{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin:22px 0 6px;}
+p{margin-bottom:14px;}
+strong{font-weight:600;color:var(--ink);}
+a{color:var(--blue);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s;}
+a:hover{border-color:var(--blue);}
+ul,ol{padding-left:20px;margin-bottom:14px;}
+li{margin-bottom:5px;}
+code{font-family:var(--mono);font-size:12.5px;background:var(--sf2);border:1px solid var(--bd);border-radius:2px;padding:1px 5px;color:var(--ink);}
+
+/* STEP */
+.step{display:flex;gap:18px;margin:28px 0;padding:22px 24px;background:var(--sf);border:1px solid var(--bd);border-radius:3px;}
+.step-n{font-family:var(--mono);font-size:12px;font-weight:500;width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bluel);color:var(--blue);border:1px solid color-mix(in srgb,var(--blue) 20%,transparent);border-radius:2px;margin-top:2px;}
+.step-body{flex:1;min-width:0;}
+.step-title{font-weight:600;color:var(--ink);font-size:16px;margin-bottom:6px;}
+.step-body p{font-size:15px;margin-bottom:8px;}
+.step-body ul{font-size:15px;}
+
+/* CALLOUT */
+.box{display:flex;gap:12px;padding:13px 16px;border-radius:3px;margin:16px 0;font-size:14.5px;line-height:1.65;}
+.box-icon{font-size:16px;flex-shrink:0;margin-top:2px;}
+.box.watch{background:var(--amberl);border:1px solid color-mix(in srgb,var(--amber) 28%,transparent);}
+.box.tip{background:var(--teall);border:1px solid color-mix(in srgb,var(--teal) 22%,transparent);}
+.box.goal{background:var(--bluel);border:1px solid color-mix(in srgb,var(--blue) 22%,transparent);}
+.box.req{background:var(--redl);border:1px solid color-mix(in srgb,var(--red) 22%,transparent);}
+.box p{margin:0;color:var(--ink);}
+
+/* FILE LAYOUT */
+.file-block{background:var(--ink);color:#e8e6dc;font-family:var(--mono);font-size:12.5px;line-height:1.9;border-radius:3px;padding:18px 20px;margin:14px 0;overflow-x:auto;}
+.file-block .hdr{color:#7ec8c4;font-weight:500;}
+.file-block .dim{color:#6a6858;}
+.file-block .hi{color:#f0b85c;}
+.file-block .grn{color:#8ecb8e;}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin:14px 0;}
+table{border-collapse:collapse;width:100%;font-size:14px;}
+th{background:var(--sf2);font-family:var(--mono);font-size:11px;font-weight:500;padding:8px 12px;text-align:left;border:1px solid var(--bd);color:var(--ink);}
+td{padding:8px 12px;border:1px solid var(--bd);color:var(--mid);vertical-align:top;font-size:14px;}
+tr:nth-child(even) td{background:var(--sf);}
+
+/* FORMULA */
+.formula{font-family:var(--mono);font-size:14px;text-align:center;padding:16px 20px;background:var(--sf);border:1px solid var(--bd);border-radius:3px;margin:14px 0;color:var(--ink);line-height:2;}
+
+/* PIPELINE STRIP */
+.pipe{display:flex;align-items:stretch;gap:0;margin:28px 0;border:1px solid var(--bd);border-radius:3px;overflow:hidden;}
+.pipe-item{flex:1;padding:14px 10px;text-align:center;border-right:1px solid var(--bd);background:var(--sf);}
+.pipe-item:last-child{border-right:none;}
+.pipe-item.active{background:var(--bluel);}
+.pipe-num{font-family:var(--mono);font-size:10px;color:var(--dim);display:block;margin-bottom:4px;}
+.pipe-item.active .pipe-num{color:var(--blue);}
+.pipe-label{font-size:12px;font-weight:600;color:var(--ink);line-height:1.3;display:block;}
+.pipe-sub{font-size:11px;color:var(--dim);display:block;margin-top:2px;line-height:1.3;}
+
+/* FIGURE MOCKUP */
+.fig-wrap{margin:20px 0;}
+.fig-caption{font-size:13px;color:var(--mid);margin-top:8px;font-style:italic;line-height:1.5;}
+.fig-caption strong{font-style:normal;color:var(--ink);}
+svg.mock{width:100%;border:1px solid var(--bd);border-radius:3px;background:var(--sf);display:block;}
+
+/* PERSON ASSIGNMENT */
+.assign{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--red);background:var(--redl);border:1px solid color-mix(in srgb,var(--red) 22%,transparent);border-radius:2px;padding:2px 8px;margin-bottom:12px;}
+
+/* HR */
+hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
+
+@media(max-width:600px){
+  nav,.hero,.page{padding-left:16px;padding-right:16px;}
+  .step{flex-direction:column;gap:10px;}
+  .pipe{flex-wrap:wrap;}
+  .pipe-item{border-right:none;border-bottom:1px solid var(--bd);min-width:45%;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nbrand">Mooney Lab · QBIO 475</span>
+  <a href="#overview">Overview</a>
+  <a href="#files">Input Files</a>
+  <a href="#step1">Step 1</a>
+  <a href="#step2">Step 2</a>
+  <a href="#step3">Step 3</a>
+  <a href="#step4">Step 4</a>
+  <a href="#step5">Step 5</a>
+  <a href="#figures">Figures</a>
+  <a href="#writeup">Write-up</a>
+</nav>
+
+<!-- ═══════════════════════════════════ HERO -->
+<div class="hero">
+  <div class="hero-label">QBIO 475 · Statistical and Evolutionary Genetics · Fall 2026</div>
+  <h1>Cancer PopGen<br>Project Guide</h1>
+  <p>A reference for navigating the data pipeline — from the GWAS Catalog through allele frequency computation, F<sub>ST</sub>, Watterson's θ, and nucleotide diversity (π). The code is yours to write; this guide explains what each step needs to accomplish and what to watch out for along the way.</p>
+  <div class="pill-row">
+    <span class="pill">R / Rmd</span>
+    <span class="pill">Python</span>
+    <span class="pill">GWAS Catalog</span>
+    <span class="pill">1000 Genomes</span>
+    <span class="pill">snp151 · hg38</span>
+    <span class="pill">ggplot2</span>
+    <span class="pill">Due Dec 15 · 1 pm</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════════════════════════════ OVERVIEW -->
+<div class="section" id="overview">
+  <div class="sec-label">00 · Overview</div>
+  <h2>The Big Picture</h2>
+
+  <p>Your central question: <strong>do cancer-associated GWAS variants show different allele frequency patterns across global populations compared to random background variants?</strong> Three data sources connect through a shared key — the <strong>rsID</strong> — and you will build that connection step by step.</p>
+
+  <div class="pipe">
+    <div class="pipe-item active">
+      <span class="pipe-num">STEP 1</span>
+      <span class="pipe-label">GWAS Catalog</span>
+      <span class="pipe-sub">Clean rsIDs + risk alleles → focal chromosome</span>
+    </div>
+    <div class="pipe-item active">
+      <span class="pipe-num">STEP 2</span>
+      <span class="pipe-label">snp151 lookup</span>
+      <span class="pipe-sub">rsID → CHR + posEnd (1-based)</span>
+    </div>
+    <div class="pipe-item active">
+      <span class="pipe-num">STEP 3</span>
+      <span class="pipe-label">Allele counts</span>
+      <span class="pipe-sub">POS → counts → freq + MAF</span>
+    </div>
+    <div class="pipe-item active">
+      <span class="pipe-num">STEP 4</span>
+      <span class="pipe-label">F<sub>ST</sub> + θ + π</span>
+      <span class="pipe-sub">Divergence + diversity</span>
+    </div>
+    <div class="pipe-item active">
+      <span class="pipe-num">STEP 5</span>
+      <span class="pipe-label">Figures</span>
+      <span class="pipe-sub">MAF · FST · SFS · π</span>
+    </div>
+  </div>
+
+  <h3>Five 1000 Genomes super-populations</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Code</th><th>Label</th><th>Example sub-populations</th></tr></thead>
+      <tbody>
+        <tr><td><strong>AFR</strong></td><td>African</td><td>YRI, LWK, GWD, MSL, ESN, ACB, ASW</td></tr>
+        <tr><td><strong>AMR</strong></td><td>Admixed American</td><td>MXL, PUR, CLM, PEL</td></tr>
+        <tr><td><strong>EAS</strong></td><td>East Asian</td><td>CHB, JPT, CHS, CDX, KHV</td></tr>
+        <tr><td><strong>EUR</strong></td><td>European</td><td>CEU, TSI, FIN, GBR, IBS</td></tr>
+        <tr><td><strong>SAS</strong></td><td>South Asian</td><td>GIH, PJL, BEB, STU, ITU</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ INPUT FILES -->
+<div class="section" id="files">
+  <div class="sec-label">Reference · Input file formats</div>
+  <h2>What Your Input Files Look Like</h2>
+  <p>Before writing any code, make sure you understand the structure of all three input sources. Misreading a column or index is the most common source of errors in this project.</p>
+
+  <h3>GWAS Catalog download (.tsv)</h3>
+  <p>Downloaded from <a href="https://www.ebi.ac.uk/gwas/" target="_blank">ebi.ac.uk/gwas</a>. Tab-separated with a header row. Key columns:</p>
+  <div class="file-block">
+<span class="hdr">SNPS                    STRONGEST.SNP.RISK.ALLELE   CHR_ID  CHR_POS    SNP_ID_CURRENT   DISEASE.TRAIT</span>
+<span class="grn">rs4430796</span>               <span class="grn">rs4430796-A</span>                 <span class="hi">17</span>      <span class="hi">36098040</span>   <span class="grn">4430796</span>          Prostate cancer
+<span class="grn">rs10187424;rs1859962</span>    <span class="grn">rs1859962-G</span>                 <span class="hi">17;17</span>   <span class="hi">36027438;6…</span><span class="grn">1859962</span>          Prostate cancer
+<span class="grn">rs16901979-A</span>            <span class="grn">rs16901979-A</span>                <span class="hi">8</span>       <span class="hi">128194800</span>  <span class="grn">16901979</span>         Prostate cancer
+<span class="dim">...                     ...                         ...     ...        ...              ...</span>
+  </div>
+
+  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Three problems you will encounter and must fix.</strong><br>
+  (1) <strong>Allele-annotated rsIDs in the SNPS column</strong> — entries like <code>rs16901979-A</code> are rsID + risk allele joined by a dash. Strip the allele suffix before using the rsID for coordinate lookup.<br>
+  (2) <strong>Multiple rsIDs in one row</strong> — entries like <code>rs10187424;rs1859962</code> need to be split so each row represents exactly one SNP. After splitting, verify the number of rsIDs equals the number of positions — rows where they disagree are ambiguous and should be dropped.<br>
+  (3) <strong><code>SNP_ID_CURRENT</code> lacks the "rs" prefix</strong> — the catalog stores updated rsIDs as bare numbers (e.g., <code>4430796</code>). Prepend "rs" before using this column, and fall back to <code>SNPS</code> when it is empty.</p></div>
+
+  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>CHR_ID needs cleaning.</strong> The chromosome column can contain non-numeric entries: "X", "Y", "MT", combined values like "1;2", or entries with extra characters. The frq.count files only cover autosomes 1–22 — filter to integer chromosome IDs only, then convert to integer type for sorting.</p></div>
+
+  <h3>snp151.txt.gz (UCSC hg38 dbSNP)</h3>
+  <p><strong>No header row. Tab-separated. Large (~7 GB compressed.</strong>) The columns are at fixed zero-based positions. When you write your output file you will need to <strong>assign your own column names</strong> — we suggest the names below so they are easier to work with downstream. Only five columns matter for this project:</p>
+  <div class="file-block">
+<span class="dim"># Raw file — NO header. Columns shown with zero-based index:</span>
+
+<span class="dim">col[0]</span>  bin       <span class="dim">→  internal UCSC bin (ignore)</span>
+<span class="hi">col[1]</span>  chrom     <span class="dim">→  chromosome with "chr" prefix, e.g.</span> <span class="grn">chr1</span>
+<span class="dim">col[2]</span>  posStart  <span class="dim">→  0-based start (ignore — do NOT use for joining)</span>
+<span class="grn">col[3]</span>  posEnd    <span class="dim">→  1-based end position — THIS is what matches frq.count POS</span>
+<span class="grn">col[4]</span>  rsID      <span class="dim">→  SNP name, e.g.</span> <span class="grn">rs775809821</span>
+<span class="dim">col[5]</span>  score     <span class="dim">→  ignore</span>
+  <span class="dim">...   (columns 6–8 ignored)</span>
+<span class="dim">col[9]</span>  alleles   <span class="dim">→  observed alleles, e.g.</span> <span class="grn">A/C</span>
+
+<span class="dim"># Example data rows:</span>
+<span class="dim">585</span>  <span class="hi">chr1</span>  <span class="dim">10019</span>  <span class="grn">10020</span>  <span class="grn">rs775809821</span>   <span class="dim">0  ...  A/C</span>
+<span class="dim">585</span>  <span class="hi">chr1</span>  <span class="dim">10037</span>  <span class="grn">10038</span>  <span class="grn">rs978760828</span>   <span class="dim">0  ...  A/C</span>
+<span class="dim">585</span>  <span class="hi">chr1</span>  <span class="dim">10041</span>  <span class="grn">10042</span>  <span class="grn">rs1008829651</span>  <span class="dim">0  ...  A/T</span>
+<span class="dim">...  ...   ...    ...    ...            ...  ...  ...</span>
+
+<span class="dim"># When you write your output, assign these column names:</span>
+<span class="hdr">rsID          chr    posStart  posEnd  alleles</span>
+<span class="grn">rs775809821</span>   <span class="hi">chr1</span>   <span class="dim">10019</span>     <span class="grn">10020</span>   <span class="grn">A/C</span>
+<span class="grn">rs978760828</span>   <span class="hi">chr1</span>   <span class="dim">10037</span>     <span class="grn">10038</span>   <span class="grn">A/C</span>
+  </div>
+
+  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Use <code>posEnd</code> (col[3]), not <code>posStart</code> (col[2]).</strong> The frq.count files record SNP positions as 1-based coordinates that match <code>posEnd</code>. If you join on <code>posStart</code> you will lose the vast majority of your matches — <code>posStart</code> is 0-based and off by one. The chromosome column uses a "chr" prefix (e.g., <code>chr1</code>) — strip this when joining to frq.count files, which use bare integers.</p></div>
+
+  <h3>*.frq.count files (1000 Genomes allele counts)</h3>
+  <p>One file per super-population × chromosome (e.g., <code>AFR_chr6.frq.count</code>). Tab-separated with a header row. The last two columns encode allele-count pairs.</p>
+  <div class="file-block">
+<span class="hdr">CHROM   POS      N_ALLELES   N_CHR   {ALLELE:COUNT}        {ALLELE:COUNT}</span>
+<span class="hi">6</span>       <span class="grn">778574</span>   2           <span class="hi">1286</span>    <span class="grn">T:1285</span>               <span class="grn">C:1</span>
+<span class="hi">6</span>       <span class="grn">779216</span>   2           <span class="hi">1286</span>    <span class="grn">T:1241</span>               <span class="grn">C:45</span>
+<span class="hi">6</span>       <span class="grn">785001</span>   2           <span class="hi">1286</span>    <span class="grn">G:1254</span>               <span class="grn">T:32</span>
+<span class="dim">...     ...      ...         ...     ...                  ...</span>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Column</th><th>Meaning</th><th>How you use it</th></tr></thead>
+      <tbody>
+        <tr><td><code>CHROM</code></td><td>Chromosome number (integer, no "chr" prefix)</td><td>Filter to your focal chromosome</td></tr>
+        <tr><td><code>POS</code></td><td>Position (1-based) — matches <code>posEnd</code> from snp151 (col[3])</td><td>Join key to your coordinate table</td></tr>
+        <tr><td><code>N_CHR</code></td><td>Total chromosomes sampled in this population</td><td>Denominator for all frequency calculations</td></tr>
+        <tr><td><code>{ALLELE:COUNT}</code></td><td>Space-separated allele:count pairs (e.g., <code>T:1285 C:1</code>)</td><td>Split on ":" to get allele identity and count</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box tip"><span class="box-icon">💡</span><p><strong>Allele frequency formula.</strong> For each allele: frequency = count ÷ N_CHR. The <strong>minor allele frequency (MAF)</strong> is the smaller of the two frequencies — always between 0 and 0.5. Use MAF for all your distribution plots so comparisons across populations are not affected by which allele is labeled "reference."</p></div>
+</div>
+
+<!-- ═══════════════════════════════════ STEP 1 -->
+<div class="section" id="step1">
+  <div class="sec-label">Step 01 · R / Rmd</div>
+  <h2>Process the GWAS Catalog</h2>
+
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> Load all your GWAS Catalog TSV files, clean the messy fields, identify which chromosome has the most associated variants (your <em>focal chromosome</em>), and output two clean files: a full processed table and a plain list of rsIDs for the coordinate lookup.</p></div>
+
+  <div class="step">
+    <div class="step-n">1a</div>
+    <div class="step-body">
+      <div class="step-title">Load all GWAS Catalog files into one data frame</div>
+      <p>Place all your downloaded TSVs in one folder. Read every file matching the naming pattern, stack them into a single data frame, and parse the cancer type from the filename. Report the total number of rows, unique studies (PubMed IDs), and unique disease traits — these numbers go in your Methods section.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">1b</div>
+    <div class="step-body">
+      <div class="step-title">Clean the SNPS and STRONGEST.SNP.RISK.ALLELE columns</div>
+      <p>Address the three problems described in the file format section above. After cleaning:</p>
+      <ul>
+        <li>Every entry in your rsID column should match the pattern <code>^rs[0-9]+$</code> — a bare rsID with no allele suffix.</li>
+        <li>Rows where the number of rsIDs does not equal the number of chromosome positions should be dropped before you expand multi-SNP rows.</li>
+        <li>Use <code>SNP_ID_CURRENT</code> as your primary rsID (it reflects rsID merges), falling back to <code>SNPS</code> when <code>SNP_ID_CURRENT</code> is empty. Make sure to prepend "rs" since the catalog omits it.</li>
+        <li>Drop rows with obvious multi-allelic risk alleles (e.g., risk allele listed as two or more bases like "AC").</li>
+      </ul>
+      <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Check your counts at each filter step.</strong> Print how many rows remain after each operation. Unexpectedly large drops are a sign that a regex is too aggressive. Keep a note of your starting and ending SNP counts for the Methods section.</p></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">1c</div>
+    <div class="step-body">
+      <div class="step-title">Find your focal chromosome</div>
+      <p>Count the number of unique SNPs per chromosome (de-duplicate rsIDs first so you don't inflate counts). The chromosome with the most associated variants is your <strong>focal chromosome</strong> — you will do all downstream allele frequency and F<sub>ST</sub> analysis on this chromosome only. Make a bar chart of SNP counts per chromosome for your Methods or Results.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">1d</div>
+    <div class="step-body">
+      <div class="step-title">Write output files</div>
+      <p>You need three outputs from this step:</p>
+      <ul>
+        <li><strong>Full processed table</strong> — all cleaned columns, all chromosomes.</li>
+        <li><strong>Unique rsID list</strong> — one rsID per line, no header, no quotes. This is the input for Step 2.</li>
+        <li><strong>Per-chromosome rsID files</strong> — one file per cancer-type × chromosome combination, for use in Step 3.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box tip"><span class="box-icon">💡</span><p><strong>Ancestry in INITIAL.SAMPLE.SIZE.</strong> The <code>INITIAL.SAMPLE.SIZE</code> column contains free-text descriptions of who was enrolled (e.g., "1,034 European ancestry individuals"). Extracting ancestry terms from this column is a good starting point for quantifying ancestry bias in your GWAS catalog download — useful for the Limitations section.</p></div>
+</div>
+
+<!-- ═══════════════════════════════════ STEP 2 -->
+<div class="section" id="step2">
+  <div class="sec-label">Step 02 · Python (recommended)</div>
+  <h2>Map rsIDs to Genomic Coordinates</h2>
+
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> For every rsID from Step 1, retrieve its chromosome and 1-based position (<code>posEnd</code>, col[3]) from snp151.txt.gz. Output a table with your own header row — columns: <code>rsID, chr, posStart, posEnd, alleles</code>. This table bridges the GWAS rsIDs to the positions used in the allele count files.</p></div>
+
+  <div class="step">
+    <div class="step-n">2a</div>
+    <div class="step-body">
+      <div class="step-title">Stream through snp151.txt.gz — do not try to load it all at once</div>
+      <p>snp151.txt.gz is ~7 GB compressed. Loading it entirely into memory will crash most laptops. Instead, open the file as a stream, read one line at a time, check whether the rsID in column 4 (zero-indexed) is in your target set, and write matching rows to an output file. Remove each found rsID from your search set as you go — this speeds up future lookups and lets you stop early once all rsIDs are found.</p>
+      <p>Write the output with a header line: <code>rsID  chr  start  end  alleles</code>.</p>
+      <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Some rsIDs will not be found.</strong> A small fraction of GWAS Catalog rsIDs have been retired, merged into other IDs, or are not present in snp151. Losing roughly 0.1–1% is normal. Write a separate file listing the missing rsIDs so you can inspect them. Report how many were lost in your Methods section.</p></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">2b</div>
+    <div class="step-body">
+      <div class="step-title">Filter back to your focal chromosome in R</div>
+      <p>Load the output from 2a into R. Filter to rows where the chromosome matches your focal chromosome (remember snp151 uses the <code>chr6</code> format — strip the prefix when needed). Remove any duplicate rsID entries, keeping one row per rsID. The <code>posEnd</code> column is the 1-based position you will join against <code>POS</code> in the frq.count files.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ STEP 3 -->
+<div class="section" id="step3">
+  <div class="sec-label">Step 03 · R</div>
+  <h2>Compute Allele Frequencies</h2>
+
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> For each of the five super-populations, parse the frq.count file for your focal chromosome, join to your coordinate table on <code>POS == posEnd</code>, compute per-allele frequencies and MAF, and identify which frequency corresponds to the GWAS risk allele. Then sample 1,000 random background SNPs per population for comparison.</p></div>
+
+  <div class="step">
+    <div class="step-n">3a</div>
+    <div class="step-body">
+      <div class="step-title">Parse frq.count files and compute frequencies</div>
+      <p>Write a single function that reads one frq.count file for one population. Inside it, skip the header, split the <code>ALLELE:COUNT</code> strings on ":" to get allele identity and raw count, then divide each count by <code>N_CHR</code> to get frequency. Compute MAF as the minimum of the two allele frequencies. Call this function in a loop over all five populations and stack the results.</p>
+      <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Join on POS == posEnd.</strong> The frq.count POS column is 1-based and matches snp151's <code>posEnd</code> (col[3]). Join on this; joining on <code>posStart</code> (col[2]) will lose most matches because posStart is 0-based and off by one.</p></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">3b</div>
+    <div class="step-body">
+      <div class="step-title">Look up the risk allele frequency specifically</div>
+      <p>After joining, bring in the risk allele column from your cleaned GWAS table. For each SNP in each population, look up whether the risk allele matches the REF or ALT allele in the frq.count file and record the appropriate frequency. Rows where the risk allele matches neither (e.g., allele listed as "?" in the catalog) should be filtered out. This risk allele frequency — not MAF — is what you plot for associated variants in the allele frequency figures.</p>
+      <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Risk allele frequency ≠ MAF.</strong> The risk allele may be common in one population and rare in another. MAF is always between 0 and 0.5; risk allele frequency can be anywhere from 0 to 1. Keep both — use risk allele frequency when you want to track the specific GWAS hit, and MAF when comparing distributions.</p></div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">3c</div>
+    <div class="step-body">
+      <div class="step-title">Sample 1,000 random background SNPs per population</div>
+      <p>For each super-population, draw 1,000 SNPs at random from the full frq.count file, excluding any positions that are in your associated SNP set. Sample each population independently. Set a random seed at the top of your script and use the same seed throughout — report this number in your Methods so results are reproducible.</p>
+      <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Sample from the frq.count file, not from a list of rsIDs.</strong> Most positions in the count file do not have rsIDs in the GWAS catalog — that is the point. You are drawing from the genomic background, not from another GWAS.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ STEP 4 -->
+<div class="section" id="step4">
+  <div class="sec-label">Step 04 · R</div>
+  <h2>Compute F<sub>ST</sub>, Watterson's θ, and Nucleotide Diversity (π)</h2>
+
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Goal.</strong> Quantify population differentiation using pairwise F<sub>ST</sub> across all ten super-population pairs. Then, using your site frequency spectrum data, compute two summaries of within-population diversity — Watterson's θ and nucleotide diversity (π) — for both associated and random SNP sets. Compare these statistics across populations and between variant types.</p></div>
+
+  <h3>Pairwise F<sub>ST</sub></h3>
+  <p>F<sub>ST</sub> at a single biallelic site summarizes how much more different two populations are from each other than each is internally. Use the following estimator, where p<sub>1</sub> and p<sub>2</sub> are the ALT allele frequencies and n<sub>1</sub>, n<sub>2</sub> are the chromosome counts:</p>
+  <div class="formula">
+    p̄ = (p₁·n₁ + p₂·n₂) / (n₁ + n₂)<br>
+    numerator = (p₁ − p₂)² − p̄(1−p̄)·[1/(n₁−1) + 1/(n₂−1)]<br>
+    denominator = 2·p̄·(1−p̄)<br>
+    F<sub>ST</sub> = numerator / denominator
+  </div>
+
+  <p>There are 10 pairwise combinations of 5 populations — use <code>combn()</code> in R to generate them automatically. Compute per-SNP F<sub>ST</sub> for every pair, then summarize with distributions (boxplots or histograms) and mean F<sub>ST</sub> heatmaps.</p>
+
+  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Negative F<sub>ST</sub> values.</strong> The estimator can return small negative values due to sampling noise when within-population variance exceeds between-population variance. True F<sub>ST</sub> is bounded between 0 and 1. Floor negative values at 0, report in your Methods that you did this, and note how much the mean F<sub>ST</sub> changes before versus after flooring.</p></div>
+
+  <h3>Watterson's θ (theta)</h3>
+  <p>Watterson's θ estimates the population-scaled mutation rate from the number of segregating sites. For a set of S segregating sites observed in a sample of n chromosomes:</p>
+  <div class="formula">
+    a<sub>n</sub> = 1 + 1/2 + 1/3 + … + 1/(n−1)   &nbsp;&nbsp; (harmonic number)<br>
+    θ<sub>W</sub> = S / a<sub>n</sub>
+  </div>
+  <p>θ<sub>W</sub> summarizes diversity in terms of how many variable sites you observe, normalized for sample size. A higher θ<sub>W</sub> means more polymorphic sites. Compute this separately for your associated SNP set and your random SNP set within each super-population. Because your SNP sets are pre-selected (not a random genomic window), interpret θ<sub>W</sub> as a relative measure comparing variant classes, not as an absolute population parameter.</p>
+
+  <div class="box tip"><span class="box-icon">💡</span><p><strong>S is just your count of SNPs in that set.</strong> Every site in your frq.count-matched set is by definition segregating (it has two alleles present). So S = number of sites in your set for that population. The tricky part is computing the harmonic number a<sub>n</sub> — you can do this in R with <code>sum(1/seq(1, n-1))</code> where n is <code>N_CHR</code> for that population.</p></div>
+
+  <h3>Nucleotide Diversity (π)</h3>
+  <p>Nucleotide diversity (π) is the average number of pairwise nucleotide differences per site between any two randomly chosen sequences. For a single biallelic site, using the alternate allele count (<strong>AC</strong>) and the total number of alleles (<strong>AN</strong>) directly from your frq.count data:</p>
+  <div class="formula">
+    π<sub>site</sub> = [AC × (AN − AC) + (AN − AC) × AC] / [AN × (AN − 1)]
+  </div>
+  <p>which simplifies to:</p>
+  <div class="formula">
+    π<sub>site</sub> = 2 × AC × (AN − AC) / [AN × (AN − 1)]
+  </div>
+  <p>This counts all discordant pairs across the AN chromosomes and normalizes by the total number of possible pairs AN(AN − 1). Average π<sub>site</sub> across all sites in your SNP set to get mean nucleotide diversity (π̄) for that set and population. This is directly computable from the AC and AN columns you already have from Step 3.</p>
+
+  <div class="box tip"><span class="box-icon">💡</span><p><strong>π vs 2pq.</strong> Using allele frequencies p = AC/AN and q = 1 − p, the formula above is equivalent to 2pq × AN/(AN−1). For large sample sizes (AN in the hundreds, as in 1000 Genomes) the correction factor AN/(AN−1) is very close to 1, so π ≈ 2pq. The true pairwise π is slightly preferred because it scales the count of discordant pairs by the exact number of possible pairs, rather than the approximation from random-mating expected heterozygosity. Both are sensitive to intermediate-frequency variants and both contrast naturally with θ<sub>W</sub>, which is sensitive to rare variants.</p></div>
+
+  <div class="box goal"><span class="box-icon">🎯</span><p><strong>Compute both θ<sub>W</sub> and π for associated and random SNPs in all five super-populations.</strong> Key comparisons to make: (1) Are associated variants more or less diverse than the random background within each population? (2) Do θ<sub>W</sub> and π tell the same story, or do they diverge — and what would that divergence mean given how each statistic is calculated? (3) Which super-population shows the highest nucleotide diversity for cancer-associated loci?</p></div>
+
+  <div class="box tip"><span class="box-icon">💡</span><p>θ<sub>W</sub> and π are related but not identical. θ<sub>W</sub> depends only on how <em>many</em> sites are variable, while π depends on how <em>common</em> each variant is. A SNP set dominated by rare variants will have a higher θ<sub>W</sub> relative to π; a set enriched for intermediate-frequency variants will have the reverse. The contrast between them is itself informative about the shape of the allele frequency spectrum — and connects directly to what you saw in Figures 1 and 2.</p></div>
+</div>
+
+<!-- ═══════════════════════════════════ STEP 5 / FIGURES -->
+<div class="section" id="step5">
+  <div class="sec-label">Step 05 · ggplot2</div>
+  <h2>Generate Your Required Figures</h2>
+
+  <p>Below are schematic mockups showing what each figure should look like and what it should communicate. The exact aesthetic, color choices, and axis formatting are up to you. Every figure must have a descriptive title, labeled axes, and the name of the person who produced it in the subtitle or caption. Use <code>ggsave()</code> to export PDFs at 300 dpi.</p>
+
+  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Always normalize to proportions, not raw counts, before plotting MAF distributions.</strong> Divide bin counts by the group total so each bar represents the proportion of SNPs in that bin. This makes populations directly comparable regardless of how many SNPs each group has.</p></div>
+</div>
+
+<!-- ═══════════════════════════════════ FIGURES -->
+<div class="section" id="figures">
+  <div class="sec-label">Required Figures</div>
+  <h2>Figure Gallery</h2>
+
+  <!-- FIG 1 -->
+    <h3>Figure 1 — MAF distribution of associated variants per super-population</h3>
+  <div class="assign">📋 Assigned to: _______________ (Group of 4: this person also makes Figure 2)</div>
+  <p>Show the distribution of minor allele frequencies for your cancer-associated SNPs, faceted by super-population. Bin MAF into 0.05-wide intervals from 0 to 0.5. Normalize counts to proportions within each population. Comment on whether the distributions are similar across populations or differ — particularly whether rare variants are more enriched in some populations than others.</p>
+  
+  <div class="fig-wrap">
+    <svg class="mock" viewBox="0 0 700 215" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
+      <!-- background -->
+      <rect width="700" height="340" fill="white"/>
+      <!-- title -->
+      <text x="350" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">MAF Distribution of Cancer-Associated Variants</text>
+      <text x="350" y="38" text-anchor="middle" font-size="11" fill="#9a9890">[Your Name] — [Cancer Type] · Chromosome [N]</text>
+
+      <!-- helper macro: mini bar chart -->
+      <!-- AFR panel -->
+      <rect x="16" y="48" width="126" height="110" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="79" y="63" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">AFR</text>
+      <!-- bars: left-skewed, high first bin -->
+      <rect x="26" y="93" width="10" height="58" fill="#2a9d8f" opacity=".85"/>
+      <rect x="39" y="108" width="10" height="43" fill="#2a9d8f" opacity=".85"/>
+      <rect x="52" y="118" width="10" height="33" fill="#2a9d8f" opacity=".85"/>
+      <rect x="65" y="124" width="10" height="27" fill="#2a9d8f" opacity=".85"/>
+      <rect x="78" y="128" width="10" height="23" fill="#2a9d8f" opacity=".85"/>
+      <rect x="91" y="131" width="10" height="20" fill="#2a9d8f" opacity=".85"/>
+      <rect x="104" y="133" width="10" height="18" fill="#2a9d8f" opacity=".85"/>
+      <rect x="117" y="135" width="10" height="16" fill="#2a9d8f" opacity=".85"/>
+      <line x1="26" y1="151" x2="136" y2="151" stroke="#dddbd5" stroke-width="1"/>
+      <text x="26" y="161" font-size="8" fill="#9a9890">[0,0.05)</text>
+      <text x="117" y="161" font-size="8" fill="#9a9890">[0.45,0.5]</text>
+      <!-- y-axis label -->
+      <text x="12" y="105" font-size="8" fill="#9a9890" transform="rotate(-90,12,105)">Proportion</text>
+
+      <!-- AMR panel -->
+      <rect x="150" y="48" width="126" height="110" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="213" y="63" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">AMR</text>
+      <rect x="160" y="98" width="10" height="53" fill="#e76f51" opacity=".85"/>
+      <rect x="173" y="111" width="10" height="40" fill="#e76f51" opacity=".85"/>
+      <rect x="186" y="120" width="10" height="31" fill="#e76f51" opacity=".85"/>
+      <rect x="199" y="126" width="10" height="25" fill="#e76f51" opacity=".85"/>
+      <rect x="212" y="129" width="10" height="22" fill="#e76f51" opacity=".85"/>
+      <rect x="225" y="131" width="10" height="20" fill="#e76f51" opacity=".85"/>
+      <rect x="238" y="134" width="10" height="17" fill="#e76f51" opacity=".85"/>
+      <rect x="251" y="136" width="10" height="15" fill="#e76f51" opacity=".85"/>
+      <line x1="160" y1="151" x2="270" y2="151" stroke="#dddbd5" stroke-width="1"/>
+
+      <!-- EAS panel -->
+      <rect x="284" y="48" width="126" height="110" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="347" y="63" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">EAS</text>
+      <rect x="294" y="89" width="10" height="62" fill="#6d597a" opacity=".85"/>
+      <rect x="307" y="110" width="10" height="41" fill="#6d597a" opacity=".85"/>
+      <rect x="320" y="120" width="10" height="31" fill="#6d597a" opacity=".85"/>
+      <rect x="333" y="126" width="10" height="25" fill="#6d597a" opacity=".85"/>
+      <rect x="346" y="130" width="10" height="21" fill="#6d597a" opacity=".85"/>
+      <rect x="359" y="132" width="10" height="19" fill="#6d597a" opacity=".85"/>
+      <rect x="372" y="135" width="10" height="16" fill="#6d597a" opacity=".85"/>
+      <rect x="385" y="136" width="10" height="15" fill="#6d597a" opacity=".85"/>
+      <line x1="294" y1="151" x2="404" y2="151" stroke="#dddbd5" stroke-width="1"/>
+
+      <!-- EUR panel -->
+      <rect x="418" y="48" width="126" height="110" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="481" y="63" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">EUR</text>
+      <rect x="428" y="104" width="10" height="47" fill="#e9c46a" opacity=".9"/>
+      <rect x="441" y="112" width="10" height="39" fill="#e9c46a" opacity=".9"/>
+      <rect x="454" y="118" width="10" height="33" fill="#e9c46a" opacity=".9"/>
+      <rect x="467" y="123" width="10" height="28" fill="#e9c46a" opacity=".9"/>
+      <rect x="480" y="127" width="10" height="24" fill="#e9c46a" opacity=".9"/>
+      <rect x="493" y="129" width="10" height="22" fill="#e9c46a" opacity=".9"/>
+      <rect x="506" y="131" width="10" height="20" fill="#e9c46a" opacity=".9"/>
+      <rect x="519" y="132" width="10" height="19" fill="#e9c46a" opacity=".9"/>
+      <line x1="428" y1="151" x2="538" y2="151" stroke="#dddbd5" stroke-width="1"/>
+
+      <!-- SAS panel -->
+      <rect x="552" y="48" width="126" height="110" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="615" y="63" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">SAS</text>
+      <rect x="562" y="101" width="10" height="50" fill="#8ab17d" opacity=".85"/>
+      <rect x="575" y="110" width="10" height="41" fill="#8ab17d" opacity=".85"/>
+      <rect x="588" y="119" width="10" height="32" fill="#8ab17d" opacity=".85"/>
+      <rect x="601" y="125" width="10" height="26" fill="#8ab17d" opacity=".85"/>
+      <rect x="614" y="129" width="10" height="22" fill="#8ab17d" opacity=".85"/>
+      <rect x="627" y="131" width="10" height="20" fill="#8ab17d" opacity=".85"/>
+      <rect x="640" y="133" width="10" height="18" fill="#8ab17d" opacity=".85"/>
+      <rect x="653" y="134" width="10" height="17" fill="#8ab17d" opacity=".85"/>
+      <line x1="562" y1="151" x2="672" y2="151" stroke="#dddbd5" stroke-width="1"/>
+
+      <!-- x axis label -->
+      <text x="350" y="172" text-anchor="middle" font-size="11" fill="#50504a">Minor Allele Frequency bin</text>
+      <text x="14" y="107" text-anchor="middle" font-size="11" fill="#50504a" transform="rotate(-90,14,107)">Proportion of Associated SNPs</text>
+
+      <!-- annotation arrow -->
+      <text x="60" y="87" font-size="9" fill="#b83228">↑ most SNPs</text>
+      <text x="60" y="98" font-size="9" fill="#b83228">  rare in AFR</text>
+
+      <!-- EUR annotation -->
+      <text x="440" y="100" font-size="9" fill="#7a4b00">EUR less skewed</text>
+      <text x="440" y="111" font-size="9" fill="#7a4b00">toward rare →</text>
+
+      <!-- note -->
+      <text x="350" y="200" text-anchor="middle" font-size="11" fill="#9a9890" font-style="italic">Each panel sums to 1. Comment: which population looks most different? Why might EUR be less skewed?</text>
+
+      <!-- Figure 2 preview below -->
+      <text x="350" y="225" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1916">Figure 2 — Associated vs. Random (same facet layout, dodged bars)</text>
+      <!-- mini paired bars for one pop -->
+      <rect x="200" y="245" width="300" height="80" fill="#f7f6f2" stroke="#dddbd5"/>
+      <text x="350" y="260" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">AFR · example panel</text>
+      <!-- random bars (tall first) -->
+      <rect x="213" y="273" width="8" height="46" fill="#3A86C8" opacity=".75"/>
+      <rect x="228" y="293" width="8" height="26" fill="#3A86C8" opacity=".75"/>
+      <rect x="243" y="303" width="8" height="16" fill="#3A86C8" opacity=".75"/>
+      <rect x="258" y="309" width="8" height="10" fill="#3A86C8" opacity=".75"/>
+      <rect x="273" y="312" width="8" height="7" fill="#3A86C8" opacity=".75"/>
+      <!-- GWAS bars (shorter first bin, longer tails) -->
+      <rect x="222" y="285" width="8" height="34" fill="#D7263D" opacity=".75"/>
+      <rect x="237" y="291" width="8" height="28" fill="#D7263D" opacity=".75"/>
+      <rect x="252" y="295" width="8" height="24" fill="#D7263D" opacity=".75"/>
+      <rect x="267" y="299" width="8" height="20" fill="#D7263D" opacity=".75"/>
+      <rect x="282" y="303" width="8" height="16" fill="#D7263D" opacity=".75"/>
+      <line x1="213" y1="319" x2="350" y2="319" stroke="#dddbd5"/>
+      <!-- legend -->
+      <rect x="380" y="270" width="10" height="10" fill="#D7263D" opacity=".75"/>
+      <text x="394" y="280" font-size="9" fill="#50504a">Associated (GWAS)</text>
+      <rect x="380" y="285" width="10" height="10" fill="#3A86C8" opacity=".75"/>
+      <text x="394" y="295" font-size="9" fill="#50504a">Random (Null)</text>
+      <text x="270" y="336" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">Random SNPs dominate the lowest MAF bin; GWAS SNPs shift toward intermediate frequency</text>
+    </svg>
+    <p class="fig-caption"><strong>Figure 1</strong> — Binned MAF distributions for cancer-associated SNPs across all five super-populations. Normalize counts to proportions within each population; each bar spans a 0.05-wide MAF interval.</p>
+  </div>
+
+  <h3>Figure 2 — MAF comparison: associated vs. random SNPs</h3>
+  <div class="assign">📋 Assigned to: _______________ (Group of 4: same person as Figure 1)</div>
+  <p>Compare allele frequency distributions of cancer-associated SNPs and randomly sampled background SNPs side-by-side, using a facet grid with one panel per super-population and dodged bars within each panel. Normalize both sets to proportions before plotting.</p>
+  <div class="box tip"><span class="box-icon">💡</span><p>Random SNPs are strongly skewed toward the lowest MAF bin — this is the genomic null expectation under neutral drift. If your associated SNPs are less skewed or more evenly spread, this suggests GWAS preferentially identifies common variants. If the shapes are similar, the trait may be influenced by rare variants too.</p></div>
+  <div class="fig-wrap">
+    <svg class="mock" viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
+  <rect width="700" height="260" fill="white"/>
+  <!-- 5 facets, dodged bars: blue=random, red=associated -->
+  <!-- AFR -->
+  <rect x="8" y="20" width="128" height="190" fill="#f7f6f2" stroke="#dddbd5"/>
+  <text x="72" y="34" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">AFR</text>
+  <rect x="16"  y="105" width="7" height="95" fill="#3A86C8"/> <rect x="24"  y="145" width="7" height="55" fill="#D7263D"/>
+  <rect x="33"  y="130" width="7" height="70" fill="#3A86C8"/> <rect x="41"  y="150" width="7" height="50" fill="#D7263D"/>
+  <rect x="50"  y="148" width="7" height="52" fill="#3A86C8"/> <rect x="58"  y="155" width="7" height="45" fill="#D7263D"/>
+  <rect x="67"  y="157" width="7" height="43" fill="#3A86C8"/> <rect x="75"  y="160" width="7" height="40" fill="#D7263D"/>
+  <rect x="84"  y="163" width="7" height="37" fill="#3A86C8"/> <rect x="92"  y="163" width="7" height="37" fill="#D7263D"/>
+  <line x1="8" y1="200" x2="136" y2="200" stroke="#dddbd5"/>
+  <text x="72" y="212" text-anchor="middle" font-size="8" fill="#9a9890">MAF bin</text>
+  <!-- AMR -->
+  <rect x="144" y="20" width="128" height="190" fill="#f7f6f2" stroke="#dddbd5"/>
+  <text x="208" y="34" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">AMR</text>
+  <rect x="152" y="100" width="7" height="100" fill="#3A86C8"/> <rect x="160" y="140" width="7" height="60" fill="#D7263D"/>
+  <rect x="169" y="128" width="7" height="72" fill="#3A86C8"/> <rect x="177" y="148" width="7" height="52" fill="#D7263D"/>
+  <rect x="186" y="148" width="7" height="52" fill="#3A86C8"/> <rect x="194" y="155" width="7" height="45" fill="#D7263D"/>
+  <rect x="203" y="158" width="7" height="42" fill="#3A86C8"/> <rect x="211" y="161" width="7" height="39" fill="#D7263D"/>
+  <rect x="220" y="164" width="7" height="36" fill="#3A86C8"/> <rect x="228" y="165" width="7" height="35" fill="#D7263D"/>
+  <line x1="144" y1="200" x2="272" y2="200" stroke="#dddbd5"/>
+  <text x="208" y="212" text-anchor="middle" font-size="8" fill="#9a9890">MAF bin</text>
+  <!-- EAS -->
+  <rect x="280" y="20" width="128" height="190" fill="#f7f6f2" stroke="#dddbd5"/>
+  <text x="344" y="34" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">EAS</text>
+  <rect x="288" y="96"  width="7" height="104" fill="#3A86C8"/> <rect x="296" y="136" width="7" height="64" fill="#D7263D"/>
+  <rect x="305" y="124" width="7" height="76" fill="#3A86C8"/> <rect x="313" y="144" width="7" height="56" fill="#D7263D"/>
+  <rect x="322" y="146" width="7" height="54" fill="#3A86C8"/> <rect x="330" y="153" width="7" height="47" fill="#D7263D"/>
+  <rect x="339" y="156" width="7" height="44" fill="#3A86C8"/> <rect x="347" y="159" width="7" height="41" fill="#D7263D"/>
+  <rect x="356" y="162" width="7" height="38" fill="#3A86C8"/> <rect x="364" y="163" width="7" height="37" fill="#D7263D"/>
+  <line x1="280" y1="200" x2="408" y2="200" stroke="#dddbd5"/>
+  <text x="344" y="212" text-anchor="middle" font-size="8" fill="#9a9890">MAF bin</text>
+  <!-- EUR -->
+  <rect x="416" y="20" width="128" height="190" fill="#f7f6f2" stroke="#dddbd5"/>
+  <text x="480" y="34" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">EUR</text>
+  <rect x="424" y="108" width="7" height="92" fill="#3A86C8"/> <rect x="432" y="142" width="7" height="58" fill="#D7263D"/>
+  <rect x="441" y="132" width="7" height="68" fill="#3A86C8"/> <rect x="449" y="150" width="7" height="50" fill="#D7263D"/>
+  <rect x="458" y="150" width="7" height="50" fill="#3A86C8"/> <rect x="466" y="155" width="7" height="45" fill="#D7263D"/>
+  <rect x="475" y="158" width="7" height="42" fill="#3A86C8"/> <rect x="483" y="160" width="7" height="40" fill="#D7263D"/>
+  <rect x="492" y="162" width="7" height="38" fill="#3A86C8"/> <rect x="500" y="163" width="7" height="37" fill="#D7263D"/>
+  <line x1="416" y1="200" x2="544" y2="200" stroke="#dddbd5"/>
+  <text x="480" y="212" text-anchor="middle" font-size="8" fill="#9a9890">MAF bin</text>
+  <!-- SAS -->
+  <rect x="552" y="20" width="140" height="190" fill="#f7f6f2" stroke="#dddbd5"/>
+  <text x="622" y="34" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">SAS</text>
+  <rect x="560" y="103" width="7" height="97" fill="#3A86C8"/> <rect x="568" y="138" width="7" height="62" fill="#D7263D"/>
+  <rect x="577" y="128" width="7" height="72" fill="#3A86C8"/> <rect x="585" y="147" width="7" height="53" fill="#D7263D"/>
+  <rect x="594" y="148" width="7" height="52" fill="#3A86C8"/> <rect x="602" y="154" width="7" height="46" fill="#D7263D"/>
+  <rect x="611" y="157" width="7" height="43" fill="#3A86C8"/> <rect x="619" y="160" width="7" height="40" fill="#D7263D"/>
+  <rect x="628" y="163" width="7" height="37" fill="#3A86C8"/> <rect x="636" y="164" width="7" height="36" fill="#D7263D"/>
+  <line x1="552" y1="200" x2="692" y2="200" stroke="#dddbd5"/>
+  <text x="622" y="212" text-anchor="middle" font-size="8" fill="#9a9890">MAF bin</text>
+  <!-- y-axis label -->
+  <text x="4" y="130" text-anchor="middle" font-size="9" fill="#50504a" transform="rotate(-90 4 130)">Proportion</text>
+  <!-- legend -->
+  <rect x="240" y="228" width="12" height="10" fill="#D7263D"/>
+  <text x="255" y="237" font-size="9" fill="#50504a">Associated (GWAS)</text>
+  <rect x="390" y="228" width="12" height="10" fill="#3A86C8"/>
+  <text x="405" y="237" font-size="9" fill="#50504a">Random (null)</text>
+</svg>
+    <p class="fig-caption"><strong>Figure 2</strong> — MAF distributions of cancer-associated (red) vs. randomly sampled (blue) SNPs, faceted by super-population. Compare the degree of skew and comment on what differences imply about variant discovery.</p>
+  </div>
+
+  <h3>Figure 3 — Watterson's θ and nucleotide diversity (π) of associated vs. random variants</h3>
+  <div class="assign">📋 Assigned to: _______________ (required for all groups)</div>
+  <p>Compute Watterson's θ<sub>W</sub> and mean nucleotide diversity (π) for associated and random SNPs separately within each super-population. Display both statistics as grouped bar charts in two side-by-side panels. Comment on: which population shows the highest diversity for cancer-associated loci? Do θ<sub>W</sub> and π agree, or do they diverge — and what does divergence tell you about the allele frequency spectrum of your SNP sets?</p>
+  
+  <div class="fig-wrap">
+    <svg class="mock" viewBox="0 0 700 310" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
+      <rect width="700" height="310" fill="white"/>
+      <text x="350" y="18" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">Watterson's θ and Expected Heterozygosity (H&#x2091;) by Super-Population</text>
+      <text x="350" y="33" text-anchor="middle" font-size="11" fill="#9a9890">[Your Name] — Associated vs Random SNPs · two-panel layout</text>
+
+      <!-- PANEL A: Watterson's theta -->
+      <rect x="10" y="42" width="330" height="180" fill="#f7f6f2" stroke="#dddbd5"/>
+      <text x="175" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1916">A. Watterson's θ<tspan baseline-shift="sub" font-size="9">W</tspan></text>
+      <text x="175" y="69" text-anchor="middle" font-size="9" fill="#9a9890">based on number of segregating sites (S)</text>
+      <!-- axes -->
+      <line x1="48" y1="75" x2="48" y2="195" stroke="#50504a" stroke-width="1"/>
+      <line x1="48" y1="195" x2="325" y2="195" stroke="#50504a" stroke-width="1"/>
+      <text x="28" y="130" text-anchor="middle" font-size="9" fill="#50504a" transform="rotate(-90,28,130)">θ&#x2082; (per site)</text>
+      <!-- y ticks -->
+      <text x="44" y="198" text-anchor="end" font-size="8" fill="#9a9890">0</text>
+      <line x1="45" y1="155" x2="48" y2="155" stroke="#9a9890"/><text x="44" y="158" text-anchor="end" font-size="8" fill="#9a9890">0.2</text>
+      <line x1="45" y1="115" x2="48" y2="115" stroke="#9a9890"/><text x="44" y="118" text-anchor="end" font-size="8" fill="#9a9890">0.4</text>
+      <line x1="45" y1="75" x2="48" y2="75" stroke="#9a9890"/><text x="44" y="78" text-anchor="end" font-size="8" fill="#9a9890">0.6</text>
+      <line x1="48" y1="155" x2="325" y2="155" stroke="#eeedea"/>
+      <line x1="48" y1="115" x2="325" y2="115" stroke="#eeedea"/>
+      <!-- AFR: assoc lower theta than random (GWAS biases toward common variants) -->
+      <rect x="57"  y="110" width="18" height="85" fill="#D7263D" opacity=".8"/>
+      <rect x="77"  y="92"  width="18" height="103" fill="#3A86C8" opacity=".7"/>
+      <text x="76" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">AFR</text>
+      <!-- AMR -->
+      <rect x="110" y="125" width="18" height="70" fill="#D7263D" opacity=".8"/>
+      <rect x="130" y="112" width="18" height="83" fill="#3A86C8" opacity=".7"/>
+      <text x="129" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">AMR</text>
+      <!-- EAS -->
+      <rect x="163" y="120" width="18" height="75" fill="#D7263D" opacity=".8"/>
+      <rect x="183" y="108" width="18" height="87" fill="#3A86C8" opacity=".7"/>
+      <text x="182" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">EAS</text>
+      <!-- EUR -->
+      <rect x="216" y="132" width="18" height="63" fill="#D7263D" opacity=".8"/>
+      <rect x="236" y="122" width="18" height="73" fill="#3A86C8" opacity=".7"/>
+      <text x="235" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">EUR</text>
+      <!-- SAS -->
+      <rect x="269" y="128" width="18" height="67" fill="#D7263D" opacity=".8"/>
+      <rect x="289" y="118" width="18" height="77" fill="#3A86C8" opacity=".7"/>
+      <text x="288" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">SAS</text>
+      <text x="175" y="222" text-anchor="middle" font-size="8.5" fill="#9a9890" font-style="italic">θ&#x2082; counts segregating sites — rare variants matter equally</text>
+
+      <!-- PANEL B: Expected Heterozygosity -->
+      <rect x="360" y="42" width="330" height="180" fill="#f7f6f2" stroke="#dddbd5"/>
+      <text x="525" y="57" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1916">B. Nucleotide Diversity π</text>
+      <text x="525" y="69" text-anchor="middle" font-size="9" fill="#9a9890">π = 2·AC·(AN−AC) / [AN·(AN−1)]</text>
+      <!-- axes -->
+      <line x1="398" y1="75" x2="398" y2="195" stroke="#50504a" stroke-width="1"/>
+      <line x1="398" y1="195" x2="675" y2="195" stroke="#50504a" stroke-width="1"/>
+      <text x="378" y="130" text-anchor="middle" font-size="9" fill="#50504a" transform="rotate(-90,378,130)">Mean π</text>
+      <text x="394" y="198" text-anchor="end" font-size="8" fill="#9a9890">0</text>
+      <line x1="395" y1="155" x2="398" y2="155" stroke="#9a9890"/><text x="394" y="158" text-anchor="end" font-size="8" fill="#9a9890">0.1</text>
+      <line x1="395" y1="115" x2="398" y2="115" stroke="#9a9890"/><text x="394" y="118" text-anchor="end" font-size="8" fill="#9a9890">0.2</text>
+      <line x1="395" y1="75" x2="398" y2="75" stroke="#9a9890"/><text x="394" y="78" text-anchor="end" font-size="8" fill="#9a9890">0.3</text>
+      <line x1="398" y1="155" x2="675" y2="155" stroke="#eeedea"/>
+      <line x1="398" y1="115" x2="675" y2="115" stroke="#eeedea"/>
+      <!-- AFR: assoc HIGHER He than random — GWAS enriches intermediate freq variants -->
+      <rect x="407" y="103" width="18" height="92" fill="#D7263D" opacity=".8"/>
+      <rect x="427" y="122" width="18" height="73" fill="#3A86C8" opacity=".7"/>
+      <text x="426" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">AFR</text>
+      <!-- AMR -->
+      <rect x="460" y="108" width="18" height="87" fill="#D7263D" opacity=".8"/>
+      <rect x="480" y="128" width="18" height="67" fill="#3A86C8" opacity=".7"/>
+      <text x="479" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">AMR</text>
+      <!-- EAS -->
+      <rect x="513" y="110" width="18" height="85" fill="#D7263D" opacity=".8"/>
+      <rect x="533" y="130" width="18" height="65" fill="#3A86C8" opacity=".7"/>
+      <text x="532" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">EAS</text>
+      <!-- EUR -->
+      <rect x="566" y="105" width="18" height="90" fill="#D7263D" opacity=".8"/>
+      <rect x="586" y="132" width="18" height="63" fill="#3A86C8" opacity=".7"/>
+      <text x="585" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">EUR</text>
+      <!-- SAS -->
+      <rect x="619" y="108" width="18" height="87" fill="#D7263D" opacity=".8"/>
+      <rect x="639" y="130" width="18" height="65" fill="#3A86C8" opacity=".7"/>
+      <text x="638" y="208" text-anchor="middle" font-size="8.5" font-weight="600" fill="#1a1916">SAS</text>
+      <text x="525" y="222" text-anchor="middle" font-size="8.5" fill="#9a9890" font-style="italic">H&#x2091; weights by frequency — GWAS variants are often intermediate-frequency</text>
+
+      <!-- legend -->
+      <rect x="230" y="240" width="12" height="12" fill="#D7263D" opacity=".8"/>
+      <text x="246" y="251" font-size="11" fill="#50504a">Associated (GWAS)</text>
+      <rect x="390" y="240" width="12" height="12" fill="#3A86C8" opacity=".7"/>
+      <text x="406" y="251" font-size="11" fill="#50504a">Random (Null)</text>
+
+      <text x="350" y="272" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">Key question: does the relationship between θ&#x2082; and H&#x2091; differ for associated vs random SNPs?</text>
+      <text x="350" y="286" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">If H&#x2091; is high relative to θ&#x2082; for GWAS SNPs, this reflects enrichment for intermediate-frequency variants</text>
+      <text x="350" y="300" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">— consistent with GWAS power being greatest for common alleles. Values above are illustrative only.</text>
+    </svg>
+    <p class="fig-caption"><strong>Figure 3</strong> — Panel A: Watterson's θ<sub>W</sub> for associated and random SNPs in each super-population. Panel B: Mean nucleotide diversity (π = 2·AC·(AN−AC) / [AN·(AN−1)]) for the same sets. The contrasting patterns between the two panels reflect differences in the allele frequency spectrum — θ<sub>W</sub> is sensitive to rare variants while π is maximized at intermediate frequency.</p>
+  </div>
+
+  <h3>Figure 4 — F<sub>ST</sub> of associated variants (boxplot + mean heatmap)</h3>
+  <div class="assign">📋 Assigned to: _______________ </div>
+  <p>Compute pairwise F<sub>ST</sub> for all 10 population pairs across your associated SNPs. Show the distribution of per-SNP F<sub>ST</sub> values as boxplots (one box per pair) and summarize mean F<sub>ST</sub> as a symmetric heatmap. Comment on which pairs are most and least differentiated and whether any pattern reflects known demographic history.</p>
+  
+  <div class="fig-wrap">
+    <svg class="mock" viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
+      <rect width="820" height="360" fill="white"/>
+
+      <!-- ── LEFT PANEL: horizontal boxplot, all 10 pairs ─────────────── -->
+      <!-- panel border -->
+      <rect x="4" y="4" width="400" height="348" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="204" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">Boxplot: per-SNP F<tspan baseline-shift="sub" font-size="8">ST</tspan> per population pair</text>
+
+      <!-- axis: vertical line at x=96, horizontal at y=330 -->
+      <line x1="96" y1="26" x2="96" y2="330" stroke="#50504a" stroke-width="1.5"/>
+      <line x1="96" y1="330" x2="390" y2="330" stroke="#50504a" stroke-width="1.5"/>
+
+      <!-- x-axis ticks and labels -->
+      <line x1="96"  y1="330" x2="96"  y2="336" stroke="#50504a" stroke-width="1"/>
+      <text x="96"  y="344" text-anchor="middle" font-size="8" fill="#9a9890">0</text>
+      <line x1="183" y1="330" x2="183" y2="336" stroke="#50504a" stroke-width="1"/>
+      <text x="183" y="344" text-anchor="middle" font-size="8" fill="#9a9890">0.10</text>
+      <line x1="270" y1="330" x2="270" y2="336" stroke="#50504a" stroke-width="1"/>
+      <text x="270" y="344" text-anchor="middle" font-size="8" fill="#9a9890">0.20</text>
+      <line x1="357" y1="330" x2="357" y2="336" stroke="#50504a" stroke-width="1"/>
+      <text x="357" y="344" text-anchor="middle" font-size="8" fill="#9a9890">0.30</text>
+      <!-- gridlines -->
+      <line x1="183" y1="26" x2="183" y2="330" stroke="#e8e6e0" stroke-width="1"/>
+      <line x1="270" y1="26" x2="270" y2="330" stroke="#e8e6e0" stroke-width="1"/>
+      <line x1="357" y1="26" x2="357" y2="330" stroke="#e8e6e0" stroke-width="1"/>
+
+      <!-- x-axis title -->
+      <text x="243" y="356" text-anchor="middle" font-size="9" fill="#50504a">F<tspan baseline-shift="sub" font-size="7">ST</tspan></text>
+      <!-- y-axis title rotated -->
+      <text x="10" y="180" text-anchor="middle" font-size="9" fill="#50504a" transform="rotate(-90 10 180)">Population pair</text>
+
+      <!-- scale: xmax=0.35, plot width = 390-96 = 294px → 1 unit = 294/0.35 = 840px
+           so 0.01 = 8.4px, med values in px from x=96 -->
+      <!-- pairs: med, iqr-half, whisker-half (all in FST units) -->
+      <!-- AFR-EAS  med=0.26 q1=0.22 q3=0.30 wl=0.16 wr=0.36→clamp0.35 -->
+      <!-- AFR-EUR  med=0.22 -->
+      <!-- AFR-AMR  med=0.21 -->
+      <!-- AFR-SAS  med=0.20 -->
+      <!-- AMR-EAS  med=0.18 -->
+      <!-- AMR-EUR  med=0.14 -->
+      <!-- AMR-SAS  med=0.16 -->
+      <!-- EAS-EUR  med=0.15 -->
+      <!-- EAS-SAS  med=0.17 -->
+      <!-- EUR-SAS  med=0.11 -->
+
+      <!-- helper: x(v) = 96 + v/0.35*294 = 96 + v*840 -->
+      <!-- row spacing: 10 rows in 26..330 = 304px → 30.4px per row, cy = 26 + i*30.4 + 15 -->
+
+      <!-- row 0: AFR-EAS  cy=41  med=218 q1=281 q3=348→357 wl=230 wr=390 -->
+      <text x="92" y="45" text-anchor="end" font-size="8.5" fill="#50504a">AFR-EAS</text>
+      <line x1="131" y1="41" x2="184" y2="41" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="184" y="35" width="64" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="218" y1="35" x2="218" y2="47" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="248" y1="41" x2="294" y2="41" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 1: AFR-EUR  cy=71  med=0.22 -->
+      <text x="92" y="75" text-anchor="end" font-size="8.5" fill="#50504a">AFR-EUR</text>
+      <line x1="143" y1="71" x2="192" y2="71" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="192" y="65" width="54" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="211" y1="65" x2="211" y2="77" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="246" y1="71" x2="285" y2="71" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 2: AFR-AMR  cy=101  med=0.21 -->
+      <text x="92" y="105" text-anchor="end" font-size="8.5" fill="#50504a">AFR-AMR</text>
+      <line x1="147" y1="101" x2="193" y2="101" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="193" y="95" width="50" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="208" y1="95" x2="208" y2="107" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="243" y1="101" x2="278" y2="101" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 3: AFR-SAS  cy=131  med=0.20 -->
+      <text x="92" y="135" text-anchor="end" font-size="8.5" fill="#50504a">AFR-SAS</text>
+      <line x1="150" y1="131" x2="193" y2="131" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="193" y="125" width="48" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="204" y1="125" x2="204" y2="137" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="241" y1="131" x2="272" y2="131" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 4: AMR-EAS  cy=161  med=0.18 -->
+      <text x="92" y="165" text-anchor="end" font-size="8.5" fill="#50504a">AMR-EAS</text>
+      <line x1="156" y1="161" x2="196" y2="161" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="196" y="155" width="44" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="200" y1="155" x2="200" y2="167" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="240" y1="161" x2="262" y2="161" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 5: AMR-EUR  cy=191  med=0.14 -->
+      <text x="92" y="195" text-anchor="end" font-size="8.5" fill="#50504a">AMR-EUR</text>
+      <line x1="165" y1="191" x2="196" y2="191" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="196" y="185" width="38" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="193" y1="185" x2="193" y2="197" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="234" y1="191" x2="252" y2="191" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 6: AMR-SAS  cy=221  med=0.16 -->
+      <text x="92" y="225" text-anchor="end" font-size="8.5" fill="#50504a">AMR-SAS</text>
+      <line x1="161" y1="221" x2="196" y2="221" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="196" y="215" width="40" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="196" y1="215" x2="196" y2="227" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="236" y1="221" x2="257" y2="221" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 7: EAS-EUR  cy=251  med=0.15 -->
+      <text x="92" y="255" text-anchor="end" font-size="8.5" fill="#50504a">EAS-EUR</text>
+      <line x1="163" y1="251" x2="195" y2="251" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="195" y="245" width="38" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="194" y1="245" x2="194" y2="257" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="233" y1="251" x2="253" y2="251" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 8: EAS-SAS  cy=281  med=0.17 -->
+      <text x="92" y="285" text-anchor="end" font-size="8.5" fill="#50504a">EAS-SAS</text>
+      <line x1="159" y1="281" x2="196" y2="281" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="196" y="275" width="40" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="199" y1="275" x2="199" y2="287" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="236" y1="281" x2="258" y2="281" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- row 9: EUR-SAS  cy=311  med=0.11 -->
+      <text x="92" y="315" text-anchor="end" font-size="8.5" fill="#50504a">EUR-SAS</text>
+      <line x1="170" y1="311" x2="192" y2="311" stroke="#1a6b65" stroke-width="1"/>
+      <rect x="192" y="305" width="32" height="12" fill="#edf5f4" stroke="#1a6b65" stroke-width="1.5"/>
+      <line x1="188" y1="305" x2="188" y2="317" stroke="#1a6b65" stroke-width="2"/>
+      <line x1="224" y1="311" x2="240" y2="311" stroke="#1a6b65" stroke-width="1"/>
+
+      <!-- ── RIGHT PANEL: heatmap ──────────────────────────────────────── -->
+      <rect x="416" y="4" width="400" height="348" fill="#f7f6f2" stroke="#dddbd5" stroke-width="1"/>
+      <text x="616" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#1a1916">Mean F<tspan baseline-shift="sub" font-size="8">ST</tspan> heatmap (symmetric)</text>
+
+      <!-- col headers -->
+      <text x="490" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">AFR</text>
+      <text x="542" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">AMR</text>
+      <text x="594" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">EAS</text>
+      <text x="646" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">EUR</text>
+      <text x="698" y="38" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">SAS</text>
+      <!-- row headers -->
+      <text x="460" y="69"  text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">AFR</text>
+      <text x="460" y="121" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">AMR</text>
+      <text x="460" y="173" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">EAS</text>
+      <text x="460" y="225" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">EUR</text>
+      <text x="460" y="277" text-anchor="end" font-size="9" font-weight="600" fill="#1a1916">SAS</text>
+
+      <!-- row AFR -->
+      <rect x="464" y="46" width="52" height="46" fill="#d4d4d4"/>
+      <rect x="516" y="46" width="52" height="46" fill="#2a9d8f" opacity=".50"/>
+      <text x="542" y="73" text-anchor="middle" font-size="9" fill="#1a1916">0.22</text>
+      <rect x="568" y="46" width="52" height="46" fill="#2a9d8f" opacity=".65"/>
+      <text x="594" y="73" text-anchor="middle" font-size="9" fill="#1a1916">0.28</text>
+      <rect x="620" y="46" width="52" height="46" fill="#2a9d8f" opacity=".55"/>
+      <text x="646" y="73" text-anchor="middle" font-size="9" fill="#1a1916">0.24</text>
+      <rect x="672" y="46" width="52" height="46" fill="#2a9d8f" opacity=".52"/>
+      <text x="698" y="73" text-anchor="middle" font-size="9" fill="#1a1916">0.23</text>
+
+      <!-- row AMR -->
+      <rect x="464" y="98" width="52" height="46" fill="#2a9d8f" opacity=".50"/>
+      <text x="490" y="125" text-anchor="middle" font-size="9" fill="#1a1916">0.22</text>
+      <rect x="516" y="98" width="52" height="46" fill="#d4d4d4"/>
+      <rect x="568" y="98" width="52" height="46" fill="#2a9d8f" opacity=".45"/>
+      <text x="594" y="125" text-anchor="middle" font-size="9" fill="#1a1916">0.19</text>
+      <rect x="620" y="98" width="52" height="46" fill="#2a9d8f" opacity=".38"/>
+      <text x="646" y="125" text-anchor="middle" font-size="9" fill="#1a1916">0.15</text>
+      <rect x="672" y="98" width="52" height="46" fill="#2a9d8f" opacity=".42"/>
+      <text x="698" y="125" text-anchor="middle" font-size="9" fill="#1a1916">0.17</text>
+
+      <!-- row EAS -->
+      <rect x="464" y="150" width="52" height="46" fill="#2a9d8f" opacity=".65"/>
+      <text x="490" y="177" text-anchor="middle" font-size="9" fill="#1a1916">0.28</text>
+      <rect x="516" y="150" width="52" height="46" fill="#2a9d8f" opacity=".45"/>
+      <text x="542" y="177" text-anchor="middle" font-size="9" fill="#1a1916">0.19</text>
+      <rect x="568" y="150" width="52" height="46" fill="#d4d4d4"/>
+      <rect x="620" y="150" width="52" height="46" fill="#2a9d8f" opacity=".40"/>
+      <text x="646" y="177" text-anchor="middle" font-size="9" fill="#1a1916">0.16</text>
+      <rect x="672" y="150" width="52" height="46" fill="#2a9d8f" opacity=".44"/>
+      <text x="698" y="177" text-anchor="middle" font-size="9" fill="#1a1916">0.18</text>
+
+      <!-- row EUR -->
+      <rect x="464" y="202" width="52" height="46" fill="#2a9d8f" opacity=".55"/>
+      <text x="490" y="229" text-anchor="middle" font-size="9" fill="#1a1916">0.24</text>
+      <rect x="516" y="202" width="52" height="46" fill="#2a9d8f" opacity=".38"/>
+      <text x="542" y="229" text-anchor="middle" font-size="9" fill="#1a1916">0.15</text>
+      <rect x="568" y="202" width="52" height="46" fill="#2a9d8f" opacity=".40"/>
+      <text x="594" y="229" text-anchor="middle" font-size="9" fill="#1a1916">0.16</text>
+      <rect x="620" y="202" width="52" height="46" fill="#d4d4d4"/>
+      <rect x="672" y="202" width="52" height="46" fill="#2a9d8f" opacity=".30"/>
+      <text x="698" y="229" text-anchor="middle" font-size="9" fill="#1a1916">0.12</text>
+
+      <!-- row SAS -->
+      <rect x="464" y="254" width="52" height="46" fill="#2a9d8f" opacity=".52"/>
+      <text x="490" y="281" text-anchor="middle" font-size="9" fill="#1a1916">0.23</text>
+      <rect x="516" y="254" width="52" height="46" fill="#2a9d8f" opacity=".42"/>
+      <text x="542" y="281" text-anchor="middle" font-size="9" fill="#1a1916">0.17</text>
+      <rect x="568" y="254" width="52" height="46" fill="#2a9d8f" opacity=".44"/>
+      <text x="594" y="281" text-anchor="middle" font-size="9" fill="#1a1916">0.18</text>
+      <rect x="620" y="254" width="52" height="46" fill="#2a9d8f" opacity=".30"/>
+      <text x="646" y="281" text-anchor="middle" font-size="9" fill="#1a1916">0.12</text>
+      <rect x="672" y="254" width="52" height="46" fill="#d4d4d4"/>
+
+      <text x="616" y="322" text-anchor="middle" font-size="9" fill="#9a9890" font-style="italic">Darker = higher F<tspan baseline-shift="sub" font-size="7">ST</tspan> · grey diagonal = self-comparison (undefined)</text>
+    </svg>
+    <p class="fig-caption"><strong>Figure 4</strong> — Left: horizontal boxplot of per-SNP F<sub>ST</sub> distributions for all ten pairwise population comparisons (population pair labels on y-axis, F<sub>ST</sub> on x-axis). Right: symmetric mean F<sub>ST</sub> heatmap. Values are illustrative — yours will differ.</p>
+  </div>
+
+  <h3>Figure 5 — F<sub>ST</sub> of associated vs. random SNPs, faceted by population pair</h3>
+  <div class="assign">📋 Assigned to: _______________ </div>
+  <p>Overlay or dodge the F<sub>ST</sub> distributions of associated and random SNPs for each population pair. This lets you ask whether cancer-associated variants show more or less differentiation than the genomic background. Use a facet grid with one panel per population pair (all 10).</p>
+  
+  <div class="fig-wrap">
+    <svg class="mock" viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans,system-ui,sans-serif">
+      <rect width="700" height="200" fill="white"/>
+      <text x="350" y="18" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">FST Distributions: Associated vs Random SNPs by Population Pair</text>
+      <text x="350" y="32" text-anchor="middle" font-size="11" fill="#9a9890">[Your Name] — faceted · 10 panels total</text>
+      <!-- show 4 example panels -->
+      <!-- AFR-EAS -->
+      <rect x="10" y="40" width="155" height="110" fill="#f7f6f2" stroke="#dddbd5"/>
+      <text x="87" y="55" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">AFR-EAS</text>
+      <!-- random: spike near 0, long tail -->
+      <rect x="20" y="90" width="6" height="48" fill="#3A86C8" opacity=".55"/>
+      <rect x="28" y="105" width="6" height="33" fill="#3A86C8" opacity=".55"/>
+      <rect x="36" y="113" width="6" height="25" fill="#3A86C8" opacity=".55"/>
+      <rect x="44" y="120" width="6" height="18" fill="#3A86C8" opacity=".55"/>
+      <rect x="52" y="126" width="6" height="12" fill="#3A86C8" opacity=".55"/>
+      <rect x="60" y="130" width="6" height="8" fill="#3A86C8" opacity=".55"/>
+      <rect x="68" y="133" width="6" height="5" fill="#3A86C8" opacity=".55"/>
+      <!-- assoc: lower first bin, shifted right -->
+      <rect x="24" y="105" width="6" height="33" fill="#D7263D" opacity=".6"/>
+      <rect x="32" y="100" width="6" height="38" fill="#D7263D" opacity=".6"/>
+      <rect x="40" y="108" width="6" height="30" fill="#D7263D" opacity=".6"/>
+      <rect x="48" y="115" width="6" height="23" fill="#D7263D" opacity=".6"/>
+      <rect x="56" y="120" width="6" height="18" fill="#D7263D" opacity=".6"/>
+      <rect x="64" y="126" width="6" height="12" fill="#D7263D" opacity=".6"/>
+      <rect x="72" y="130" width="6" height="8" fill="#D7263D" opacity=".6"/>
+      <line x1="20" y1="138" x2="155" y2="138" stroke="#dddbd5"/>
+      <text x="87" y="148" text-anchor="middle" font-size="8" fill="#9a9890">FST</text>
+
+      <!-- AMR-EUR -->
+      <rect x="175" y="40" width="155" height="110" fill="#f7f6f2" stroke="#dddbd5"/>
+      <text x="252" y="55" text-anchor="middle" font-size="9" font-weight="600" fill="#1a1916">AMR-EUR</text>
+      <rect x="185" y="78" width="6" height="60" fill="#3A86C8" opacity=".55"/>
+      <rect x="193" y="97" width="6" height="41" fill="#3A86C8" opacity=".55"/>
+      <rect x="201" y="110" width="6" height="28" fill="#3A86C8" opacity=".55"/>
+      <rect x="209" y="120" width="6" height="18" fill="#3A86C8" opacity=".55"/>
+      <rect x="217" y="127" width="6" height="11" fill="#3A86C8" opacity=".55"/>
+      <rect x="225" y="131" width="6" height="7" fill="#3A86C8" opacity=".55"/>
+      <rect x="189" y="100" width="6" height="38" fill="#D7263D" opacity=".6"/>
+      <rect x="197" y="94" width="6" height="44" fill="#D7263D" opacity=".6"/>
+      <rect x="205" y="103" width="6" height="35" fill="#D7263D" opacity=".6"/>
+      <rect x="213" y="111" width="6" height="27" fill="#D7263D" opacity=".6"/>
+      <rect x="221" y="119" width="6" height="19" fill="#D7263D" opacity=".6"/>
+      <rect x="229" y="125" width="6" height="13" fill="#D7263D" opacity=".6"/>
+      <line x1="185" y1="138" x2="320" y2="138" stroke="#dddbd5"/>
+      <text x="252" y="148" text-anchor="middle" font-size="8" fill="#9a9890">FST</text>
+
+      <!-- ellipsis panels -->
+      <rect x="340" y="40" width="155" height="110" fill="#f7f6f2" stroke="#dddbd5" stroke-dasharray="4 2"/>
+      <text x="417" y="100" text-anchor="middle" font-size="12" fill="#9a9890">···</text>
+      <text x="417" y="115" text-anchor="middle" font-size="9" fill="#9a9890">8 more pairs</text>
+
+      <rect x="505" y="40" width="155" height="110" fill="#f7f6f2" stroke="#dddbd5"/>
+      <!-- legend here -->
+      <rect x="520" y="70" width="10" height="10" fill="#D7263D" opacity=".75"/>
+      <text x="534" y="80" font-size="10" fill="#50504a">Associated (GWAS)</text>
+      <rect x="520" y="90" width="10" height="10" fill="#3A86C8" opacity=".65"/>
+      <text x="534" y="100" font-size="10" fill="#50504a">Random (Null)</text>
+      <text x="582" y="130" text-anchor="middle" font-size="9" fill="#9a9890" font-style="italic">10 facets total</text>
+
+      <text x="350" y="172" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">Key question: do associated SNPs show higher or lower FST than the genomic background?</text>
+      <text x="350" y="186" text-anchor="middle" font-size="10" fill="#9a9890" font-style="italic">x-axis: FST (0 to 1)  ·  y-axis: count of SNPs</text>
+    </svg>
+    <p class="fig-caption"><strong>Figure 5</strong> — Overlapping histograms of F<sub>ST</sub> per population pair, comparing associated (red) and random (blue) variants. All 10 pairwise facets should appear in your final figure.</p>
+  </div>
+
+
