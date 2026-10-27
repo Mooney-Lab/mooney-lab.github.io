@@ -151,6 +151,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
   <a href="#step5">Step 5</a>
   <a href="#figures">Figures</a>
   <a href="#writeup">Write-up</a>
+    <a href="#future-directions">Future Directions</a>
 </nav>
 
 <!-- ═══════════════════════════════════ HERO -->
@@ -1037,3 +1038,52 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
   </div>
 
 
+
+
+<div class="section" id="writeup">
+  <div class="sec-label">Write-up · Paper Sections</div>
+  <h2>Paper Write-up Guide</h2>
+  <p>Each section of the paper is worth <strong>20 points</strong> and is written individually or in pairs. Groups of 4 have four 20-pt writing sections (Abstract, Introduction, Discussion, Limitations). Groups of 5 have a fifth section — <strong>Future Directions</strong> — so that every member has a section to own.</p>
+
+  <h3>Abstract</h3>
+  <div class="assign">📋 Group of 4: 1 person solo (20 pts) or pair (10 pts each) &nbsp;·&nbsp; Groups of 5: same</div>
+  <p>150–200 words. Include: cancer type studied, main goals, data sources (GWAS Catalog, 1000 Genomes), key results (allele frequency patterns, F<sub>ST</sub>, θ<sub>W</sub>, π), and main conclusion.</p>
+
+  <h3>Introduction</h3>
+  <div class="assign">📋 Group of 4: 1 person solo (20 pts) or pair (10 pts each) &nbsp;·&nbsp; Groups of 5: same</div>
+  <p>Introduce the biological and population genetics background. At a minimum address: What is the cancer and why is it important? What age groups and populations does it affect? What has GWAS found so far, and in which populations? What do we have left to learn? Why might allele frequencies differ across populations? End with 3–4 sentences describing what you did: <em>"In this study, we use XXX data and show XXX."</em></p>
+
+  <h3>Methods</h3>
+  <div class="assign">📋 All members contribute — 8 pts each</div>
+  <p>Describe how you processed the data: GWAS Catalog filtering, coordinate mapping, allele frequency computation, F<sub>ST</sub> calculation, θ<sub>W</sub> and π computation, random SNP sampling, and figure generation. Be specific about tools (R, Python, vcftools) and parameter choices.</p>
+
+  <h3>Results</h3>
+  <div class="assign">📋 Each person writes up their own figure — 10 pts per figure</div>
+  <p>Present your figures in order (Figures 1–5). For each figure, describe what is shown, report key values, and comment on patterns. Do not interpret — save interpretation for Discussion.</p>
+
+  <h3>Discussion</h3>
+  <div class="assign">📋 Group of 4: 1 person solo (20 pts) or pair (10 pts each) &nbsp;·&nbsp; Groups of 5: same</div>
+  <p>Interpret your results in biological context. Address: Are associated variants more common in GWAS discovery populations? Do F<sub>ST</sub> patterns suggest local adaptation or drift? What do θ<sub>W</sub> and π tell you about the frequency spectrum of cancer-associated loci? Are allele frequency differences biologically or clinically meaningful? End by summarizing key findings in 2–3 sentences.</p>
+
+  <h3>Limitations</h3>
+  <div class="assign">📋 Group of 4: 1 person solo (20 pts) or pair (10 pts each) &nbsp;·&nbsp; Groups of 5: same</div>
+  <p>Discuss limitations of the project. At a minimum address:</p>
+  <ul>
+    <li>GWAS ancestry bias — most GWAS studies are conducted in European-ancestry populations; how might this affect your results?</li>
+    <li>Limited SNPs or cancer subtypes — are your GWAS hits comprehensive, or is the catalog sparse for your cancer type?</li>
+    <li>Population sampling limitations — the 1000 Genomes super-populations are broad; what within-population heterogeneity might be masked?</li>
+  </ul>
+
+  <h3 id="future-directions">Future Directions <span style="font-size:13px;font-weight:400;color:var(--red);margin-left:8px;">Groups of 5 only — 20 pts</span></h3>
+  <div class="assign" style="background:color-mix(in srgb,var(--red) 8%,transparent);">📋 Groups of 5: 1 person solo (20 pts) or pair (10 pts each) &nbsp;·&nbsp; <strong>Groups of 4: not required</strong></div>
+  <p>Propose concrete next steps that would extend or improve this project. At a minimum address:</p>
+  <ul>
+    <li><strong>Additional populations.</strong> Which underrepresented populations (e.g., admixed Latin American, Indigenous, or specific African sub-populations) would most improve GWAS power and generalizability? What 1000 Genomes sub-populations would you add?</li>
+    <li><strong>Additional cancer types or subtypes.</strong> Would your findings likely generalize to related cancers or subtypes? What would you predict and why?</li>
+    <li><strong>Functional follow-up.</strong> For loci showing high F<sub>ST</sub> or unusual allele frequency patterns, what types of statistical tests or even functional experiments could you use for validation of the signal and phentype (if that were possible to quantify)?</li>
+    <li><strong>Analytical extensions.</strong> What additional statistics or methods — maybe something with haplotype homozygosity (EHH or iHS), selection scans, or polygenic risk score (PRS) portability analysis — would help you distinguish selection from drift or GWAS ascertainment bias?</li>
+    <li><strong>Clinical implications.</strong> If risk alleles differ substantially in frequency across populations, what does this imply for the portability of polygenic risk scores? How might a future study address health equity concerns?</li>
+  </ul>
+
+  <div class="box tip"><span class="box-icon">💡</span><p>A strong Future Directions section synthesizes the results and discussion to provide a reader with next steps. Explain <em>why</em> each direction is the logical next step given your specific results, and what you would expect to find.</p></div>
+</div>
