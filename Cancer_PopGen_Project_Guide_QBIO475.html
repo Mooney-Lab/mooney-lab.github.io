@@ -378,6 +378,123 @@ hr{border:none;border-top:1px solid var(--bd);margin:52px 0;}
   </div>
 </div>
 
+
+  <div class="box goal" style="margin-top:28px"><span class="box-icon">🗺️</span><p><strong>How the three files join together.</strong> snp151.txt is purely a coordinate lookup — it does not contain allele counts. The two-step join below is the only way to connect a GWAS rsID to AC and AN values.</p></div>
+
+  <div style="margin:20px 0;overflow-x:auto">
+    <table style="border-collapse:collapse;font-size:12px;font-family:var(--mono);width:100%;min-width:720px">
+      <thead>
+        <tr>
+          <th colspan="2" style="background:#534AB7;color:#fff;padding:7px 12px;border-radius:6px 6px 0 0;text-align:center;font-family:var(--sans);font-size:12px;letter-spacing:.02em">GWAS Catalog</th>
+          <td rowspan="2" style="border:none;background:transparent;text-align:center;vertical-align:middle;padding:0 8px;min-width:90px">
+            <svg width="80" height="22" style="display:block;margin:0 auto 4px"><defs><marker id="jma" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-linecap="round"/></marker></defs><line x1="4" y1="11" x2="72" y2="11" stroke="#534AB7" stroke-width="2" marker-end="url(#jma)"/></svg>
+            <span style="font-family:var(--sans);font-size:10px;font-weight:600;color:#534AB7;background:#EEEDFE;border:1px solid #AFA9EC;border-radius:4px;padding:2px 5px;white-space:nowrap">JOIN on rsID</span>
+          </td>
+          <th colspan="3" style="background:#0F6E56;color:#fff;padding:7px 12px;border-radius:6px 6px 0 0;text-align:center;font-family:var(--sans);font-size:12px;letter-spacing:.02em">snp151.txt <span style="font-weight:400;opacity:.8">(coordinate map)</span></th>
+          <td rowspan="2" style="border:none;background:transparent;text-align:center;vertical-align:middle;padding:0 8px;min-width:90px">
+            <svg width="80" height="22" style="display:block;margin:0 auto 4px"><defs><marker id="jmb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round"/></marker></defs><line x1="4" y1="11" x2="72" y2="11" stroke="#0F6E56" stroke-width="2" marker-end="url(#jmb)"/></svg>
+            <span style="font-family:var(--sans);font-size:10px;font-weight:600;color:#085041;background:#E1F5EE;border:1px solid #5DCAA5;border-radius:4px;padding:2px 5px;white-space:nowrap">JOIN chr+pos</span>
+          </td>
+          <th colspan="4" style="background:#993C1D;color:#fff;padding:7px 12px;border-radius:6px 6px 0 0;text-align:center;font-family:var(--sans);font-size:12px;letter-spacing:.02em">*.frq.count</th>
+        </tr>
+        <tr style="background:#f1efe8">
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;color:#3C3489;box-shadow:inset 0 0 0 2px #534AB7">chr</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;color:#3C3489;box-shadow:inset 0 0 0 2px #534AB7">"rs" + SNP_ID_CURRENT</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;color:#085041;box-shadow:inset 0 0 0 2px #0F6E56">chr</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;color:#3C3489;box-shadow:inset 0 0 0 2px #534AB7">rsID</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;color:#085041;box-shadow:inset 0 0 0 2px #0F6E56">posEnd</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;color:#085041;box-shadow:inset 0 0 0 2px #0F6E56">chr</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;color:#085041;box-shadow:inset 0 0 0 2px #0F6E56">POS</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px">AC (ref)</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px">AN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">9</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">rs1333049</td>
+          <td style="border:none;background:transparent"></td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">chr9</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">rs1333049</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">22125504</td>
+          <td style="border:none;background:transparent"></td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">9</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">22125504</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px">694</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px">1008</td>
+        </tr>
+        <tr style="background:#faf9f6">
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">17</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">rs4430796</td>
+          <td style="border:none;background:transparent"></td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">chr17</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">rs4430796</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">36102281</td>
+          <td style="border:none;background:transparent"></td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">17</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">36102281</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px">919</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px">1008</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">10</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">rs2981582</td>
+          <td style="border:none;background:transparent"></td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">chr10</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#3C3489">rs2981582</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">89692955</td>
+          <td style="border:none;background:transparent"></td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">10</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;color:#085041">89692955</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px">507</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px">1008</td>
+        </tr>
+        <tr style="background:#faf9f6">
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+          <td style="border:none;background:transparent"></td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+          <td style="border:none;background:transparent"></td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+          <td style="border:1px solid #dddbd5;padding:5px 10px;color:#9a9890">···</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="text-align:center;margin:12px 0 4px;font-size:18px;color:var(--dim)">↓</div>
+    <div style="text-align:center;font-size:11px;color:var(--dim);margin-bottom:6px;font-family:var(--sans)">After both joins — one row per SNP, ready to compute MAF = AC / AN</div>
+
+    <table style="border-collapse:collapse;font-size:12px;font-family:var(--mono);width:100%;min-width:720px">
+      <thead>
+        <tr><th colspan="7" style="background:#854F0B;color:#fff;padding:7px 12px;border-radius:6px 6px 0 0;text-align:center;font-family:var(--sans);font-size:12px">Joined result</th></tr>
+        <tr style="background:#f1efe8">
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px">chr</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px">rsID</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px">posEnd</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px">AC (ref)</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px">AN</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;background:#FAEEDA;color:#633806">MAF = AC / AN</th>
+          <th style="border:1px solid #dddbd5;padding:6px 10px;font-size:11px;background:#FAEEDA;color:#633806">if MAF &gt; 0.5 → 1 − AC/AN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="border:1px solid #dddbd5;padding:5px 10px">9</td><td style="border:1px solid #dddbd5;padding:5px 10px">rs1333049</td><td style="border:1px solid #dddbd5;padding:5px 10px">22125504</td><td style="border:1px solid #dddbd5;padding:5px 10px">694</td><td style="border:1px solid #dddbd5;padding:5px 10px">1008</td><td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;background:#FAEEDA;color:#412402">0.689</td><td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;background:#FAEEDA;color:#412402">→ 0.311</td></tr>
+        <tr style="background:#faf9f6"><td style="border:1px solid #dddbd5;padding:5px 10px">17</td><td style="border:1px solid #dddbd5;padding:5px 10px">rs4430796</td><td style="border:1px solid #dddbd5;padding:5px 10px">36102281</td><td style="border:1px solid #dddbd5;padding:5px 10px">919</td><td style="border:1px solid #dddbd5;padding:5px 10px">1008</td><td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;background:#FAEEDA;color:#412402">0.912</td><td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;background:#FAEEDA;color:#412402">→ 0.088</td></tr>
+        <tr><td style="border:1px solid #dddbd5;padding:5px 10px">10</td><td style="border:1px solid #dddbd5;padding:5px 10px">rs2981582</td><td style="border:1px solid #dddbd5;padding:5px 10px">89692955</td><td style="border:1px solid #dddbd5;padding:5px 10px">507</td><td style="border:1px solid #dddbd5;padding:5px 10px">1008</td><td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;background:#FAEEDA;color:#412402">0.503</td><td style="border:1px solid #dddbd5;padding:5px 10px;font-weight:600;background:#FAEEDA;color:#412402">→ 0.497</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>Join on posEnd, not posStart.</strong> snp151.txt col[3] is <code>posEnd</code> (1-based). The frq.count <code>POS</code> column is also 1-based posEnd. Always join these two. <code>posStart</code> is 0-based and off by one — your join will fail silently and return few or no matches. Also note that snp151 stores chromosome as <code>chr9</code> format; strip the "chr" prefix before joining to the frq.count chromosome column.</p></div>
+
+  <div class="box watch"><span class="box-icon">⚠️</span><p><strong>SNP_ID_CURRENT needs "rs" prepended.</strong> The GWAS Catalog stores the numeric ID only (e.g., <code>1333049</code>). Paste "rs" in front in R: <code>paste0("rs", gwas$SNP_ID_CURRENT)</code>. When SNP_ID_CURRENT is empty, fall back to the SNPS column — but clean allele suffixes (e.g., strip "-A" from "rs1333049-A") first.</p></div>
+
+  <div class="box tip"><span class="box-icon">💡</span><p><strong>Your focal chromosome is the one with the most GWAS associations.</strong> After Step 1, count unique rsIDs per chromosome (de-duplicate first). The chromosome with the highest count is your <strong>focal chromosome</strong> — filter snp151 output and frq.count to that chromosome before running this join. This keeps comparisons controlled and file sizes tractable.</p></div>
+
 <!-- ═══════════════════════════════════ STEP 3 -->
 <div class="section" id="step3">
   <div class="sec-label">Step 03 · R</div>
